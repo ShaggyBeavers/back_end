@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name = "relic")
+import java.time.LocalDate;
+
+@Table(name = "Relics")
 @Entity
 @Getter
 @Setter
@@ -14,10 +16,18 @@ public class RelicExample implements EntityWithId<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*Other fields
-    * @Column
-    * private ... ...
-    * */
-
-
+    @Column
+    private String object_type;
+    private String status;
+    private LocalDate theft_date;
+    private LocalDate creation_date;
+    private String author;
+    private String picture;
+    private String description;
+    private String probable_location;
+    private Long region_id;
+    private String map_location;
+    private String court_decisions;
+    private String name;
+    private Long historic_region_id;
 }

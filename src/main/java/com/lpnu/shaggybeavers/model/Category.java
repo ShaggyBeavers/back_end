@@ -1,0 +1,19 @@
+package com.lpnu.shaggybeavers.model;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Table(name = "Сategories")
+@Entity
+@Getter
+@Setter
+public class Category implements EntityWithId<Long> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
+    private String category_name;
+}
