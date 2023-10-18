@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name = "Categories_Properties")
+@Table(name = "сategory_properties")
 @Entity
 @Getter
 @Setter
