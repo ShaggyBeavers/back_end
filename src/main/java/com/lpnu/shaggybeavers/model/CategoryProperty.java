@@ -14,7 +14,9 @@ public class CategoryProperty implements EntityWithId<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Long category_id;
-    private Long property_id;
+    @Column(name = "category_id")
+    private Long categoryId;
+
+    @Column(name = "property_id")
+    private Long propertyId;
 }

@@ -14,6 +14,6 @@ public class Category implements EntityWithId<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String category_name;
+    @Column(name = "category_name")
+    private String categoryName;
 }
