@@ -1,6 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
-import com.lpnu.shaggybeavers.service.RelicService;
+import com.lpnu.shaggybeavers.service.RelicCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/relics")
+@RequestMapping(value = "/api/relic_categories")
 @RequiredArgsConstructor
-public class RelicController {
+public class RelicCategoryController {
 
-    private RelicService relicService;
+    private RelicCategoryService relicCategoryService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getRelicById(@PathVariable Long id) {
-        return ResponseEntity.ok(relicService.findById(id));
-        /*You mustn't return entities , you need to transform that entity to certain dto using transformer pattern or some architecture layer */
+    public ResponseEntity<?> getRelicCategoryById(@PathVariable Long id) {
+        return ResponseEntity.ok(relicCategoryService.findById(id));
     }
-
 }
