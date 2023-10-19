@@ -20,4 +20,5 @@ public class UserRegion implements EntityWithId<Long> {
     @Column(name = "user_id")
     private Long userId;
 
+
 }

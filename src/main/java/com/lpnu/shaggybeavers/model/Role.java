@@ -17,4 +17,5 @@ public class Role implements EntityWithId<Long> {
     @Column(name = "name")
     private String name;
 
+
 }

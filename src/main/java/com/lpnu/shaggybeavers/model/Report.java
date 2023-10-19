@@ -36,4 +36,5 @@ public class Report implements EntityWithId<Long> {
     @Column(name = "comment")
     private String comment;
 
+
 }

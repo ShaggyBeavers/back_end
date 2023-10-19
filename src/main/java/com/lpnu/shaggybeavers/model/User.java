@@ -29,4 +29,5 @@ public class User implements EntityWithId<Long> {
     @Column(name = "role_id")
     private Long roleId;
 
+
 }
