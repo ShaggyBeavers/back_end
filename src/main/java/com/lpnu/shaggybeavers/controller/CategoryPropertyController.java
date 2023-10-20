@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CategoryPropertyController {
 
-    private CategoryPropertyService categoryPropertyService;
+    private final CategoryPropertyService categoryPropertyService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getCategoryPropertyById(@PathVariable Long id) {

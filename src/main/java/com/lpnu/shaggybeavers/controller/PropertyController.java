@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PropertyController {
 
-    private PropertyService propertyService;
+    private final PropertyService propertyService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getPropertyById(@PathVariable Long id) {

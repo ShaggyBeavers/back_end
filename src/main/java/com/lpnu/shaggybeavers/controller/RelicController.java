@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RelicController {
 
-    private RelicService relicService;
+    private final RelicService relicService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getRelicById(@PathVariable Long id) {

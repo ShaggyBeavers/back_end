@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CategoryController {
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
