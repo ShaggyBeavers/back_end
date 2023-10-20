@@ -4,20 +4,16 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name = "relic")
+@Table(name = "сategories")
 @Entity
 @Getter
 @Setter
-public class RelicExample implements EntityWithId<Long> {
+public class Category implements EntityWithId<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*Other fields
-    * @Column
-    * private ... ...
-    * */
-
-
+    @Column(name = "category_name")
+    private String categoryName;
 }
