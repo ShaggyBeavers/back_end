@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserRegionController {
 
-    private UserRegionService userRegionService;
+    private final UserRegionService userRegionService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getUserRegionById(@PathVariable Long id) {

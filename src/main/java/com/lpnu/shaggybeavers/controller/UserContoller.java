@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserContoller {
 
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {

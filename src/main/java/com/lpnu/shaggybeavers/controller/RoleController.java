@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RoleController {
 
-    private RoleService roleService;
+    private final RoleService roleService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getRoleById(@PathVariable Long id) {

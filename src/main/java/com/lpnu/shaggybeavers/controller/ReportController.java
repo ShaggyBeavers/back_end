@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ReportController {
 
-    private ReportService reportService;
+    private final ReportService reportService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getReportById(@PathVariable Long id) {
