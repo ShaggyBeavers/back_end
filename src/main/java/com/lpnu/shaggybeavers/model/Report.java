@@ -21,6 +21,9 @@ public class Report implements EntityWithId<Long> {
     @Column(name = "relic_id")
     private Long relicId;
 
+    @Column(name = "region_id")
+    private Long regionId;
+
     @Column(name = "submission_date")
     private LocalDate submissionDate;
 
