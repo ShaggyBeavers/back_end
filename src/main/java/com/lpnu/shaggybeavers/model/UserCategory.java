@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name = "user_regions")
+@Table(name = "user_categories")
 @Entity
 @Getter
 @Setter
-public class UserRegion implements EntityWithId<Long> {
+public class UserCategory implements EntityWithId<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class UserRegion implements EntityWithId<Long> {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "region_id")
-    private Region region;
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 }

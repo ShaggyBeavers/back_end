@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Table(name = "regions")
 @Entity
 @Getter
@@ -16,6 +19,12 @@ public class Region implements EntityWithId<Long> {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "region")
+    private List<UserRegion> userRegions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "region")
+    private List<Report> report = new ArrayList<>();
 
 
 }
