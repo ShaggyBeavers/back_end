@@ -19,8 +19,9 @@ public class Report implements EntityWithId<Long> {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "relic_id")
-    private Long relicId;
+    @ManyToOne
+    @JoinColumn(name = "relic_id")
+    private Relic relic;
 
     @ManyToOne
     @JoinColumn(name = "region_id")
@@ -40,6 +41,5 @@ public class Report implements EntityWithId<Long> {
 
     @Column(name = "comment")
     private String comment;
-
 
 }
