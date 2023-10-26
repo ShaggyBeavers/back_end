@@ -21,8 +21,12 @@ public class Category implements EntityWithId<Long> {
     private String categoryName;
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<UserCategory> userCategories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<RelicCategory> relicCategories = new ArrayList<>();
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<CategoryProperty> categoryProperties = new ArrayList<>();
+
 }

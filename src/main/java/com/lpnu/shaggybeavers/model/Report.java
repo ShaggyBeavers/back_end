@@ -15,15 +15,17 @@ public class Report implements EntityWithId<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "relic_id")
     private Relic relic;
 
-    @Column(name = "region_id")
-    private Long regionId;
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    private Region region;
 
     @Column(name = "submission_date")
     private LocalDate submissionDate;
