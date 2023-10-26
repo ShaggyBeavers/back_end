@@ -14,9 +14,11 @@ public class RelicCategory implements EntityWithId<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "relic_id")
-    private Long relicId;
+    @ManyToOne
+    @JoinColumn(name = "relic_id")
+    private Relic relic;
 
-    @Column(name = "category_id")
-    private Long categoryId;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

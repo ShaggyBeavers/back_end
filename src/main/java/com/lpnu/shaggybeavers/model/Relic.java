@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "relics")
 @Entity
@@ -40,8 +42,9 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "probable_location")
     private String probableLocation;
 
-    @Column(name = "region_id")
-    private Long regionId;
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    private Region region;
 
     @Column(name = "map_location")
     private String mapLocation;
@@ -52,6 +55,13 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "historic_region_id")
-    private Long historicRegionId;
+    @ManyToOne
+    @JoinColumn(name = "historic_region_id")
+    private Region historicRegion;
+
+    @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<Report> reports = new ArrayList<>();
+
+    @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<RelicCategory> relicCategories = new ArrayList<>();
 }
