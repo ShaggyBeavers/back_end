@@ -1,8 +1,10 @@
 package com.lpnu.shaggybeavers.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 public class LoginDTO {
 
     private String email;
