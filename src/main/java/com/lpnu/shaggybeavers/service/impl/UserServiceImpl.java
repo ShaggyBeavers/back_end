@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.service.impl;
 
+import com.lpnu.shaggybeavers.exception.NotExistsUserException;
 import com.lpnu.shaggybeavers.model.User;
 import com.lpnu.shaggybeavers.repository.UserRepository;
 import com.lpnu.shaggybeavers.service.UserService;
@@ -16,5 +17,11 @@ public class UserServiceImpl extends CRUDServiceImpl<User,Long> implements UserS
     @Override
     protected JpaRepository<User, Long> getRepository () {
         return this.repository;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return repository.findByEmail(email)
+                .orElseThrow(NotExistsUserException::new);
     }
 }
