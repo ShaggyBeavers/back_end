@@ -24,9 +24,6 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "theft_date")
-    private LocalDate theftDate;
-
     @Column(name = "creation_date")
     private LocalDate creationDate;
 
@@ -36,32 +33,52 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "picture")
     private String picture;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "probable_location")
-    private String probableLocation;
-
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;
-
-    @Column(name = "map_location")
-    private String mapLocation;
-
-    @Column(name = "court_decisions")
-    private String courtDecisions;
 
     @Column(name = "name")
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "historic_region_id")
-    private Region historicRegion;
+    @JoinColumn(name = "creation_place_id")
+    private Region creationPlaceId;
 
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Report> reports = new ArrayList<>();
 
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<RelicCategory> relicCategories = new ArrayList<>();
+
+    @OneToOne(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private RelicInfo relicInfo;
+
+    @ManyToOne
+    @JoinColumn(name = "museum_id")
+    private Museum museum;
+
+    @Column
+    private Integer quantity;
+
+    @Column
+    private String collection;
+
+    @Column
+    private String comment;
+
+    @Column
+    private String copyInformation;
+
+    @Column
+    private LocalDate copyCreationTime;
+
+    @Column
+    private String entryBookNumber;
+
+    @Column
+    private Integer inventoryNumber;
+
+    @Column
+    private Integer formerInventoryNumber;
+
 }
