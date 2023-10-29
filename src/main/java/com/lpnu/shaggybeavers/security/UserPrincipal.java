@@ -2,7 +2,6 @@ package com.lpnu.shaggybeavers.security;
 
 import com.lpnu.shaggybeavers.model.User;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +14,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
 

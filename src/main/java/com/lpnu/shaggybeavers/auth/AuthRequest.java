@@ -1,8 +1,8 @@
 package com.lpnu.shaggybeavers.auth;
 
 import lombok.*;
-
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
