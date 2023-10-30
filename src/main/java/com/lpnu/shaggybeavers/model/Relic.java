@@ -42,7 +42,7 @@ public class Relic implements EntityWithId<Long> {
 
     @ManyToOne
     @JoinColumn(name = "creation_place_id")
-    private Region creationPlaceId;
+    private Region creationPlace;
 
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Report> reports = new ArrayList<>();
