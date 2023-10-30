@@ -20,20 +20,20 @@ public class RecoveredRelicInfo implements EntityWithId<Long> {
     @JoinColumn(name = "relic_info_id")
     private RelicInfo relicInfo;
 
-    @Column
-    private String location_source;
+    @Column(name = "location_source")
+    private String locationSource;
 
-    @Column
-    private LocalDate previous_search_info;
+    @Column(name = "previous_search_info")
+    private LocalDate previousSearchInfo;
 
-    @Column
-    private String return_process;
+    @Column(name = "return_process")
+    private String returnProcess;
 
-    @Column
-    private String court_decision;
+    @Column(name = "court_decision")
+    private String courtDecision;
 
-    @Column
-    private LocalDate return_date;
+    @Column(name = "return_date")
+    private LocalDate returnDate;
 
 }
 

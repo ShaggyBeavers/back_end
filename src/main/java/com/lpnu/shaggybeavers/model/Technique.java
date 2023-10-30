@@ -17,7 +17,7 @@ public class Technique implements EntityWithId<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
     @OneToMany(mappedBy = "technique", cascade = {CascadeType.MERGE, CascadeType.REMOVE})

@@ -26,28 +26,28 @@ public class RelicInfo implements EntityWithId<Long> {
     @JoinColumn(name = "historical_period_id")
     private HistoricalPeriod historicalPeriod;
 
-    @Column
+    @Column(name = "dimensions")
     private String dimensions;
 
-    @Column
+    @Column(name = "marks")
     private String marks;
 
-    @Column
+    @Column(name = "labels")
     private String labels;
 
-    @Column
+    @Column(name = "signatures")
     private String signatures;
 
-    @Column
+    @Column(name = "restoration")
     private String restoration;
 
-    @Column
-    private String appraised_value;
+    @Column(name = "appraised_value")
+    private String appraisedValue;
 
-    @Column
-    private String insurance_value;
+    @Column(name = "insurance_value")
+    private String insuranceValue;
 
-    @Column
+    @Column(name = "annotation")
     private String annotation;
 
     @OneToOne(mappedBy = "relicInfo", cascade = {CascadeType.MERGE, CascadeType.REMOVE})

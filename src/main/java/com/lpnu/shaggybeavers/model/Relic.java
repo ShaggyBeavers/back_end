@@ -42,7 +42,7 @@ public class Relic implements EntityWithId<Long> {
 
     @ManyToOne
     @JoinColumn(name = "creation_place_id")
-    private Region creationPlaceId;
+    private Region creationPlace;
 
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Report> reports = new ArrayList<>();
@@ -57,28 +57,28 @@ public class Relic implements EntityWithId<Long> {
     @JoinColumn(name = "museum_id")
     private Museum museum;
 
-    @Column
+    @Column(name = "quantity")
     private Integer quantity;
 
-    @Column
+    @Column(name = "collection")
     private String collection;
 
-    @Column
+    @Column(name = "comment")
     private String comment;
 
-    @Column
+    @Column(name = "copy_information")
     private String copyInformation;
 
-    @Column
+    @Column(name = "copy_creation_time")
     private LocalDate copyCreationTime;
 
-    @Column
+    @Column(name = "entry_book_number")
     private String entryBookNumber;
 
-    @Column
+    @Column(name = "inventory_number")
     private Integer inventoryNumber;
 
-    @Column
+    @Column(name = "former_inventory_number")
     private Integer formerInventoryNumber;
 
 }

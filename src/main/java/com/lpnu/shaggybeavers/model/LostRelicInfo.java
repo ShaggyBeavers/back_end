@@ -24,13 +24,13 @@ public class LostRelicInfo implements EntityWithId<Long> {
     @JoinColumn(name = "owner_id")
     private Museum museum;
 
-    @Column
-    private String loss_way;
+    @Column(name = "loss_way")
+    private String lossWay;
 
-    @Column
-    private LocalDate loss_time;
+    @Column(name = "loss_time")
+    private LocalDate lossTime;
 
-    @Column
+    @Column(name = "probable_location")
     private String probableLocation;
 
 }
