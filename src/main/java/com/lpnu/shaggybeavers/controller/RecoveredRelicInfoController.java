@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.facade.RecoveredRelicInfoFacade;
 import com.lpnu.shaggybeavers.service.RecoveredRelicInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RecoveredRelicInfoController {
 
-    private final RecoveredRelicInfoService recoveredRelicInfoService;
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getRecoveredRelicInfoById(@PathVariable Long id) {
-        return ResponseEntity.ok(recoveredRelicInfoService.findById(id));
-    }
+    private final RecoveredRelicInfoFacade recoveredRelicInfoFacade;
 
 }

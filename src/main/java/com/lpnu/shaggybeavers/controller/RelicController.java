@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.facade.RelicFacade;
 import com.lpnu.shaggybeavers.service.RelicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RelicController {
 
-    private final RelicService relicService;
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getRelicById(@PathVariable Long id) {
-        return ResponseEntity.ok(relicService.findById(id));
-        /*You mustn't return entities , you need to transform that entity to certain dto using transformer pattern or some architecture layer */
-    }
+    private final RelicFacade relicFacade;
 
 }

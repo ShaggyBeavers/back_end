@@ -28,13 +28,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public void registration (RegistrationDTO request) {
-        var user = new User();
-        user.setEmail(request.getEmail());
+    public void registration (User user) {
         user.setRole(roleService.findByName("USER"));
-        user.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userService.save(user);
     }
 

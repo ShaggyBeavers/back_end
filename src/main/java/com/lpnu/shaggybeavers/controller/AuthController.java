@@ -2,6 +2,7 @@ package com.lpnu.shaggybeavers.controller;
 
 import com.lpnu.shaggybeavers.dto.auth.AuthenticationDTO;
 import com.lpnu.shaggybeavers.dto.JwtDTO;
+import com.lpnu.shaggybeavers.facade.AuthFacade;
 import com.lpnu.shaggybeavers.service.AuthService;
 import com.lpnu.shaggybeavers.dto.auth.RegistrationDTO;
 import jakarta.validation.Valid;
@@ -18,17 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+    private final AuthFacade authFacade;
 
     @PostMapping("/sign-up")
     public ResponseEntity<Void> register(@Valid @RequestBody RegistrationDTO request) {
-        authService.registration(request);
+        authFacade.registration(request);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/sign-in")
     public ResponseEntity<JwtDTO> authenticate(@RequestBody AuthenticationDTO request) {
-        return ResponseEntity.ok((authService.authenticate(request)));
+        return ResponseEntity.ok((authFacade.authenticate(request)));
     }
 
 }

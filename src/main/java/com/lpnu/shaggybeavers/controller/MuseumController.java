@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.facade.MuseumFacade;
 import com.lpnu.shaggybeavers.service.MuseumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MuseumController {
 
-    private final MuseumService museumService;
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getMuseumById(@PathVariable Long id) {
-        return ResponseEntity.ok(museumService.findById(id));
-    }
+    private final MuseumFacade museumFacade;
 
 }

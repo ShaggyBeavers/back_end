@@ -16,9 +16,4 @@ public class UserContoller {
 
     private final UserFacade userFacade;
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok( userFacade.findById(id));
-    }
-
 }

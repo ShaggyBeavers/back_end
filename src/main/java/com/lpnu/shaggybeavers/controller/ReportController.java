@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.facade.ReportFacade;
 import com.lpnu.shaggybeavers.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ReportController {
 
-    private final ReportService reportService;
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getReportById(@PathVariable Long id) {
-        return ResponseEntity.ok( reportService.findById(id));
-    }
+    private final ReportFacade reportFacade;
 
 }
