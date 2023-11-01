@@ -24,9 +24,6 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "theft_date")
-    private LocalDate theftDate;
-
     @Column(name = "creation_date")
     private LocalDate creationDate;
 
@@ -36,32 +33,52 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "picture")
     private String picture;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "probable_location")
-    private String probableLocation;
-
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;
-
-    @Column(name = "map_location")
-    private String mapLocation;
-
-    @Column(name = "court_decisions")
-    private String courtDecisions;
 
     @Column(name = "name")
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "historic_region_id")
-    private Region historicRegion;
+    @JoinColumn(name = "creation_place_id")
+    private Region creationPlace;
 
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Report> reports = new ArrayList<>();
 
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<RelicCategory> relicCategories = new ArrayList<>();
+
+    @OneToOne(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private RelicInfo relicInfo;
+
+    @ManyToOne
+    @JoinColumn(name = "museum_id")
+    private Museum museum;
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "collection")
+    private String collection;
+
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "copy_information")
+    private String copyInformation;
+
+    @Column(name = "copy_creation_time")
+    private LocalDate copyCreationTime;
+
+    @Column(name = "entry_book_number")
+    private String entryBookNumber;
+
+    @Column(name = "inventory_number")
+    private Integer inventoryNumber;
+
+    @Column(name = "former_inventory_number")
+    private Integer formerInventoryNumber;
+
 }
