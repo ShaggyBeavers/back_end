@@ -22,4 +22,5 @@ public class Property implements EntityWithId<Long> {
 
     @OneToMany(mappedBy = "property", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<CategoryProperty> categoryProperties = new ArrayList<>();
+
 }
