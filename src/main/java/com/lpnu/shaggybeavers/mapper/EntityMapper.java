@@ -1,8 +1,9 @@
 package com.lpnu.shaggybeavers.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 
-@Mapper
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EntityMapper extends AuthMapper, CategoryMapper, CategoryPropertyMapper,
         HistoricalPeriodMapper, LostRelicInfoMapper, MuseumMapper, PropertyMapper,
         RecoveredRelicInfoMapper, RegionMapper, RelicCategoryMapper, RelicInfoMapper,
