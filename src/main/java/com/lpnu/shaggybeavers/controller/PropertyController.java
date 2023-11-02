@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.facade.PropertyFacade;
 import com.lpnu.shaggybeavers.service.PropertyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PropertyController {
 
-    private final PropertyService propertyService;
+    private final PropertyFacade propertyFacade;
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getPropertyById(@PathVariable Long id) {
-        return ResponseEntity.ok(propertyService.findById(id));
-    }
 }

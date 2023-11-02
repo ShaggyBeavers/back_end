@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.facade.TechniqueFacade;
 import com.lpnu.shaggybeavers.service.TechniqueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TechniqueController {
 
-    private final TechniqueService techniqueService;
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getTechniqueById(@PathVariable Long id) {
-        return ResponseEntity.ok(techniqueService.findById(id));
-    }
+    private final TechniqueFacade techniqueFacade;
 
 }

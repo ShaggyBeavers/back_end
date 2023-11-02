@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.facade.RegionFacade;
 import com.lpnu.shaggybeavers.service.RegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RegionController {
 
-    private final RegionService regionService;
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getRegionById(@PathVariable Long id) {
-        return ResponseEntity.ok( regionService.findById(id));
-    }
+    private final RegionFacade regionFacade;
 
 }
