@@ -1,8 +1,6 @@
 package com.lpnu.shaggybeavers.service.impl;
 
 import com.lpnu.shaggybeavers.dto.auth.AuthenticationDTO;
-import com.lpnu.shaggybeavers.dto.auth.RegistrationDTO;
-import com.lpnu.shaggybeavers.dto.JwtDTO;
 import com.lpnu.shaggybeavers.model.User;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
 import com.lpnu.shaggybeavers.security.jwt.JwtUtil;
@@ -28,23 +26,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public void registration (RegistrationDTO request) {
-        var user = new User();
-        user.setEmail(request.getEmail());
+    public void registration (User user) {
         user.setRole(roleService.findByName("USER"));
-        user.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userService.save(user);
     }
 
     @Override
-    public JwtDTO authenticate (AuthenticationDTO request) {
+    public String authenticate (AuthenticationDTO request) {
         var authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
         var userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        var accessToken = jwtUtil.generateToken(userPrincipal);
-        var tokenDto = new JwtDTO();
-        tokenDto.setAccessToken(accessToken);
-        return tokenDto;
+        return jwtUtil.generateToken(userPrincipal);
     }
 }

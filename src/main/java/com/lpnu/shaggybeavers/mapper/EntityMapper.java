@@ -1,0 +1,10 @@
+package com.lpnu.shaggybeavers.mapper;
+
+import org.mapstruct.Mapper;
+
+@Mapper
+public interface EntityMapper extends AuthMapper, CategoryMapper, CategoryPropertyMapper,
+        HistoricalPeriodMapper, LostRelicInfoMapper, MuseumMapper, PropertyMapper,
+        RecoveredRelicInfoMapper, RegionMapper, RelicCategoryMapper, RelicInfoMapper,
+        RelicMapper, ReportMapper, RoleMapper, TechniqueMapper, UserMapper, UserRegionMapper {
+}

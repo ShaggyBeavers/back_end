@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.facade.UserFacade;
 import com.lpnu.shaggybeavers.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserContoller {
 
-    private final UserService userService;
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok( userService.findById(id));
-    }
+    private final UserFacade userFacade;
 
 }

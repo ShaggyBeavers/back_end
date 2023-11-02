@@ -1,5 +1,7 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.facade.UserRegionFacade;
+import com.lpnu.shaggybeavers.factory.UserRegionFactory;
 import com.lpnu.shaggybeavers.service.UserRegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,15 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/user_region")
+@RequestMapping(value = "/api/user-region")
 @RequiredArgsConstructor
 public class UserRegionController {
 
-    private final UserRegionService userRegionService;
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getUserRegionById(@PathVariable Long id) {
-        return ResponseEntity.ok( userRegionService.findById(id));
-    }
+    private final UserRegionFacade userRegionFacade;
 
 }
