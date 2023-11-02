@@ -1,6 +1,7 @@
 package com.lpnu.shaggybeavers.controller;
 
 import com.lpnu.shaggybeavers.facade.TechniqueFacade;
+
 import com.lpnu.shaggybeavers.service.TechniqueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,5 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TechniqueController {
 
     private final TechniqueFacade techniqueFacade;
+
 
 }
