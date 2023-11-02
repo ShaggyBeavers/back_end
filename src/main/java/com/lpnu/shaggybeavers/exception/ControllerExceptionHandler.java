@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.*;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestControllerAdvice
@@ -17,6 +19,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = NotExistsObjectException.class)
     public ResponseEntity<Object> handleNotExistObjectException(NotExistsObjectException e) {
         return buildException(List.of(e.getMessage()),HttpStatus.CONFLICT);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = ExpiredJwtException.class)
+    public ResponseEntity<?> handleExpiredJwtException(ExpiredJwtException e) {
+        return buildException(Collections.singletonList(e.getMessage()),HttpStatus.UNAUTHORIZED);
     }
 
     private ResponseEntity<Object> buildException(List<String> message, HttpStatus httpStatus){
