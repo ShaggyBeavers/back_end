@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/recovered_relic_infos")
+@RequestMapping(value = "/api/recovered-relic-infos")
 @RequiredArgsConstructor
 public class RecoveredRelicInfoController {
 

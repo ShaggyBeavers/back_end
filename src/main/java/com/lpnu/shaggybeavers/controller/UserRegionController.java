@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/user_region")
+@RequestMapping(value = "/api/user-region")
 @RequiredArgsConstructor
 public class UserRegionController {
 
