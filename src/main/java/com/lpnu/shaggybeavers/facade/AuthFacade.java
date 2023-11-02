@@ -4,7 +4,6 @@ import com.lpnu.shaggybeavers.dto.JwtDTO;
 import com.lpnu.shaggybeavers.dto.auth.AuthenticationDTO;
 import com.lpnu.shaggybeavers.dto.auth.RegistrationDTO;
 import com.lpnu.shaggybeavers.factory.AuthFactory;
-import com.lpnu.shaggybeavers.model.User;
 import com.lpnu.shaggybeavers.service.AuthService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +17,13 @@ public class AuthFacade {
 
     private final AuthService authService ;
 
+    @Transactional
     public void registration (RegistrationDTO request) {
-        authService.registration(authFactory.RegistrationDtoToUser(request));
+        authService.registration(authFactory.toUser(request));
     }
 
     public JwtDTO authenticate (AuthenticationDTO request) {
-        return authService.authenticate(request);
+         return authFactory.toJwtDTO(authService.authenticate(request));
     }
 
 }

@@ -1,6 +1,5 @@
 package com.lpnu.shaggybeavers.facade;
 
-import com.lpnu.shaggybeavers.dto.UserDTO;
 import com.lpnu.shaggybeavers.factory.UserFactory;
 import com.lpnu.shaggybeavers.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,4 @@ public class UserFacade {
 
     private final UserService userService;
 
-    public UserDTO findById(Long id) {
-        return userFactory.userToDTO(userService.findById(id));
-    }
 }
