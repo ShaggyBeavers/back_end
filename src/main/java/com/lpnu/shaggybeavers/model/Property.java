@@ -21,6 +21,6 @@ public class Property implements EntityWithId<Long> {
     private String property;
 
     @OneToMany(mappedBy = "property", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    private List<CategoryProperty> categoryProperties = new ArrayList<>();
+    private List<RelicProperty> relicProperties = new ArrayList<>();
 
 }
