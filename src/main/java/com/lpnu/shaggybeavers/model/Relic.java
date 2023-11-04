@@ -81,4 +81,7 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "former_inventory_number")
     private Integer formerInventoryNumber;
 
+    @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<RelicProperty> relicProperties = new ArrayList<>();
+
 }

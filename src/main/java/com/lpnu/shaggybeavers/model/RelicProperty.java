@@ -4,21 +4,25 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name = "сategory_properties")
+@Table(name = "relic_properties")
 @Entity
 @Getter
 @Setter
-public class CategoryProperty implements EntityWithId<Long> {
+public class RelicProperty implements EntityWithId<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "value")
+    private String value;
+
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "relic_id")
+    private Relic relic;
 
     @ManyToOne
     @JoinColumn(name = "property_id")
     private Property property;
+
 }

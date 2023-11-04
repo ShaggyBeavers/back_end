@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CategoryPropertyFactory {
+public class RelicPropertyFactory {
 
     private final EntityMapper entityMapper;
 
