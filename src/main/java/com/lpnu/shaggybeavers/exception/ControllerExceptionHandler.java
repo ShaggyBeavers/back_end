@@ -15,7 +15,6 @@ import java.util.List;
 @RestControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-
     @ExceptionHandler(value = NotExistsObjectException.class)
     public ResponseEntity<Object> handleNotExistObjectException(NotExistsObjectException e) {
         return buildException(List.of(e.getMessage()),HttpStatus.CONFLICT);
@@ -24,6 +23,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(value = ExpiredJwtException.class)
     public ResponseEntity<?> handleExpiredJwtException(ExpiredJwtException e) {
         return buildException(Collections.singletonList(e.getMessage()),HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(value = FileException.class)
+    public ResponseEntity<Object> handleFileException(FileException e) {
+        return buildException(List.of(e.getMessage()), HttpStatus.CONFLICT);
     }
 
     private ResponseEntity<Object> buildException(List<String> message, HttpStatus httpStatus){

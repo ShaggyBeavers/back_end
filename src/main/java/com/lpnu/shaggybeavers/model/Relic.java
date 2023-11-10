@@ -84,4 +84,7 @@ public class Relic implements EntityWithId<Long> {
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<RelicProperty> relicProperties = new ArrayList<>();
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
 }
