@@ -7,5 +7,6 @@ import org.mapstruct.MappingConstants;
 public interface EntityMapper extends AuthMapper, CategoryMapper, RelicPropertyMapper,
         HistoricalPeriodMapper, LostRelicInfoMapper, MuseumMapper, PropertyMapper,
         RecoveredRelicInfoMapper, RegionMapper, RelicCategoryMapper, RelicInfoMapper,
-        RelicMapper, ReportMapper, RoleMapper, TechniqueMapper, UserMapper, UserRegionMapper {
+        RelicMapper, ReportMapper, RoleMapper, TechniqueMapper, UserMapper, UserRegionMapper,
+        StorageMapper {
 }

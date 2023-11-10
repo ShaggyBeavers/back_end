@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,5 +84,8 @@ public class Relic implements EntityWithId<Long> {
 
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<RelicProperty> relicProperties = new ArrayList<>();
+
+    @Column(name = "image_url")
+    private URL imageUrl;
 
 }
