@@ -17,4 +17,5 @@ public class RelicServiceImpl extends CRUDServiceImpl<Relic, Long> implements Re
     protected JpaRepository<Relic, Long> getRepository () {
         return this.relicRepository;
     }
+
 }
