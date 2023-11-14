@@ -25,4 +25,11 @@ public class RoleServiceImpl extends CRUDServiceImpl<Role,Long> implements RoleS
     public Role findByName (String name) {
         return repository.findByName(name).orElseThrow( () -> new NotExistsObjectException("Role with %s name doesn't exist".formatted(name)));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+    }
+
 }
