@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.facade.RelicFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,4 +26,11 @@ public class RelicController {
             @PathVariable(value = "relicId") Long relicId) {
         return new ResponseEntity<>(relicFacade.downloadFile(relicId), HttpStatus.OK);
     }
+
+    @GetMapping("/{relicId}")
+    public ResponseEntity<RelicDTO> getRelicById(
+            @PathVariable(value = "relicId") Long relicId) {
+        return new ResponseEntity<RelicDTO>(relicFacade.getRelicById(relicId), HttpStatus.OK);
+    }
+
 }
