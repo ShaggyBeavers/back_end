@@ -30,7 +30,7 @@ public class RelicController {
     @GetMapping("/{relicId}")
     public ResponseEntity<RelicDTO> getRelicById(
             @PathVariable(value = "relicId") Long relicId) {
-        return new ResponseEntity<RelicDTO>(relicFacade.getRelicById(relicId), HttpStatus.OK);
+        return new ResponseEntity<>(relicFacade.getRelicById(relicId), HttpStatus.OK);
     }
 
 }

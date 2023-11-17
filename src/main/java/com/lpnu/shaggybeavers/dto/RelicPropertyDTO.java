@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 public class RelicPropertyDTO {
 
-    private String value;
+    private String name;
 
-    private String propertyName;
+    private String value;
 
 }

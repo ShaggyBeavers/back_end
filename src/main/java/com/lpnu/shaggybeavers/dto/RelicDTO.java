@@ -16,7 +16,7 @@ public class RelicDTO {
 
     private String creationPlaceName;
 
-    private Byte picture;
+    private String imageUrl;
 
     private String museumName;
 
