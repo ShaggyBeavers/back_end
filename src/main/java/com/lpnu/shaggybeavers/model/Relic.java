@@ -30,9 +30,6 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "author")
     private String author;
 
-    @Column(name = "picture")
-    private String picture;
-
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;

@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.facade;
 
+import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.factory.RelicFactory;
 import com.lpnu.shaggybeavers.model.Relic;
 import com.lpnu.shaggybeavers.service.RelicService;
@@ -27,6 +28,10 @@ public class RelicFacade {
 
     public String downloadFile(Long relicId) {
         return relicService.findById(relicId).getImageUrl();
+    }
+
+    public RelicDTO getRelicById(Long relicId) {
+        return relicFactory.toRelicDTO(relicService.findById(relicId));
     }
 
 }
