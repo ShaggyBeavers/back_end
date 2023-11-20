@@ -1,8 +1,12 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.facade.RelicFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +35,13 @@ public class RelicController {
     public ResponseEntity<RelicDTO> getRelicById(
             @PathVariable(value = "relicId") Long relicId) {
         return new ResponseEntity<>(relicFacade.getRelicById(relicId), HttpStatus.OK);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<Page<RelicCatalogDTO>> getCatalog(
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+        Pageable pageable= PageRequest.of(page, size);
+        return new ResponseEntity<>(relicFacade.getCatalog(pageable), HttpStatus.OK);
     }
 
 }

@@ -5,7 +5,6 @@ import com.lpnu.shaggybeavers.model.RelicProperty;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
 public interface RelicPropertyMapper {
 
     @Mapping(source = "property.property", target = "name")

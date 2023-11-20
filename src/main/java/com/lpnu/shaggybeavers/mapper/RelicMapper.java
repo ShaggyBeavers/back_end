@@ -1,11 +1,11 @@
 package com.lpnu.shaggybeavers.mapper;
 
+import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.model.Relic;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
 public interface RelicMapper {
 
     @Mapping(source = "creationPlace.name", target = "creationPlaceName")
@@ -16,5 +16,7 @@ public interface RelicMapper {
     @Mapping(source = "relicInfo.recoveredRelicInfo", target = "recoveredRelicInfoDTO")
     @Mapping(source = "relicInfo.lostRelicInfo", target = "lostRelicInfoDTO")
     RelicDTO toRelicDTO(Relic relic);
+
+    RelicCatalogDTO toRelicCatalogDTO(Relic relic);
 
 }

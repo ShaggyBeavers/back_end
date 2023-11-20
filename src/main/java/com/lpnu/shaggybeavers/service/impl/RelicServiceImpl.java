@@ -4,6 +4,8 @@ import com.lpnu.shaggybeavers.model.Relic;
 import com.lpnu.shaggybeavers.repository.RelicRepository;
 import com.lpnu.shaggybeavers.service.RelicService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +20,8 @@ public class RelicServiceImpl extends CRUDServiceImpl<Relic, Long> implements Re
         return this.relicRepository;
     }
 
+    @Override
+    public Page<Relic> getCatalog(Pageable pageable) {
+        return relicRepository.findAll(pageable);
+    }
 }

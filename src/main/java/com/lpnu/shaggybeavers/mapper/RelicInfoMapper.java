@@ -5,7 +5,6 @@ import com.lpnu.shaggybeavers.model.RelicInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
 public interface RelicInfoMapper {
 
     @Mapping(source = "technique.name", target = "techniqueName")
