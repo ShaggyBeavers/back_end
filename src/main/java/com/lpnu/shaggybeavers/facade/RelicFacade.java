@@ -39,7 +39,7 @@ public class RelicFacade {
     }
 
     public Page<RelicCatalogDTO> getCatalog(Pageable pageable) {
-        Page<Relic> relicPage = relicService.getCatalog(pageable);
+        Page<Relic> relicPage = relicService.findAll(pageable);
         return relicPage.map(relicFactory::toRelicCatalogDTO);
     }
 

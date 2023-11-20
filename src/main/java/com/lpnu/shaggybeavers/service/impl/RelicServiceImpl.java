@@ -21,7 +21,7 @@ public class RelicServiceImpl extends CRUDServiceImpl<Relic, Long> implements Re
     }
 
     @Override
-    public Page<Relic> getCatalog(Pageable pageable) {
+    public Page<Relic> findAll(Pageable pageable) {
         return relicRepository.findAll(pageable);
     }
 }

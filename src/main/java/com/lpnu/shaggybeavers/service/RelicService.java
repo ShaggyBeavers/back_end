@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface RelicService extends CRUDService<Relic,Long> {
 
-    Page<Relic> getCatalog(Pageable pageable);
+    Page<Relic> findAll(Pageable pageable);
 }
