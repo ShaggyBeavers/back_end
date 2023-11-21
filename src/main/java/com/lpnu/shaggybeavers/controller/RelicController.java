@@ -37,7 +37,7 @@ public class RelicController {
         return new ResponseEntity<>(relicFacade.getRelicById(relicId), HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping("/page")
     public ResponseEntity<Page<RelicCatalogDTO>> getCatalog(
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
         Pageable pageable= PageRequest.of(page, size);

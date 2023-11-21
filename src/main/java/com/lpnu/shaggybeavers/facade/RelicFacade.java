@@ -5,6 +5,7 @@ import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.factory.RelicFactory;
 import com.lpnu.shaggybeavers.model.Relic;
 import com.lpnu.shaggybeavers.service.RelicService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +39,7 @@ public class RelicFacade {
         return relicFactory.toRelicDTO(relicService.findById(relicId));
     }
 
+    @Transactional
     public Page<RelicCatalogDTO> getCatalog(Pageable pageable) {
         Page<Relic> relicPage = relicService.findAll(pageable);
         return relicPage.map(relicFactory::toRelicCatalogDTO);
