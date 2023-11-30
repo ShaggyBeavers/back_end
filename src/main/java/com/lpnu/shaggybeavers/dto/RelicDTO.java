@@ -10,6 +10,8 @@ import java.util.List;
 @Getter
 public class RelicDTO {
 
+    private Long id;
+
     private String name;
 
     private LocalDate creationDate;
