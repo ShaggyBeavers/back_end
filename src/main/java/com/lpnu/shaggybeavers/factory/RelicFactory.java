@@ -7,6 +7,8 @@ import com.lpnu.shaggybeavers.model.Relic;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class RelicFactory {
@@ -18,4 +20,8 @@ public class RelicFactory {
     }
 
     public RelicCatalogDTO toRelicCatalogDTO(Relic relic) { return entityMapper.toRelicCatalogDTO(relic); }
+
+    public List<RelicDTO> toRelicDTOList(List<Relic> relics) {
+        return entityMapper.toRelicDTOList(relics);
+    }
 }

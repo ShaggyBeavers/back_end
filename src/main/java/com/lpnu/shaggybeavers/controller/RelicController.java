@@ -3,6 +3,7 @@ package com.lpnu.shaggybeavers.controller;
 import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.facade.RelicFacade;
+import com.lpnu.shaggybeavers.filter.RelicFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/relics")
@@ -44,4 +47,9 @@ public class RelicController {
         return new ResponseEntity<>(relicFacade.getCatalog(pageable), HttpStatus.OK);
     }
 
+    @PostMapping("/filter")
+    public ResponseEntity<List<RelicDTO>> getRelicsByFilter(
+            @RequestBody RelicFilter filter) {
+        return new ResponseEntity<>(relicFacade.getRelicsByFilter(filter), HttpStatus.OK);
+    }
 }

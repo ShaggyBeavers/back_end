@@ -3,8 +3,9 @@ package com.lpnu.shaggybeavers.mapper;
 import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.model.Relic;
-import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 public interface RelicMapper {
 
@@ -18,5 +19,7 @@ public interface RelicMapper {
     RelicDTO toRelicDTO(Relic relic);
 
     RelicCatalogDTO toRelicCatalogDTO(Relic relic);
+
+    List<RelicDTO> toRelicDTOList(List<Relic> relics);
 
 }
