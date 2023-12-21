@@ -21,25 +21,22 @@ public class RelicSpecification implements Specification<Relic> {
     public Predicate toPredicate(Root<Relic> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
-        if (filter.getHistoricalPeriod() != null) {
-            root.join("relicInfo");
-            predicates.add(criteriaBuilder.equal(root.get("relicInfo").get("historicalPeriod").get("name"), filter.getHistoricalPeriod()));
+        if (filter.getHistoricalPeriods() != null) {
+            predicates.add(root.get("relicInfo").get("historicalPeriod").get("name").in(filter.getHistoricalPeriods()));
         }
-        if (filter.getStatus() != null) {
-            predicates.add(criteriaBuilder.equal(root.get("status"), filter.getStatus()));
+        if (filter.getStatuses() != null) {
+            predicates.add(root.get("status").in(filter.getStatuses()));
         }
-        if (filter.getTechnique() != null) {
-            root.join("relicInfo");
-            predicates.add(criteriaBuilder.equal(root.get("relicInfo").get("technique").get("name"), filter.getTechnique()));
+        if (filter.getTechniques() != null) {
+            predicates.add(root.get("relicInfo").get("technique").get("name").in(filter.getTechniques()));
         }
-        if (filter.getCollection() != null) {
-            predicates.add(criteriaBuilder.equal(root.get("collection"), filter.getCollection()));
+        if (filter.getCollections() != null) {
+            predicates.add(root.get("collection").in(filter.getCollections()));
         }
-        if (filter.getCategory() != null) {
-            root.join("relicCategories");
-            predicates.add(criteriaBuilder.equal(root.get("relicCategories").get("category").get("categoryName"), filter.getCategory()));
+        if (filter.getCategories() != null) {
+            predicates.add(root.get("relicCategories").get("category").get("categoryName").in(filter.getCategories()));
         }
 
-        return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 }
