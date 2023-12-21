@@ -43,4 +43,7 @@ public class User implements EntityWithId<Long> {
     @OneToMany(mappedBy = "user")
     private List<UserCategory> userCategories = new ArrayList<>();
 
+    @Column(name = "profile_image_url")
+    private String imageUrl;
+
 }
