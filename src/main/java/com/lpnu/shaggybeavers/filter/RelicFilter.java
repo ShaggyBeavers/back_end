@@ -3,13 +3,15 @@ package com.lpnu.shaggybeavers.filter;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class RelicFilter {
 
-    private String historicalPeriod;
-    private String status;
-    private String technique;
-    private String collection;
-    private String category;
+    private List<String> historicalPeriods;
+    private List<String> statuses;
+    private List<String> techniques;
+    private List<String> collections;
+    private List<String> categories;
 }
