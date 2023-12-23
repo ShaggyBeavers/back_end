@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "reports")
 @Entity
@@ -41,5 +43,17 @@ public class Report implements EntityWithId<Long> {
 
     @Column(name = "comment")
     private String comment;
+
+    @Column(name = "info_references")
+    private String infoReferences;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @OneToMany(mappedBy = "report", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<ReportCategories> reportCategories = new ArrayList<>();
 
 }
