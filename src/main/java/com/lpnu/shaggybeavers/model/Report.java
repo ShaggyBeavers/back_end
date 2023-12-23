@@ -54,6 +54,6 @@ public class Report implements EntityWithId<Long> {
     private String imageUrl;
 
     @OneToMany(mappedBy = "report", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    private List<ReportCategories> reportCategories = new ArrayList<>();
+    private List<ReportCategory> reportCategories = new ArrayList<>();
 
 }

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class ReportCategories {
+public class ReportCategory implements EntityWithId<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
