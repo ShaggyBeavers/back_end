@@ -18,21 +18,10 @@ public class UserController {
 
     private final UserFacade userFacade;
 
-    @GetMapping("current-profile")
+    @GetMapping("/current-profile")
     public ResponseEntity<UserDTO> getProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal) {
         return new ResponseEntity<>(userFacade.getProfile(userPrincipal.getId()), HttpStatus.OK);
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(
-            @RequestParam(value = "file") MultipartFile multipartFile, @RequestParam(value = "userId") Long userId) {
-        return new ResponseEntity<>(userFacade.uploadFile(multipartFile, userId), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/download/{relicId}")
-    public ResponseEntity<String> downloadFile(
-            @PathVariable(value = "relicId") Long userId) {
-        return new ResponseEntity<>(userFacade.downloadFile(userId), HttpStatus.OK);
-    }
 }

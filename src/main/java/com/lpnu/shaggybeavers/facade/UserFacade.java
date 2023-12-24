@@ -5,6 +5,7 @@ import com.lpnu.shaggybeavers.factory.UserFactory;
 import com.lpnu.shaggybeavers.model.Relic;
 import com.lpnu.shaggybeavers.model.User;
 import com.lpnu.shaggybeavers.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,20 +20,10 @@ public class UserFacade {
 
     private final StorageFacade storageFacade;
 
+    @Transactional
     public UserDTO getProfile(Long userId) {
         return userFactory.toUserDTO(userService.findById(userId));
     }
 
-    public String uploadFile(MultipartFile multipartFile, Long userId) {
-        String url = storageFacade.uploadFile(multipartFile);
-        User user = userService.findById(userId);
-        user.setImageUrl(url);
-        userService.update(user);
-        return url;
-    }
-
-    public String downloadFile(Long userId) {
-        return userService.findById(userId).getImageUrl();
-    }
 
 }
