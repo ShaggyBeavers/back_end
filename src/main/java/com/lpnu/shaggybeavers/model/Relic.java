@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.model;
 
+import com.lpnu.shaggybeavers.domain.RelicStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +22,9 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "object_type")
     private String objectType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private RelicStatus status;
 
     @Column(name = "creation_date")
     private LocalDate creationDate;
