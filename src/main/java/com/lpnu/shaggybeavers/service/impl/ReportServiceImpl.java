@@ -1,7 +1,5 @@
 package com.lpnu.shaggybeavers.service.impl;
 
-import com.lpnu.shaggybeavers.filter.ReportByUserFilter;
-import com.lpnu.shaggybeavers.model.Relic;
 import com.lpnu.shaggybeavers.model.Report;
 import com.lpnu.shaggybeavers.repository.ReportRepository;
 import com.lpnu.shaggybeavers.service.ReportService;

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class ReportDTO {
+public class CurrentUserReportDTO {
 
     private String name ;
 

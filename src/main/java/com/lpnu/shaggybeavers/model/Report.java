@@ -38,7 +38,7 @@ public class Report implements EntityWithId<Long> {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "status")
+    @Column(name = "report_status")
     private String status;
 
     @Column(name = "comment")

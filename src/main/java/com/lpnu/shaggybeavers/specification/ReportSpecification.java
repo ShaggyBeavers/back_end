@@ -1,6 +1,6 @@
 package com.lpnu.shaggybeavers.specification;
 
-import com.lpnu.shaggybeavers.filter.ReportByUserFilter;
+import com.lpnu.shaggybeavers.filter.ReportFilter;
 import com.lpnu.shaggybeavers.model.Report;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReportSpecification implements Specification<Report> {
 
-    private final ReportByUserFilter filter;
+    private final ReportFilter filter;
 
     @Override
     public Predicate toPredicate(Root<Report> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
