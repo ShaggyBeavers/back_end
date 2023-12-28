@@ -4,11 +4,11 @@ import com.lpnu.shaggybeavers.domain.ReportStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-public class ReportDTO {
+public class ReportCreateDTO {
 
     public String name;
 
@@ -16,7 +16,7 @@ public class ReportDTO {
 
     public String mapLocation;
 
-    public List<Long> categoryIds;
+    public Set<Long> categoryIds;
 
     public ReportStatus status;
 

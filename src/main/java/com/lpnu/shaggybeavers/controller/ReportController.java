@@ -1,6 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
-import com.lpnu.shaggybeavers.dto.ReportDTO;
+import com.lpnu.shaggybeavers.dto.ReportCreateDTO;
 import com.lpnu.shaggybeavers.facade.ReportFacade;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,8 @@ public class ReportController {
 
     @PostMapping("/")
     public ResponseEntity<Long> createReport(
-            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody ReportDTO reportDTO) {
-        Long id = reportFacade.createReport(userPrincipal, reportDTO);
+            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody ReportCreateDTO reportCreateDTO) {
+        Long id = reportFacade.createReport(userPrincipal, reportCreateDTO);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 

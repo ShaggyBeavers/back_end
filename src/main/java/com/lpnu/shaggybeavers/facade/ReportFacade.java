@@ -1,6 +1,6 @@
 package com.lpnu.shaggybeavers.facade;
 
-import com.lpnu.shaggybeavers.dto.ReportDTO;
+import com.lpnu.shaggybeavers.dto.ReportCreateDTO;
 import com.lpnu.shaggybeavers.factory.ReportFactory;
 import com.lpnu.shaggybeavers.model.Category;
 import com.lpnu.shaggybeavers.model.Report;
@@ -24,11 +24,11 @@ public class ReportFacade {
     private final ReportCategoryFacade reportCategoryFacade;
 
     @Transactional
-    public Long createReport(UserPrincipal userPrincipal, ReportDTO reportDTO) {
-        Report report = reportService.save(reportFactory.toReport(reportDTO));
+    public Long createReport(UserPrincipal userPrincipal, ReportCreateDTO reportCreateDTO) {
+        Report report = reportService.save(reportFactory.toReport(reportCreateDTO));
         report.setUser(userPrincipal.getUser());
 
-        reportDTO.categoryIds
+        reportCreateDTO.categoryIds
                 .forEach(categoryId -> {
                     Category category = categoryFacade.findById(categoryId);
                     ReportCategory reportCategory = new ReportCategory();
