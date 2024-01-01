@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 public interface ReportMapper {
 
     @Mapping(source = "reportCategories", target = "categoriesDTO")
-    CurrentUserReportDTO toReportDTO(Report report);
+    CurrentUserReportDTO toCurrentUserReportDTO(Report report);
   
     Report toReport(ReportCreateDTO reportCreateDTO);
 

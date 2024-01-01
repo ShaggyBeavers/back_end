@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.dto;
 
+import com.lpnu.shaggybeavers.domain.RelicStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +31,7 @@ public class RelicDTO {
 
     private String comment;
 
-    private String status;
+    private RelicStatus status;
 
     private List<RelicPropertyDTO> relicPropertyDTOs;
 
