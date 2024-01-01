@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.model;
 
+import com.lpnu.shaggybeavers.domain.ReportStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,8 +39,9 @@ public class Report implements EntityWithId<Long> {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "report_status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ReportStatus status;
 
     @Column(name = "comment")
     private String comment;
