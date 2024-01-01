@@ -1,9 +1,9 @@
 package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.dto.CurrentUserReportDTO;
-import com.lpnu.shaggybeavers.filter.ReportFilter;
 import com.lpnu.shaggybeavers.dto.ReportCreateDTO;
 import com.lpnu.shaggybeavers.factory.ReportFactory;
+import com.lpnu.shaggybeavers.filter.ReportFilter;
 import com.lpnu.shaggybeavers.model.Category;
 import com.lpnu.shaggybeavers.model.Report;
 import com.lpnu.shaggybeavers.model.ReportCategory;
@@ -16,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
