@@ -5,8 +5,10 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class UserDTO {
+public class ReportCategoryDTO {
 
-    private String imageUrl;
+    private String name ;
+
+    private Long id;
 
 }
