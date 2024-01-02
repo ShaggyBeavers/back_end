@@ -14,7 +14,7 @@ public class ReportFactory {
     private final EntityMapper entityMapper;
 
     public CurrentUserReportDTO toReportDTO(Report report) { 
-        return entityMapper.toReportDTO(report); 
+        return entityMapper.toCurrentUserReportDTO(report);
     }
 
     public Report toReport(ReportCreateDTO reportCreateDTO) {
