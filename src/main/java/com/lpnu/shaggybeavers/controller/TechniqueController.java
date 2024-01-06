@@ -1,14 +1,11 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.dto.TechniqueCreateDTO;
 import com.lpnu.shaggybeavers.facade.TechniqueFacade;
 
-import com.lpnu.shaggybeavers.service.TechniqueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/techniques")
@@ -17,5 +14,9 @@ public class TechniqueController {
 
     private final TechniqueFacade techniqueFacade;
 
+    @PostMapping("/create")
+    public void createTechnique(@RequestBody TechniqueCreateDTO techniqueCreateDTO){
+        techniqueFacade.createTechnique(techniqueCreateDTO);
+    }
 
 }

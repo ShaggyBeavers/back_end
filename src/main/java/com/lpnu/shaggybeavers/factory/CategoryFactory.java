@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.factory;
 
+import com.lpnu.shaggybeavers.dto.CategoryCreateDTO;
 import com.lpnu.shaggybeavers.dto.CategoryDTO;
 import com.lpnu.shaggybeavers.mapper.EntityMapper;
 import com.lpnu.shaggybeavers.model.Category;
@@ -18,4 +19,7 @@ public class CategoryFactory {
         return entityMapper.toCategoryDTOList(categories);
     }
 
+    public Category toCategory(CategoryCreateDTO categoryCreateDTO) {
+        return entityMapper.toCategory(categoryCreateDTO);
+    }
 }

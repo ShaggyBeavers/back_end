@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.facade;
 
+import com.lpnu.shaggybeavers.dto.PropertyCreateDTO;
 import com.lpnu.shaggybeavers.factory.PropertyFactory;
 import com.lpnu.shaggybeavers.service.PropertyService;
 import lombok.RequiredArgsConstructor;
@@ -13,4 +14,7 @@ public class PropertyFacade {
 
     private final PropertyService propertyService;
 
+    public void createProperty(PropertyCreateDTO propertyCreateDTO) {
+        propertyService.save(propertyFactory.toProperty(propertyCreateDTO));
+    }
 }
