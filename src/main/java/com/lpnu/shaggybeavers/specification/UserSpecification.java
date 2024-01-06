@@ -22,7 +22,7 @@ public class UserSpecification implements Specification<User> {
         List<Predicate> predicates = new ArrayList<>();
 
         if (filter.getRoleName() != null) {
-            predicates.add(root.get("role").get("name").in(filter.getRoleName()));
+            predicates.add(criteriaBuilder.like(root.get("role").get("name"), filter.getRoleName()));
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
