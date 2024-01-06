@@ -20,7 +20,6 @@ public class User implements EntityWithId<Long> {
     @Column(name = "email", unique = true)
     private String email;
 
-
     @Column(name = "password")
     private String password;
 
@@ -34,13 +33,13 @@ public class User implements EntityWithId<Long> {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Report> reports = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<UserRegion> userRegions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<UserCategory> userCategories = new ArrayList<>();
 
 }
