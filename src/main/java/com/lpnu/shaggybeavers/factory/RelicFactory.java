@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.factory;
 
+import com.lpnu.shaggybeavers.dto.FavoriteRelicDTO;
 import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.mapper.EntityMapper;
@@ -24,4 +25,9 @@ public class RelicFactory {
     public List<RelicDTO> toRelicDTOList(List<Relic> relics) {
         return entityMapper.toRelicDTOList(relics);
     }
+
+    public FavoriteRelicDTO toFavoriteRelicDTO(Relic relic) {
+        return entityMapper.toFavoriteRelicDTO(relic);
+    }
+
 }

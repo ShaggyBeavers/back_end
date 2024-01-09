@@ -86,4 +86,7 @@ public class Relic implements EntityWithId<Long> {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "favorite")
+    private boolean favorite;
+
 }
