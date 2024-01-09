@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.mapper;
 
+import com.lpnu.shaggybeavers.dto.FavoriteRelicDTO;
 import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.model.Relic;
@@ -21,5 +22,9 @@ public interface RelicMapper {
     RelicCatalogDTO toRelicCatalogDTO(Relic relic);
 
     List<RelicDTO> toRelicDTOList(List<Relic> relics);
+
+    @Mapping(source = "relicInfo.lostRelicInfo.lossTime", target = "lossTime")
+    @Mapping(source = "relicCategories", target = "categories")
+    FavoriteRelicDTO toFavoriteRelicDTO(Relic relic);
 
 }

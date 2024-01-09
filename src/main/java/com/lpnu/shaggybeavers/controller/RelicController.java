@@ -1,5 +1,7 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.domain.RelicStatus;
+import com.lpnu.shaggybeavers.dto.FavoriteRelicDTO;
 import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.facade.RelicFacade;
@@ -52,4 +54,22 @@ public class RelicController {
             @RequestBody RelicFilter filter) {
         return new ResponseEntity<>(relicFacade.getRelicsByFilter(filter), HttpStatus.OK);
     }
+
+    @PostMapping("/change-favorite")
+    public ResponseEntity<Void> changeFavoriteRelic() {
+        relicFacade.changeFavoriteRelic();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/favorite")
+    public ResponseEntity<FavoriteRelicDTO> getFavoriteRelic() {
+        return new ResponseEntity<>(relicFacade.getFavoriteRelic(), HttpStatus.OK);
+    }
+
+    @GetMapping("/count-by-statuses")
+    public ResponseEntity<Long> countByStatuses(
+            @RequestParam List<RelicStatus> statuses) {
+        return new ResponseEntity<>(relicFacade.countByStatuses(statuses), HttpStatus.OK);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.service.impl;
 
+import com.lpnu.shaggybeavers.domain.RelicStatus;
 import com.lpnu.shaggybeavers.model.Relic;
 import com.lpnu.shaggybeavers.repository.RelicRepository;
 import com.lpnu.shaggybeavers.service.RelicService;
@@ -34,4 +35,20 @@ public class RelicServiceImpl extends CRUDServiceImpl<Relic, Long> implements Re
     public List<Relic> findAll(Specification<Relic> specification) {
         return relicRepository.findAll(specification);
     }
+
+    @Override
+    public Long countByStatuses(List<RelicStatus> statuses) {
+        return relicRepository.countByStatuses(statuses);
+    }
+
+    @Override
+    public Relic getCurrentFavoriteRelic() {
+        return relicRepository.getCurrentFavoriteRelic();
+    }
+
+    @Override
+    public Relic getNewFavoriteRelic() {
+        return relicRepository.getNewFavoriteRelic();
+    }
+
 }

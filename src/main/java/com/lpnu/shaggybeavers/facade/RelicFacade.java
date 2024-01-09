@@ -1,7 +1,10 @@
 package com.lpnu.shaggybeavers.facade;
 
+import com.lpnu.shaggybeavers.domain.RelicStatus;
+import com.lpnu.shaggybeavers.dto.FavoriteRelicDTO;
 import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
+import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.factory.RelicFactory;
 import com.lpnu.shaggybeavers.filter.RelicFilter;
 import com.lpnu.shaggybeavers.model.Relic;
@@ -49,9 +52,36 @@ public class RelicFacade {
         return relicPage.map(relicFactory::toRelicCatalogDTO);
     }
 
+    @Transactional
     public List<RelicDTO> getRelicsByFilter(RelicFilter filter) {
         Specification<Relic> specification = new RelicSpecification(filter);
         List<Relic> relics = relicService.findAll(specification);
         return relicFactory.toRelicDTOList(relics);
     }
+
+    @Transactional
+    public void changeFavoriteRelic() {
+        Relic currentFavoriteRelic = relicService.getCurrentFavoriteRelic();
+        Relic newFavoriteRelic = relicService.getNewFavoriteRelic();
+        if (currentFavoriteRelic != null) {
+            currentFavoriteRelic.setFavorite(false);
+            relicService.update(currentFavoriteRelic);
+        }
+        if (newFavoriteRelic == null) {
+            throw new NotExistsObjectException("There is no new relic with image at the moment.");
+        }
+        newFavoriteRelic.setFavorite(true);
+        relicService.update(newFavoriteRelic);
+    }
+
+    @Transactional
+    public FavoriteRelicDTO getFavoriteRelic() {
+        return relicFactory.toFavoriteRelicDTO(relicService.getCurrentFavoriteRelic());
+    }
+
+    @Transactional
+    public Long countByStatuses(List<RelicStatus> statuses) {
+        return relicService.countByStatuses(statuses);
+    }
+
 }
