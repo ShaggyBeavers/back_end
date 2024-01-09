@@ -2,6 +2,7 @@ package com.lpnu.shaggybeavers.mapper;
 
 import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
+import com.lpnu.shaggybeavers.dto.RelicCreateEditDTO;
 import com.lpnu.shaggybeavers.model.Relic;
 import org.mapstruct.Mapping;
 
@@ -22,4 +23,5 @@ public interface RelicMapper {
 
     List<RelicDTO> toRelicDTOList(List<Relic> relics);
 
+    Relic toRelic(RelicCreateEditDTO relicCreateEditDTO);
 }
