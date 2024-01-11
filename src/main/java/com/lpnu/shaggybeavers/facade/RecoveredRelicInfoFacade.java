@@ -22,4 +22,8 @@ public class RecoveredRelicInfoFacade {
     public RecoveredRelicInfo toRecoveredRelicInfo(RecoveredRelicInfoCreateEditDTO recoveredRelicInfoCreateEditDTO) {
         return recoveredRelicInfoFactory.toRecoveredRelicInfo(recoveredRelicInfoCreateEditDTO);
     }
+
+    public RecoveredRelicInfo update(Long id, RecoveredRelicInfoCreateEditDTO recoveredRelicInfoCreateEditDTO) {
+        return recoveredRelicInfoFactory.update(recoveredRelicInfoService.findById(id), recoveredRelicInfoCreateEditDTO);
+    }
 }

@@ -26,4 +26,8 @@ public class RelicInfoFacade {
         relicInfo.setRelic(relic);
         return relicInfoService.save(relicInfo);
     }
+
+    public RelicInfo update(Long id, RelicInfoCreateEditDTO relicInfoCreateEditDTO) {
+        return relicInfoFactory.update(relicInfoService.findById(id), relicInfoCreateEditDTO);
+    }
 }

@@ -22,4 +22,8 @@ public class LostRelicInfoFacade {
     public LostRelicInfo toLostRelicInfo(LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO) {
         return lostRelicInfoFactory.toLostRelicInfo(lostRelicInfoCreateEditDTO);
     }
+
+    public LostRelicInfo update(Long id, LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO) {
+        return lostRelicInfoFactory.update(lostRelicInfoService.findById(id), lostRelicInfoCreateEditDTO);
+    }
 }

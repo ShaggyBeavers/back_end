@@ -15,4 +15,8 @@ public class RecoveredRelicInfoFactory {
     public RecoveredRelicInfo toRecoveredRelicInfo(RecoveredRelicInfoCreateEditDTO recoveredRelicInfoCreateEditDTO) {
         return entityMapper.toRecoveredRelicInfo(recoveredRelicInfoCreateEditDTO);
     }
+
+    public RecoveredRelicInfo update(RecoveredRelicInfo recoveredRelicInfo, RecoveredRelicInfoCreateEditDTO recoveredRelicInfoCreateEditDTO) {
+        return entityMapper.update(recoveredRelicInfo, recoveredRelicInfoCreateEditDTO);
+    }
 }

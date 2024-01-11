@@ -2,7 +2,6 @@ package com.lpnu.shaggybeavers.controller;
 
 import com.lpnu.shaggybeavers.dto.CategoryCreateDTO;
 import com.lpnu.shaggybeavers.dto.CategoryDTO;
-import com.lpnu.shaggybeavers.dto.TechniqueCreateDTO;
 import com.lpnu.shaggybeavers.facade.CategoryFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

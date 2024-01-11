@@ -5,6 +5,7 @@ import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.dto.RelicCreateEditDTO;
 import com.lpnu.shaggybeavers.model.Relic;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface RelicMapper {
     List<RelicDTO> toRelicDTOList(List<Relic> relics);
 
     Relic toRelic(RelicCreateEditDTO relicCreateEditDTO);
+
+    Relic update(@MappingTarget Relic relic, RelicCreateEditDTO relicCreateEditDTO);
 }

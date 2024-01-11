@@ -5,6 +5,7 @@ import com.lpnu.shaggybeavers.dto.RelicInfoDTO;
 import com.lpnu.shaggybeavers.model.RelicInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 public interface RelicInfoMapper {
 
@@ -13,4 +14,6 @@ public interface RelicInfoMapper {
     RelicInfoDTO toRelicInfoDTO(RelicInfo relicInfo);
 
     RelicInfo toRelicInfo(RelicInfoCreateEditDTO relicInfoCreateEditDTO);
+
+    RelicInfo update(@MappingTarget RelicInfo relicInfo, RelicInfoCreateEditDTO relicInfoCreateEditDTO);
 }

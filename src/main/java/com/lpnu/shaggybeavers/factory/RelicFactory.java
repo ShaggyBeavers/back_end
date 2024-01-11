@@ -29,4 +29,8 @@ public class RelicFactory {
     public Relic toRelic(RelicCreateEditDTO relicCreateEditDTO) {
         return entityMapper.toRelic(relicCreateEditDTO);
     }
+
+    public Relic update(Relic relic, RelicCreateEditDTO relicCreateEditDTO) {
+        return entityMapper.update(relic, relicCreateEditDTO);
+    }
 }

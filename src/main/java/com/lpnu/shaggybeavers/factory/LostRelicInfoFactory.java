@@ -15,4 +15,8 @@ public class LostRelicInfoFactory {
     public LostRelicInfo toLostRelicInfo(LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO) {
         return entityMapper.toLostRelicInfo(lostRelicInfoCreateEditDTO);
     }
+
+    public LostRelicInfo update(LostRelicInfo lostRelicInfo, LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO) {
+        return entityMapper.update(lostRelicInfo, lostRelicInfoCreateEditDTO);
+    }
 }

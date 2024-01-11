@@ -15,4 +15,8 @@ public class RelicInfoFactory {
     public RelicInfo toRelicInfo(RelicInfoCreateEditDTO relicInfoCreateEditDTO) {
         return entityMapper.toRelicInfo(relicInfoCreateEditDTO);
     }
+
+    public RelicInfo update(RelicInfo relicInfo, RelicInfoCreateEditDTO relicInfoCreateEditDTO) {
+        return entityMapper.update(relicInfo, relicInfoCreateEditDTO);
+    }
 }

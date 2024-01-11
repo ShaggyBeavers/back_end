@@ -66,41 +66,10 @@ public class RelicFacade {
 
     @Transactional
     public void editRelic(Long relicId, RelicCreateEditDTO relicCreateEditDTO) {
-        Relic relic = relicService.findById(relicId);
-        relic.setName(relicCreateEditDTO.getName());
-        relic.setObjectType(relicCreateEditDTO.getObjectType());
-        relic.setStatus(relicCreateEditDTO.getStatus());
-        relic.setCreationDate(relicCreateEditDTO.getCreationDate());
-        relic.setAuthor(relicCreateEditDTO.getAuthor());
-        relic.setRegion(relicCreateEditDTO.getRegion());
-        relic.setName(relicCreateEditDTO.getName());
-        relic.setCreationPlace(relicCreateEditDTO.getCreationPlace());
-        relic.setReports(relicCreateEditDTO.getReports());
-        relic.setRelicCategories(relicCreateEditDTO.getRelicCategories());
-        relic.setMuseum(relicCreateEditDTO.getMuseum());
-        relic.setQuantity(relicCreateEditDTO.getQuantity());
-        relic.setCollection(relicCreateEditDTO.getCollection());
-        relic.setComment(relicCreateEditDTO.getComment());
-        relic.setCopyInformation(relicCreateEditDTO.getCopyInformation());
-        relic.setCopyCreationTime(relicCreateEditDTO.getCopyCreationTime());
-        relic.setEntryBookNumber(relicCreateEditDTO.getEntryBookNumber());
-        relic.setInventoryNumber(relicCreateEditDTO.getInventoryNumber());
-        relic.setFormerInventoryNumber(relicCreateEditDTO.getFormerInventoryNumber());
-        relic.setRelicProperties(relicCreateEditDTO.getRelicProperties());
-        relic.setImageUrl(relicCreateEditDTO.getImageUrl());
-
+        Relic relic = relicFactory.update(relicService.findById(relicId), relicCreateEditDTO);
+        // optional if relic or relicInfo not found?
         RelicInfoCreateEditDTO relicInfoCreateEditDTO = relicCreateEditDTO.getRelicInfoCreateEditDTO();
-        RelicInfo relicInfo = relicInfoFacade.findById(relic.getRelicInfo().getId());
-        relicInfo.setHistoricalPeriod(relicInfoCreateEditDTO.getHistoricalPeriod());
-        relicInfo.setAnnotation(relicInfoCreateEditDTO.getAnnotation());
-        relicInfo.setAppraisedValue(relicInfoCreateEditDTO.getAppraisedValue());
-        relicInfo.setDimensions(relicInfoCreateEditDTO.getDimensions());
-        relicInfo.setLabels(relicInfoCreateEditDTO.getLabels());
-        relicInfo.setMarks(relicInfoCreateEditDTO.getMarks());
-        relicInfo.setInsuranceValue(relicInfoCreateEditDTO.getInsuranceValue());
-        relicInfo.setRestoration(relicInfoCreateEditDTO.getRestoration());
-        relicInfo.setTechnique(relicInfoCreateEditDTO.getTechnique());
-        relicInfo.setSignatures(relicInfoCreateEditDTO.getSignatures());
+        RelicInfo relicInfo = relicInfoFacade.update(relic.getRelicInfo().getId(), relicInfoCreateEditDTO);
 
         LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO = relicInfoCreateEditDTO.getLostRelicInfoCreateEditDTO();
         if (lostRelicInfoCreateEditDTO != null) {
@@ -110,11 +79,7 @@ public class RelicFacade {
                 lostRelicInfo.setRelicInfo(relicInfo);
             }
             else {
-                lostRelicInfo = lostRelicInfoFacade.findById(lostRelicInfo.getId());
-                lostRelicInfo.setMuseum(lostRelicInfoCreateEditDTO.getMuseum());
-                lostRelicInfo.setLossTime(lostRelicInfoCreateEditDTO.getLossTime());
-                lostRelicInfo.setLossWay(lostRelicInfoCreateEditDTO.getLossWay());
-                lostRelicInfo.setProbableLocation(lostRelicInfoCreateEditDTO.getProbableLocation());
+                lostRelicInfo = lostRelicInfoFacade.update(lostRelicInfo.getId(), lostRelicInfoCreateEditDTO);
             }
             lostRelicInfoFacade.save(lostRelicInfo);
         }
@@ -127,12 +92,7 @@ public class RelicFacade {
                 recoveredRelicInfo.setRelicInfo(relicInfo);
             }
             else {
-                recoveredRelicInfo = recoveredRelicInfoFacade.findById(recoveredRelicInfo.getId());
-                recoveredRelicInfo.setCourtDecision(recoveredRelicInfoCreateEditDTO.getCourtDecision());
-                recoveredRelicInfo.setLocationSource(recoveredRelicInfoCreateEditDTO.getLocationSource());
-                recoveredRelicInfo.setPreviousSearchInfo(recoveredRelicInfoCreateEditDTO.getPreviousSearchInfo());
-                recoveredRelicInfo.setReturnProcess(recoveredRelicInfoCreateEditDTO.getReturnProcess());
-                recoveredRelicInfo.setReturnDate(recoveredRelicInfoCreateEditDTO.getReturnDate());
+                recoveredRelicInfo = recoveredRelicInfoFacade.update(recoveredRelicInfo.getId(), recoveredRelicInfoCreateEditDTO);
             }
             recoveredRelicInfoFacade.save(recoveredRelicInfo);
         }
