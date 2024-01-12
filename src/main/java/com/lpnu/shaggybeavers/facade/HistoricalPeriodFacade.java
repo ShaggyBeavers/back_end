@@ -21,6 +21,7 @@ public class HistoricalPeriodFacade {
         historicalPeriodService.save(historicalPeriodFactory.toHistoricalPeriod(historicalPeriodCreateDTO));
     }
 
+    @Transactional
     public HistoricalPeriod findById(Long historicalPeriodId) { return historicalPeriodService.findById(historicalPeriodId);
     }
 }

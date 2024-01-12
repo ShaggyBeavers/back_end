@@ -1,6 +1,5 @@
 package com.lpnu.shaggybeavers.mapper;
 
-import com.lpnu.shaggybeavers.dto.RelicPropertyCreateDTO;
 import com.lpnu.shaggybeavers.dto.RelicPropertyDTO;
 import com.lpnu.shaggybeavers.model.RelicProperty;
 import org.mapstruct.Mapping;

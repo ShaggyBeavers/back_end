@@ -17,6 +17,7 @@ public class RecoveredRelicInfoFacade {
 
     private final RecoveredRelicInfoService recoveredRelicInfoService;
 
+    @Transactional
     public void create(RecoveredRelicInfoCreateEditDTO recoveredRelicInfoCreateEditDTO, RelicInfo relicInfo) {
         RecoveredRelicInfo recoveredRelicInfo = recoveredRelicInfoFactory.toRecoveredRelicInfo(recoveredRelicInfoCreateEditDTO);
         recoveredRelicInfo.setRelicInfo(relicInfo);
