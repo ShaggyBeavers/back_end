@@ -2,6 +2,7 @@ package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.dto.RegionCreateDTO;
 import com.lpnu.shaggybeavers.factory.RegionFactory;
+import com.lpnu.shaggybeavers.model.Region;
 import com.lpnu.shaggybeavers.service.RegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,5 +19,9 @@ public class RegionFacade {
     @Transactional
     public void createRegion(RegionCreateDTO regionCreateDTO) {
         regionService.save(regionFactory.toRegion(regionCreateDTO));
+    }
+
+    @Transactional
+    public Region findById(Long regionId) { return regionService.findById(regionId);
     }
 }

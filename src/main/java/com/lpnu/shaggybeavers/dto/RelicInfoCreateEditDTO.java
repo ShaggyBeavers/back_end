@@ -10,9 +10,9 @@ import lombok.Setter;
 public class RelicInfoCreateEditDTO {
 
 
-    private Technique technique;
+    private Long techniqueId;
 
-    private HistoricalPeriod historicalPeriod;
+    private Long historicalPeriodId;
 
     private String dimensions;
 

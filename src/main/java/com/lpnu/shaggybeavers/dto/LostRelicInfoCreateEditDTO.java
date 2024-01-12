@@ -14,7 +14,7 @@ public class LostRelicInfoCreateEditDTO {
 
     private LocalDate lossTime;
 
-    private Museum museum;
+    private Long museumId;
 
     private String probableLocation;
 

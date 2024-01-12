@@ -21,17 +21,17 @@ public class RelicCreateEditDTO {
 
     private String author;
 
-    private Region region;
+    private Long regionId;
 
     private String name;
 
-    private Region creationPlace;
+    private Long creationPlaceId;
 
-    private List<Report> reports = new ArrayList<>();
+    private List<Long> reportIds = new ArrayList<>();
 
-    private List<RelicCategory> relicCategories = new ArrayList<>();
+    private List<Long> relicCategoryIds = new ArrayList<>();
 
-    private Museum museum;
+    private Long museumId;
 
     private Integer quantity;
 
@@ -49,7 +49,9 @@ public class RelicCreateEditDTO {
 
     private Integer formerInventoryNumber;
 
-    private List<RelicProperty> relicProperties = new ArrayList<>();
+    private List<Long> relicPropertyIds = new ArrayList<>();
+
+    private List<String> propertyValues = new ArrayList<>();
 
     private String imageUrl;
 

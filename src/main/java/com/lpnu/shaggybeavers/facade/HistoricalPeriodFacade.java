@@ -2,6 +2,7 @@ package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.dto.HistoricalPeriodCreateDTO;
 import com.lpnu.shaggybeavers.factory.HistoricalPeriodFactory;
+import com.lpnu.shaggybeavers.model.HistoricalPeriod;
 import com.lpnu.shaggybeavers.service.HistoricalPeriodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,5 +19,8 @@ public class HistoricalPeriodFacade {
     @Transactional
     public void createHistoricalPeriod(HistoricalPeriodCreateDTO historicalPeriodCreateDTO) {
         historicalPeriodService.save(historicalPeriodFactory.toHistoricalPeriod(historicalPeriodCreateDTO));
+    }
+
+    public HistoricalPeriod findById(Long historicalPeriodId) { return historicalPeriodService.findById(historicalPeriodId);
     }
 }

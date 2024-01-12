@@ -3,7 +3,9 @@ package com.lpnu.shaggybeavers.facade;
 import com.lpnu.shaggybeavers.dto.LostRelicInfoCreateEditDTO;
 import com.lpnu.shaggybeavers.factory.LostRelicInfoFactory;
 import com.lpnu.shaggybeavers.model.LostRelicInfo;
+import com.lpnu.shaggybeavers.model.RelicInfo;
 import com.lpnu.shaggybeavers.service.LostRelicInfoService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,15 +17,18 @@ public class LostRelicInfoFacade {
 
     private final LostRelicInfoService lostRelicInfoService;
 
-    public LostRelicInfo findById(Long id) { return lostRelicInfoService.findById(id); }
+    private final MuseumFacade museumFacade;
 
-    public void save(LostRelicInfo lostRelicInfo) { lostRelicInfoService.save(lostRelicInfo); }
-
-    public LostRelicInfo toLostRelicInfo(LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO) {
-        return lostRelicInfoFactory.toLostRelicInfo(lostRelicInfoCreateEditDTO);
+    @Transactional
+    public void create(LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO, RelicInfo relicInfo) {
+        LostRelicInfo lostRelicInfo = lostRelicInfoFactory.toLostRelicInfo(lostRelicInfoCreateEditDTO);
+        lostRelicInfo.setRelicInfo(relicInfo);
+        lostRelicInfo.setMuseum(museumFacade.findById((lostRelicInfoCreateEditDTO.getMuseumId())));
+        lostRelicInfoService.save(lostRelicInfo);
     }
 
-    public LostRelicInfo update(Long id, LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO) {
-        return lostRelicInfoFactory.update(lostRelicInfoService.findById(id), lostRelicInfoCreateEditDTO);
+    @Transactional
+    public void update(Long id, LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO) {
+        lostRelicInfoService.save(lostRelicInfoFactory.update(lostRelicInfoService.findById(id), lostRelicInfoCreateEditDTO));
     }
 }

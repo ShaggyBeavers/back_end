@@ -35,6 +35,14 @@ public class RelicFacade {
 
     private final RecoveredRelicInfoFacade recoveredRelicInfoFacade;
 
+    private final RegionFacade regionFacade;
+
+    private final MuseumFacade museumFacade;
+
+    private final RelicPropertyFacade relicPropertyFacade;
+
+    private final RelicCategoryFacade relicCategoryFacade;
+
     public String uploadFile(MultipartFile multipartFile, Long relicId) {
         String url = storageFacade.uploadFile(multipartFile);
         Relic relic = relicService.findById(relicId);
@@ -67,7 +75,14 @@ public class RelicFacade {
     @Transactional
     public void editRelic(Long relicId, RelicCreateEditDTO relicCreateEditDTO) {
         Relic relic = relicFactory.update(relicService.findById(relicId), relicCreateEditDTO);
-        // optional if relic or relicInfo not found?
+        relic.setRegion(regionFacade.findById((relicCreateEditDTO.getRegionId())));
+        relic.setCreationPlace(regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())));
+        relic.setMuseum(museumFacade.findById((relicCreateEditDTO.getMuseumId())));
+        relicService.save(relic);
+
+        relicCategoryFacade.updateRelicCategories(relicCreateEditDTO.getRelicCategoryIds(), relic);
+        relicPropertyFacade.updateRelicProperties(relicCreateEditDTO.getRelicPropertyIds(), relic, relicCreateEditDTO.getPropertyValues());
+
         RelicInfoCreateEditDTO relicInfoCreateEditDTO = relicCreateEditDTO.getRelicInfoCreateEditDTO();
         RelicInfo relicInfo = relicInfoFacade.update(relic.getRelicInfo().getId(), relicInfoCreateEditDTO);
 
@@ -75,48 +90,46 @@ public class RelicFacade {
         if (lostRelicInfoCreateEditDTO != null) {
             LostRelicInfo lostRelicInfo = relicInfo.getLostRelicInfo();
             if (lostRelicInfo == null) {
-                lostRelicInfo = lostRelicInfoFacade.toLostRelicInfo(lostRelicInfoCreateEditDTO);
-                lostRelicInfo.setRelicInfo(relicInfo);
+                lostRelicInfoFacade.create(lostRelicInfoCreateEditDTO, relicInfo);
             }
             else {
-                lostRelicInfo = lostRelicInfoFacade.update(lostRelicInfo.getId(), lostRelicInfoCreateEditDTO);
+                lostRelicInfoFacade.update(lostRelicInfo.getId(), lostRelicInfoCreateEditDTO);
             }
-            lostRelicInfoFacade.save(lostRelicInfo);
         }
 
         RecoveredRelicInfoCreateEditDTO recoveredRelicInfoCreateEditDTO = relicInfoCreateEditDTO.getRecoveredRelicInfoCreateEditDTO();
         if (recoveredRelicInfoCreateEditDTO != null) {
             RecoveredRelicInfo recoveredRelicInfo = relicInfo.getRecoveredRelicInfo();
             if (recoveredRelicInfo == null) {
-                recoveredRelicInfo = recoveredRelicInfoFacade.toRecoveredRelicInfo(recoveredRelicInfoCreateEditDTO);
-                recoveredRelicInfo.setRelicInfo(relicInfo);
+                recoveredRelicInfoFacade.create(recoveredRelicInfoCreateEditDTO, relicInfo);
             }
             else {
-                recoveredRelicInfo = recoveredRelicInfoFacade.update(recoveredRelicInfo.getId(), recoveredRelicInfoCreateEditDTO);
+                recoveredRelicInfoFacade.update(recoveredRelicInfo.getId(), recoveredRelicInfoCreateEditDTO);
             }
-            recoveredRelicInfoFacade.save(recoveredRelicInfo);
         }
-        relicInfoFacade.save(relicInfo);
-        relicService.save(relic);
     }
 
     @Transactional
     public void createRelic(RelicCreateEditDTO relicCreateEditDTO) {
-        Relic relic = relicService.save(relicFactory.toRelic(relicCreateEditDTO));
-        RelicInfo relicInfo = relicInfoFacade.save(relicCreateEditDTO.getRelicInfoCreateEditDTO(), relic);
+        Relic relic = relicFactory.toRelic(relicCreateEditDTO);
+        relic.setRegion(regionFacade.findById((relicCreateEditDTO.getRegionId())));
+        relic.setCreationPlace(regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())));
+        relic.setMuseum(museumFacade.findById((relicCreateEditDTO.getMuseumId())));
+        relic = relicService.save(relic);
+
+        relicCategoryFacade.updateRelicCategories(relicCreateEditDTO.getRelicCategoryIds(), relic);
+        relicPropertyFacade.updateRelicProperties(relicCreateEditDTO.getRelicPropertyIds(), relic, relicCreateEditDTO.getPropertyValues());
+
+        RelicInfo relicInfo = relicInfoFacade.create(relicCreateEditDTO.getRelicInfoCreateEditDTO(), relic);
 
         RecoveredRelicInfoCreateEditDTO recoveredRelicInfoCreateEditDTO = relicCreateEditDTO.getRelicInfoCreateEditDTO().getRecoveredRelicInfoCreateEditDTO();
         if (recoveredRelicInfoCreateEditDTO != null) {
-            RecoveredRelicInfo recoveredRelicInfo = recoveredRelicInfoFacade.toRecoveredRelicInfo(recoveredRelicInfoCreateEditDTO);
-            recoveredRelicInfo.setRelicInfo(relicInfo);
-            recoveredRelicInfoFacade.save(recoveredRelicInfo);
+            recoveredRelicInfoFacade.create(recoveredRelicInfoCreateEditDTO, relicInfo);
         }
 
         LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO = relicCreateEditDTO.getRelicInfoCreateEditDTO().getLostRelicInfoCreateEditDTO();
         if (lostRelicInfoCreateEditDTO != null) {
-            LostRelicInfo lostRelicInfo = lostRelicInfoFacade.toLostRelicInfo(lostRelicInfoCreateEditDTO);
-            lostRelicInfo.setRelicInfo(relicInfo);
-            lostRelicInfoFacade.save(lostRelicInfo);
+            lostRelicInfoFacade.create(lostRelicInfoCreateEditDTO, relicInfo);
         }
     }
 }
