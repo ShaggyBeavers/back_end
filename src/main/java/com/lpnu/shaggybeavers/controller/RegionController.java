@@ -1,13 +1,12 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.dto.RegionCreateDTO;
+import com.lpnu.shaggybeavers.dto.TechniqueCreateDTO;
 import com.lpnu.shaggybeavers.facade.RegionFacade;
 import com.lpnu.shaggybeavers.service.RegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/region")
@@ -15,5 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegionController {
 
     private final RegionFacade regionFacade;
+
+    @PostMapping("/create")
+    public void createRegion(@RequestBody RegionCreateDTO regionCreateDTO){
+        regionFacade.createRegion(regionCreateDTO);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.facade;
 
+import com.lpnu.shaggybeavers.dto.CategoryCreateDTO;
 import com.lpnu.shaggybeavers.dto.CategoryDTO;
 import com.lpnu.shaggybeavers.factory.CategoryFactory;
 import com.lpnu.shaggybeavers.model.Category;
@@ -28,4 +29,8 @@ public class CategoryFacade {
         return categoryFactory.toCategoryDTOList(categoryService.findAll());
     }
 
+    @Transactional
+    public void createCategory(CategoryCreateDTO categoryCreateDTO) {
+        categoryService.save(categoryFactory.toCategory(categoryCreateDTO));
+    }
 }

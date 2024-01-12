@@ -1,7 +1,9 @@
 package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.factory.MuseumFactory;
+import com.lpnu.shaggybeavers.model.Museum;
 import com.lpnu.shaggybeavers.service.MuseumService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,4 +15,7 @@ public class MuseumFacade {
 
     private final MuseumService museumService;
 
+    @Transactional
+    public Museum findById(Long museumId) { return museumService.findById(museumId);
+    }
 }
