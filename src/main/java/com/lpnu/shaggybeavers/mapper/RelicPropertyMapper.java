@@ -10,5 +10,4 @@ public interface RelicPropertyMapper {
     @Mapping(source = "property.property", target = "name")
     RelicPropertyDTO toRelicPropertyDTO(RelicProperty relicProperty);
 
-    RelicProperty toRelicProperty(RelicPropertyCreateDTO relicPropertyCreateDTO);
 }

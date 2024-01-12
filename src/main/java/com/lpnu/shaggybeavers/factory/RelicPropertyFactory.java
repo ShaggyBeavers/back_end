@@ -14,11 +14,4 @@ public class RelicPropertyFactory {
 
     private final EntityMapper entityMapper;
 
-    public RelicProperty toRelicProperty(Property property, Relic relic, String value) {
-        RelicPropertyCreateDTO relicPropertyCreateDTO = new RelicPropertyCreateDTO();
-        relicPropertyCreateDTO.setRelic(relic);
-        relicPropertyCreateDTO.setProperty(property);
-        relicPropertyCreateDTO.setValue(value);
-        return entityMapper.toRelicProperty(relicPropertyCreateDTO);
-    }
 }

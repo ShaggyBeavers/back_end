@@ -27,8 +27,7 @@ public class RelicCategoryFacade {
         }
 
         for (Long categoryId : relicCategoryIds){
-            RelicCategory relicCategory = relicCategoryFactory.toRelicCategory(categoryFacade.findById(categoryId), relic);
-            relicCategoryService.save(relicCategory);
+            relicCategoryService.create(relic.getId(), categoryId);
         }
     }
 }

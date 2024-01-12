@@ -14,10 +14,4 @@ public class RelicCategoryFactory {
 
     private final EntityMapper entityMapper;
 
-    public RelicCategory toRelicCategory(Category category, Relic relic) {
-        RelicCategoryCreateDTO relicCategoryCreateDTO = new RelicCategoryCreateDTO();
-        relicCategoryCreateDTO.setCategory(category);
-        relicCategoryCreateDTO.setRelic(relic);
-        return entityMapper.toRelicCategory(relicCategoryCreateDTO);
-    }
 }

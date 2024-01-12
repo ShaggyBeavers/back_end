@@ -27,9 +27,7 @@ public class RelicPropertyFacade {
         }
 
         for (int i = 0; i < relicPropertyIds.size(); i++){
-            RelicProperty relicProperty = relicPropertyFactory.toRelicProperty(
-                    propertyFacade.findById(relicPropertyIds.get(i)), relic, propertyValues.get(i));
-            relicPropertyService.save(relicProperty);
+            relicPropertyService.create(relic.getId(), relicPropertyIds.get(i), propertyValues.get(i) );
         }
     }
 }

@@ -14,6 +14,4 @@ public interface RelicCategoryMapper {
     @Mapping(source = "category.categoryName", target = "categoryName")
     CategoryDTO toCategoryDTO(RelicCategory relicCategory);
 
-    RelicCategory toRelicCategory(RelicCategoryCreateDTO relicCategoryCreateDTO);
-
 }
