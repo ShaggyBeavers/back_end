@@ -1,5 +1,7 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.domain.RelicStatus;
+import com.lpnu.shaggybeavers.dto.FavoriteRelicDTO;
 import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
 import com.lpnu.shaggybeavers.dto.RelicCreateEditDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
@@ -54,6 +56,7 @@ public class RelicController {
         return new ResponseEntity<>(relicFacade.getRelicsByFilter(filter), HttpStatus.OK);
     }
 
+
     @PutMapping("/edit/{relicId}")
     public void editRelic(
             @PathVariable(value = "relicId") Long relicId, @RequestBody RelicCreateEditDTO relicCreateEditDTO){
@@ -65,4 +68,23 @@ public class RelicController {
            @RequestBody RelicCreateEditDTO relicCreateEditDTO){
         relicFacade.createRelic(relicCreateEditDTO);
     }
+
+    @PostMapping("/change-favorite")
+    public ResponseEntity<Void> changeFavoriteRelic() {
+        relicFacade.changeFavoriteRelic();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/favorite")
+    public ResponseEntity<FavoriteRelicDTO> getFavoriteRelic() {
+        return new ResponseEntity<>(relicFacade.getFavoriteRelic(), HttpStatus.OK);
+    }
+
+    @GetMapping("/count-by-statuses")
+    public ResponseEntity<Long> countByStatuses(
+            @RequestParam List<RelicStatus> statuses) {
+        return new ResponseEntity<>(relicFacade.countByStatuses(statuses), HttpStatus.OK);
+    }
+
+
 }
