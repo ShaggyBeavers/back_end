@@ -5,6 +5,7 @@ import com.lpnu.shaggybeavers.repository.RelicPropertyRepository;
 import com.lpnu.shaggybeavers.service.PropertyService;
 import com.lpnu.shaggybeavers.service.RelicPropertyService;
 import com.lpnu.shaggybeavers.service.RelicService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class RelicPropertyServiceImpl extends CRUDServiceImpl<RelicProperty, Lon
     }
 
     @Override
+    @Transactional
     public void create(Long relicId, Long propertyId, String value) {
         RelicProperty relicProperty = new RelicProperty();
         relicProperty.setProperty(propertyService.findById(propertyId));

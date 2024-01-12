@@ -140,6 +140,7 @@ public class RelicFacade {
         }
     }
 
+    @Transactional
     public void changeFavoriteRelic() {
         Relic currentFavoriteRelic = relicService.getCurrentFavoriteRelic();
         Relic newFavoriteRelic = relicService.getNewFavoriteRelic();
