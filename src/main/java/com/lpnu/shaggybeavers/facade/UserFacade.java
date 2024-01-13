@@ -28,6 +28,10 @@ public class UserFacade {
 
     private final StorageFacade storageFacade;
 
+    private final ResetTokenFacade resetTokenFacade;
+
+    private final EmailFacade emailFacade;
+
     @Transactional
     public UserProfileDTO getProfile(Long userId) {
         return userFactory.toUserProfileDTO(userService.findById(userId));
@@ -53,28 +57,30 @@ public class UserFacade {
     @Transactional
     public void requestResetPassword(String email) {
         User user = userService.findByEmail(email);
-        ResetToken currentResetToken = userService.findResetTokenByUserId(user.getId());
+        ResetToken currentResetToken = resetTokenFacade.findByUserId(user.getId());
 
-        if (currentResetToken != null && !userService.isResetTokenExpired(currentResetToken)) {
-            userService.sendResetPasswordEmail(user, currentResetToken.getToken());
+        if (currentResetToken != null && !resetTokenFacade.isResetTokenExpired(currentResetToken)) {
+            emailFacade.sendResetPasswordEmail(user, currentResetToken.getToken());
             return;
-        } else if (currentResetToken != null && userService.isResetTokenExpired(currentResetToken)) {
-            userService.deleteResetToken(currentResetToken);
+        }
+        if (currentResetToken != null && resetTokenFacade.isResetTokenExpired(currentResetToken)) {
+            resetTokenFacade.deleteResetToken(currentResetToken);
         }
 
-        ResetToken resetToken = userService.generateResetToken(user);
-        userService.sendResetPasswordEmail(user, resetToken.getToken());
+        ResetToken resetToken = resetTokenFacade.generateResetToken(user);
+        emailFacade.sendResetPasswordEmail(user, resetToken.getToken());
     }
 
     @Transactional
     public void resetPassword(ResetPasswordDTO dto) {
-        userService.validateResetToken(dto.getToken());
+        resetTokenFacade.validateResetToken(dto.getToken());
 
         if (!Objects.equals(dto.getPassword(), dto.getPasswordConfirmation())) {
             throw new NotEqualObjectsException("Password and password confirmation aren't equal");
         }
 
-        userService.changePassword(dto.getToken(), dto.getPassword());
+        ResetToken resetToken = resetTokenFacade.findByToken(dto.getToken());
+        userService.changePassword(resetToken.getUser(), dto.getPassword());
     }
 
 }

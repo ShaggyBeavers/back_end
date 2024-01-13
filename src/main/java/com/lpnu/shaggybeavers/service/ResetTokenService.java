@@ -5,7 +5,7 @@ import com.lpnu.shaggybeavers.model.User;
 
 public interface ResetTokenService extends CRUDService<ResetToken, Long> {
 
-    ResetToken findResetTokenByUserId(Long userId);
+    ResetToken findByUserId(Long userId);
 
     boolean isResetTokenExpired(ResetToken resetToken);
 

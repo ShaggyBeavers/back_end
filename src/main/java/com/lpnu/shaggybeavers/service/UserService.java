@@ -1,6 +1,5 @@
 package com.lpnu.shaggybeavers.service;
 
-import com.lpnu.shaggybeavers.model.ResetToken;
 import com.lpnu.shaggybeavers.model.User;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -12,18 +11,6 @@ public interface UserService extends CRUDService<User,Long> {
 
     User findByEmail(String email);
 
-    ResetToken findResetTokenByUserId(Long userId);
-
-    boolean isResetTokenExpired(ResetToken resetToken);
-
-    void sendResetPasswordEmail(User user, String token);
-
-    void deleteResetToken(ResetToken resetToken);
-
-    ResetToken generateResetToken(User user);
-
-    void validateResetToken(String token);
-
-    void changePassword(String token, String password);
+    void changePassword(User user, String password);
 
 }

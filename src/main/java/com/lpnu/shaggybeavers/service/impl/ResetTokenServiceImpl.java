@@ -25,7 +25,7 @@ public class ResetTokenServiceImpl extends CRUDServiceImpl<ResetToken, Long> imp
     }
 
     @Override
-    public ResetToken findResetTokenByUserId(Long userId) {
+    public ResetToken findByUserId(Long userId) {
         return repository.findByUserId(userId);
     }
 

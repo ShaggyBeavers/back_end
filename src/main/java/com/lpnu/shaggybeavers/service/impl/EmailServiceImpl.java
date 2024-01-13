@@ -24,7 +24,6 @@ public class EmailServiceImpl implements EmailService {
     public void sendResetPasswordEmail(User user, String token) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
-        simpleMailMessage.setFrom("noreply@divi.com");
         simpleMailMessage.setTo(user.getEmail());
         simpleMailMessage.setSubject("Reset password");
 
