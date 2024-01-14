@@ -1,6 +1,7 @@
 package com.lpnu.shaggybeavers.factory;
 
 import com.lpnu.shaggybeavers.dto.UserDTO;
+import com.lpnu.shaggybeavers.dto.UserEditDTO;
 import com.lpnu.shaggybeavers.dto.UserProfileDTO;
 import com.lpnu.shaggybeavers.mapper.EntityMapper;
 import com.lpnu.shaggybeavers.model.User;
@@ -23,4 +24,5 @@ public class UserFactory {
         return entityMapper.toUserDTOList(users);
     }
 
+    public User update(User user, UserEditDTO userEditDTO) { return entityMapper.update(user, userEditDTO); }
 }
