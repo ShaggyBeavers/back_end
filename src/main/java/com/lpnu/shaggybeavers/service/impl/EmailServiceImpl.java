@@ -27,9 +27,9 @@ public class EmailServiceImpl implements EmailService {
         simpleMailMessage.setTo(user.getEmail());
         simpleMailMessage.setSubject("Reset password");
 
-        String url = "https://%s:%s/api/users/password/reset?token=%s"
-                .formatted(domain, serverPort, token);
-        simpleMailMessage.setText("Click the following link to reset your password: " + url);
+        simpleMailMessage.setText(
+                "Click the following link to reset your password: " +
+                "https://%s:%s/api/users/password/reset?token=%s".formatted(domain, serverPort, token));
 
         javaMailSender.send(simpleMailMessage);
     }

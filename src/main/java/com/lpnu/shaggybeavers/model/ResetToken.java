@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 public class ResetToken implements EntityWithId<Long> {
 
-    public static final int EXPIRATION_IN_HOURS = 1;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
