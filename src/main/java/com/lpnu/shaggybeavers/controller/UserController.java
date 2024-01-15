@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.dto.UserEditDTO;
 import com.lpnu.shaggybeavers.dto.EmailDTO;
 import com.lpnu.shaggybeavers.dto.ResetPasswordDTO;
 import com.lpnu.shaggybeavers.dto.UserProfileDTO;
@@ -23,6 +24,13 @@ public class UserController {
     public ResponseEntity<UserProfileDTO> getProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal) {
         return new ResponseEntity<>(userFacade.getProfile(userPrincipal.getId()), HttpStatus.OK);
+    }
+
+    @PutMapping("/edit/{userId}")
+    public ResponseEntity<Void> editUser(
+            @PathVariable Long userId, @RequestBody @Valid UserEditDTO userEditDTO) {
+        userFacade.editUser(userId, userEditDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/password/request-reset")

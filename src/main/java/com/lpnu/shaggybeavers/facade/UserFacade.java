@@ -2,6 +2,7 @@ package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.dto.ResetPasswordDTO;
 import com.lpnu.shaggybeavers.dto.UserDTO;
+import com.lpnu.shaggybeavers.dto.UserEditDTO;
 import com.lpnu.shaggybeavers.dto.UserProfileDTO;
 import com.lpnu.shaggybeavers.exception.NotEqualObjectsException;
 import com.lpnu.shaggybeavers.factory.UserFactory;
@@ -52,6 +53,11 @@ public class UserFacade {
     @Transactional
     public User getUserById(Long userId) {
         return userService.findById(userId);
+    }
+
+    @Transactional
+    public void editUser(Long userId, UserEditDTO userEditDTO) {
+        userService.save(userFactory.update(userService.findById(userId), userEditDTO));
     }
 
     @Transactional
