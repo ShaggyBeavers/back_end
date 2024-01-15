@@ -42,4 +42,7 @@ public class User implements EntityWithId<Long> {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<UserCategory> userCategories = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private ResetToken resetToken;
+
 }

@@ -9,4 +9,8 @@ public interface UserService extends CRUDService<User,Long> {
 
     List<User> findAll(Specification<User> specification);
 
+    User findByEmail(String email);
+
+    void changePassword(User user, String password);
+
 }
