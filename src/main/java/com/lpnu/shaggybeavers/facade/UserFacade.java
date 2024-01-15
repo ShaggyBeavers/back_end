@@ -1,6 +1,7 @@
 package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.dto.UserDTO;
+import com.lpnu.shaggybeavers.dto.UserEditDTO;
 import com.lpnu.shaggybeavers.dto.UserProfileDTO;
 import com.lpnu.shaggybeavers.factory.UserFactory;
 import com.lpnu.shaggybeavers.filter.UserFilter;
@@ -46,4 +47,8 @@ public class UserFacade {
         return userService.findById(userId);
     }
 
+    @Transactional
+    public void editUser(Long userId, UserEditDTO userEditDTO) {
+        userService.save(userFactory.update(userService.findById(userId), userEditDTO));
+    }
 }

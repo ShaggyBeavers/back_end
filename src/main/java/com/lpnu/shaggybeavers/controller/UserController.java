@@ -1,8 +1,10 @@
 package com.lpnu.shaggybeavers.controller;
 
+import com.lpnu.shaggybeavers.dto.UserEditDTO;
 import com.lpnu.shaggybeavers.dto.UserProfileDTO;
 import com.lpnu.shaggybeavers.facade.UserFacade;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,13 @@ public class UserController {
     public ResponseEntity<UserProfileDTO> getProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal) {
         return new ResponseEntity<>(userFacade.getProfile(userPrincipal.getId()), HttpStatus.OK);
+    }
+
+    @PutMapping("/edit/{userId}")
+    public ResponseEntity<Void> editUser(
+            @PathVariable Long userId, @RequestBody @Valid UserEditDTO userEditDTO) {
+        userFacade.editUser(userId, userEditDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
