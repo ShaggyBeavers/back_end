@@ -1,9 +1,6 @@
 package com.lpnu.shaggybeavers.facade;
 
-import com.lpnu.shaggybeavers.dto.ResetPasswordDTO;
-import com.lpnu.shaggybeavers.dto.UserDTO;
-import com.lpnu.shaggybeavers.dto.UserEditDTO;
-import com.lpnu.shaggybeavers.dto.UserProfileDTO;
+import com.lpnu.shaggybeavers.dto.*;
 import com.lpnu.shaggybeavers.exception.NotEqualObjectsException;
 import com.lpnu.shaggybeavers.factory.UserFactory;
 import com.lpnu.shaggybeavers.filter.UserFilter;
@@ -89,4 +86,11 @@ public class UserFacade {
         userService.changePassword(resetToken.getUser(), dto.getPassword());
     }
 
+    @Transactional
+    public void changePassword(Long userId, ChangePasswordDTO dto) {
+        if (!Objects.equals(dto.getPassword(), dto.getPasswordConfirmation())) {
+            throw new NotEqualObjectsException("Password and password confirmation aren't equal");
+        }
+        userService.changePassword(userService.findById(userId), dto.getPassword());
+    }
 }

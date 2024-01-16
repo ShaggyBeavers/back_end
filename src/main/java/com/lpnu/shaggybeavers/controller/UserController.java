@@ -1,9 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
-import com.lpnu.shaggybeavers.dto.UserEditDTO;
-import com.lpnu.shaggybeavers.dto.EmailDTO;
-import com.lpnu.shaggybeavers.dto.ResetPasswordDTO;
-import com.lpnu.shaggybeavers.dto.UserProfileDTO;
+import com.lpnu.shaggybeavers.dto.*;
 import com.lpnu.shaggybeavers.facade.UserFacade;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
 import jakarta.validation.Valid;
@@ -40,8 +37,15 @@ public class UserController {
     }
 
     @PostMapping("/password/reset")
-    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
+    public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordDTO resetPasswordDTO) {
         userFacade.resetPassword(resetPasswordDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/password/change/{userId}")
+    public ResponseEntity<Void> changePassword(
+            @PathVariable Long userId, @RequestBody @Valid ChangePasswordDTO changePasswordDTO) {
+        userFacade.changePassword(userId, changePasswordDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
