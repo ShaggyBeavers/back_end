@@ -1,12 +1,9 @@
 package com.lpnu.shaggybeavers.facade;
 
 
-import com.lpnu.shaggybeavers.dto.*;
-
 import com.lpnu.shaggybeavers.domain.RelicStatus;
-import com.lpnu.shaggybeavers.dto.FavoriteRelicDTO;
-import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
-import com.lpnu.shaggybeavers.dto.RelicDTO;
+import com.lpnu.shaggybeavers.dto.*;
+import com.lpnu.shaggybeavers.exception.FileException;
 import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.factory.RelicFactory;
 import com.lpnu.shaggybeavers.filter.RelicFilter;
@@ -16,14 +13,17 @@ import com.lpnu.shaggybeavers.model.Relic;
 import com.lpnu.shaggybeavers.model.RelicInfo;
 import com.lpnu.shaggybeavers.service.RelicService;
 import com.lpnu.shaggybeavers.specification.RelicSpecification;
+import com.lpnu.shaggybeavers.util.FileUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -33,8 +33,6 @@ public class RelicFacade {
     private final RelicFactory relicFactory;
 
     private final RelicService relicService;
-
-    private final StorageFacade storageFacade;
 
     private final RelicInfoFacade relicInfoFacade;
 
@@ -49,18 +47,6 @@ public class RelicFacade {
     private final RelicPropertyFacade relicPropertyFacade;
 
     private final RelicCategoryFacade relicCategoryFacade;
-
-    public String uploadFile(MultipartFile multipartFile, Long relicId) {
-        String url = storageFacade.uploadFile(multipartFile);
-        Relic relic = relicService.findById(relicId);
-        relic.setImageUrl(url);
-        relicService.update(relic);
-        return url;
-    }
-
-    public String downloadFile(Long relicId) {
-        return relicService.findById(relicId).getImageUrl();
-    }
 
     public RelicDTO getRelicById(Long relicId) {
         return relicFactory.toRelicDTO(relicService.findById(relicId));
@@ -163,6 +149,34 @@ public class RelicFacade {
     @Transactional
     public Long countByStatuses(List<RelicStatus> statuses) {
         return relicService.countByStatuses(statuses);
+    }
+
+    @Transactional
+    public void uploadFile(Long relicId, MultipartFile multipartFile) {
+        try {
+            relicService.uploadFile(relicService.findById(relicId), FileUtil.toFile(multipartFile));
+        } catch (IOException ioe) {
+            throw new FileException("Failed uploading file: " + ioe.getMessage());
+        }
+    }
+
+    @Transactional
+    public Resource downloadFile(Long relicId) {
+        return relicService.downloadFile(relicService.findById(relicId));
+    }
+
+    @Transactional
+    public void deleteFile(Long relicId) {
+        relicService.deleteFile(relicService.findById(relicId));
+    }
+
+    @Transactional
+    public void updateFile(Long relicId, MultipartFile multipartFile) {
+        try {
+            relicService.updateFile(relicService.findById(relicId), FileUtil.toFile(multipartFile));
+        } catch (IOException ioe) {
+            throw new FileException("Failed updating file: " + ioe.getMessage());
+        }
     }
 
 }
