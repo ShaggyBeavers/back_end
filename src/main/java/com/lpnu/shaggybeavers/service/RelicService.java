@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface RelicService extends CRUDService<Relic,Long> {
+public interface RelicService extends FileStoreService<Relic, String, Long> {
 
     Page<Relic> findAll(Pageable pageable);
 

@@ -8,6 +8,7 @@ import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.facade.RelicFacade;
 import com.lpnu.shaggybeavers.filter.RelicFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,18 +25,6 @@ import java.util.List;
 public class RelicController {
 
     private final RelicFacade relicFacade;
-
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(
-            @RequestParam(value = "file") MultipartFile multipartFile, @RequestParam(value = "relicId") Long relicId) {
-        return new ResponseEntity<>(relicFacade.uploadFile(multipartFile, relicId), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/download/{relicId}")
-    public ResponseEntity<String> downloadFile(
-            @PathVariable(value = "relicId") Long relicId) {
-        return new ResponseEntity<>(relicFacade.downloadFile(relicId), HttpStatus.OK);
-    }
 
     @GetMapping("/{relicId}")
     public ResponseEntity<RelicDTO> getRelicById(
@@ -86,5 +75,29 @@ public class RelicController {
         return new ResponseEntity<>(relicFacade.countByStatuses(statuses), HttpStatus.OK);
     }
 
+    @PostMapping("/file/upload/{relicId}")
+    public ResponseEntity<Void> uploadFile(
+            @PathVariable Long relicId, @RequestParam(value = "file") MultipartFile multipartFile) {
+        relicFacade.uploadFile(relicId, multipartFile);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/file/download/{relicId}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long relicId) {
+        return new ResponseEntity<>(relicFacade.downloadFile(relicId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/file/delete/{relicId}")
+    public ResponseEntity<Void> deleteFile(@PathVariable Long relicId) {
+        relicFacade.deleteFile(relicId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/file/update/{relicId}")
+    public ResponseEntity<Void> updateFile(
+            @PathVariable Long relicId, @RequestParam(value = "file") MultipartFile multipartFile) {
+        relicFacade.updateFile(relicId, multipartFile);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
