@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserRegionServiceImpl extends CRUDServiceImpl<UserRegion,Long> implements UserRegionService {
@@ -17,4 +19,10 @@ public class UserRegionServiceImpl extends CRUDServiceImpl<UserRegion,Long> impl
     protected JpaRepository<UserRegion, Long> getRepository () {
         return this.repository;
     }
+
+    @Override
+    public Optional<UserRegion> findByUserIdAndRegionId(Long userId, Long regionId) {
+        return repository.findByUserIdAndRegionId(userId, regionId);
+    }
+
 }

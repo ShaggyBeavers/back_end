@@ -93,4 +93,10 @@ public class UserFacade {
         }
         userService.changePassword(userService.findById(userId), dto.getPassword());
     }
+
+    @Transactional
+    public void save(User user) {
+        userService.save(user);
+    }
+
 }
