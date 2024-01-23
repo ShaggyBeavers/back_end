@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -51,16 +50,13 @@ public class AdminFacade {
 
         dto.getRegionIds()
                 .forEach(regionId -> {
-                    Optional<UserRegion> oldUserRegion = userRegionFacade.findByUserIdAndRegionId(dto.getUserId(), regionId);
+                    userRegionFacade.findByUserIdAndRegionId(dto.getUserId(), regionId)
+                            .ifPresent(value -> { throw new DuplicateException("UserRegion object already exists"); });
 
-                    if (oldUserRegion.isEmpty()) {
-                        UserRegion newUserRegion = new UserRegion();
-                        newUserRegion.setUser(user);
-                        newUserRegion.setRegion(regionFacade.findById(regionId));
-                        userRegionFacade.save(newUserRegion);
-                    } else {
-                        throw new DuplicateException("UserRegion object already exists");
-                    }
+                    UserRegion newUserRegion = new UserRegion();
+                    newUserRegion.setUser(user);
+                    newUserRegion.setRegion(regionFacade.findById(regionId));
+                    userRegionFacade.save(newUserRegion);
                 });
     }
 
