@@ -43,7 +43,7 @@ public class ReportFacade {
         Report report = reportService.save(reportFactory.toReport(reportCreateDTO));
         report.setUser(userPrincipal.getUser());
 
-        reportCreateDTO.categoryIds
+        reportCreateDTO.getCategoryIds()
                 .forEach(categoryId -> {
                     Category category = categoryFacade.findById(categoryId);
                     ReportCategory reportCategory = new ReportCategory();

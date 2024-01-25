@@ -24,4 +24,9 @@ public class RoleFacade {
     public void save(String name) {
         roleService.save(roleFactory.toRole(name));
     }
+
+    @Transactional
+    public Role findByName(String name) {
+        return roleService.findByName(name);
+    }
 }

@@ -10,16 +10,16 @@ import java.util.Set;
 @Setter
 public class ReportCreateDTO {
 
-    public String name;
+    private String name;
 
-    public String description;
+    private String description;
 
-    public String mapLocation;
+    private String mapLocation;
 
-    public Set<Long> categoryIds;
+    private Set<Long> categoryIds;
 
-    public ReportStatus status;
+    private ReportStatus status;
 
-    public String infoReferences;
+    private String infoReferences;
 
 }

@@ -18,6 +18,11 @@ import java.util.List;
 @RestControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(value = DuplicateException.class)
+    public ResponseEntity<Object> handleDuplicateException(DuplicateException e) {
+        return buildException((List.of(e.getMessage())), HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(value = TokenException.class)
     public ResponseEntity<Object> handleTokenException(TokenException e) {
         return buildException((List.of(e.getMessage())), HttpStatus.CONFLICT);

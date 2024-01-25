@@ -6,6 +6,9 @@ import com.lpnu.shaggybeavers.service.UserRegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,4 +20,11 @@ public class UserRegionServiceImpl extends CRUDServiceImpl<UserRegion,Long> impl
     protected JpaRepository<UserRegion, Long> getRepository () {
         return this.repository;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<UserRegion> findByUserIdAndRegionId(Long userId, Long regionId) {
+        return repository.findByUserIdAndRegionId(userId, regionId);
+    }
+
 }
