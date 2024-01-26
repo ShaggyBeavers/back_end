@@ -1,13 +1,11 @@
 package com.lpnu.shaggybeavers.facade;
 
-import com.lpnu.shaggybeavers.dto.ModeratorDTO;
+import com.lpnu.shaggybeavers.dto.ModeratorAdminCreateDTO;
 import com.lpnu.shaggybeavers.dto.RegionalModeratorDTO;
 import com.lpnu.shaggybeavers.dto.UserDTO;
-import com.lpnu.shaggybeavers.exception.DuplicateException;
 import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.filter.UserFilter;
 import com.lpnu.shaggybeavers.model.User;
-import com.lpnu.shaggybeavers.model.UserRegion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +21,9 @@ public class AdminFacade {
 
     private final RoleFacade roleFacade;
 
-    private final RegionFacade regionFacade;
-
     private final UserRegionFacade userRegionFacade;
+
+    private final UserCategoryFacade userCategoryFacade;
 
     @Transactional
     public List<UserDTO> getModerators() {
@@ -48,23 +46,17 @@ public class AdminFacade {
         user.setRole(roleFacade.findByName("REGIONAL_MODERATOR"));
         userFacade.save(user);
 
-        dto.getRegionIds()
-                .forEach(regionId -> {
-                    userRegionFacade.findByUserIdAndRegionId(dto.getUserId(), regionId)
-                            .ifPresent(value -> { throw new DuplicateException("UserRegion object already exists"); });
-
-                    UserRegion newUserRegion = new UserRegion();
-                    newUserRegion.setUser(user);
-                    newUserRegion.setRegion(regionFacade.findById(regionId));
-                    userRegionFacade.save(newUserRegion);
-                });
+        userRegionFacade.create(user, dto.getRegionIds());
     }
 
     @Transactional
-    public void createModerator(ModeratorDTO dto) {
+    public void createModerator(ModeratorAdminCreateDTO dto) {
         User user = userFacade.getUserById(dto.getUserId());
         user.setRole(roleFacade.findByName("MODERATOR"));
         userFacade.save(user);
+
+        userRegionFacade.create(user, dto.getRegionIds());
+        userCategoryFacade.create(user, dto.getCategoryIds());
     }
 
 }

@@ -1,6 +1,6 @@
 package com.lpnu.shaggybeavers.controller;
 
-import com.lpnu.shaggybeavers.dto.ModeratorDTO;
+import com.lpnu.shaggybeavers.dto.ModeratorAdminCreateDTO;
 import com.lpnu.shaggybeavers.dto.RegionalModeratorDTO;
 import com.lpnu.shaggybeavers.dto.UserDTO;
 import com.lpnu.shaggybeavers.facade.AdminFacade;
@@ -36,7 +36,7 @@ public class AdminController {
     }
 
     @PostMapping("/moderators")
-    public ResponseEntity<Void> createModerator(@RequestBody ModeratorDTO dto) {
+    public ResponseEntity<Void> createModerator(@RequestBody ModeratorAdminCreateDTO dto) {
         adminFacade.createModerator(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

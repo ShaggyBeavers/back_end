@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,12 @@ public class UserRegionServiceImpl extends CRUDServiceImpl<UserRegion,Long> impl
     @Transactional(readOnly = true)
     public Optional<UserRegion> findByUserIdAndRegionId(Long userId, Long regionId) {
         return repository.findByUserIdAndRegionId(userId, regionId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UserRegion> findAllByUserId(Long userId) {
+        return repository.findAllByUserId(userId);
     }
 
 }
