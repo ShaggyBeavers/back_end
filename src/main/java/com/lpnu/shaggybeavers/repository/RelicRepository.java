@@ -18,6 +18,8 @@ public interface RelicRepository extends JpaRepository<Relic, Long>, JpaSpecific
     @Override
     Page<Relic> findAll(Pageable pageable);
 
+    Page<Relic> findByNameIgnoreCaseContaining(String name, Pageable pageable);
+
     @Query(value = "SELECT r FROM Relic r WHERE r.favorite = true")
     Relic getCurrentFavoriteRelic();
 

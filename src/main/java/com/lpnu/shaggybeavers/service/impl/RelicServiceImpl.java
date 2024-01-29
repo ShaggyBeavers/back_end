@@ -60,4 +60,9 @@ public class RelicServiceImpl extends FileStoreServiceImpl<Relic, String, Long> 
         return repository.getNewFavoriteRelic();
     }
 
+    @Override
+    public Page<Relic> findAllByNameContaining(String relicName, Pageable pageable) {
+        return repository.findByNameIgnoreCaseContaining(relicName, pageable);
+    }
+
 }

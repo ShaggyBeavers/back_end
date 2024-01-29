@@ -20,4 +20,5 @@ public interface RelicService extends FileStoreService<Relic, String, Long> {
 
     Relic getNewFavoriteRelic();
 
+    Page<Relic> findAllByNameContaining(String relicName, Pageable pageable);
 }
