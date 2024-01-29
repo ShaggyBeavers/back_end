@@ -37,6 +37,7 @@ public abstract class CRUDServiceImpl <ENTITY extends EntityWithId<ID>, ID> impl
     }
 
     @Override
+    @Transactional
     public ENTITY deleteById (@NotNull ID id) {
         ENTITY entity = findById(id);
         getRepository().deleteById(id);

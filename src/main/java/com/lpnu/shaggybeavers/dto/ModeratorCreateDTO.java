@@ -11,5 +11,8 @@ public class ModeratorCreateDTO {
 
     private Long userId;
 
+    private Set<Long> regionIds;
+
     private Set<Long> categoryIds;
+
 }

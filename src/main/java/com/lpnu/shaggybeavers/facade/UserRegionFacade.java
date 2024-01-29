@@ -38,7 +38,7 @@ public class UserRegionFacade {
     public Set<Long> getRegionIdsByUserId(Long regionalModeratorId) {
         Set<Long> regionIds = new HashSet<>();
         userRegionService.findAllByUserId(regionalModeratorId).forEach(userRegion -> {
-            regionIds.add(userRegion.getId());
+            regionIds.add(userRegion.getRegion().getId());
         });
         return regionIds;
     }

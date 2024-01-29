@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.init;
 
+import com.lpnu.shaggybeavers.domain.RoleEnum;
 import com.lpnu.shaggybeavers.facade.RoleFacade;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -15,14 +16,18 @@ public class initDataBaseRole {
     @Transactional
     @PostConstruct
     public void init() {
-        if (!roleFacade.existsByName("USER")) {
-            roleFacade.save("USER");
+        if (!roleFacade.existsByName(RoleEnum.ADMIN.name())) {
+            roleFacade.save(RoleEnum.ADMIN.name());
         }
-
-        if (!roleFacade.existsByName("ADMIN")) {
-            roleFacade.save("ADMIN");
+        if (!roleFacade.existsByName(RoleEnum.REGIONAL_MODERATOR.name())) {
+            roleFacade.save(RoleEnum.REGIONAL_MODERATOR.name());
+        }
+        if (!roleFacade.existsByName(RoleEnum.MODERATOR.name())) {
+            roleFacade.save(RoleEnum.MODERATOR.name());
+        }
+        if (!roleFacade.existsByName(RoleEnum.USER.name())) {
+            roleFacade.save(RoleEnum.USER.name());
         }
     }
-
 
 }
