@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -33,4 +34,13 @@ public class UserCategoryFacade {
                     userCategoryService.save(newUserCategory);
                 });
     }
+
+    @Transactional
+    public Set<Long> getCategoryIdsByUserId(Long userId) {
+        return userCategoryService.findAllByUserId(userId)
+                .stream()
+                .map(userCategory -> userCategory.getCategory().getId())
+                .collect(Collectors.toSet());
+    }
+
 }

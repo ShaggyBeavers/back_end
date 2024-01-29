@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,12 @@ public class UserCategoryServiceImpl extends CRUDServiceImpl<UserCategory,Long> 
     @Transactional(readOnly = true)
     public Optional<UserCategory> findByUserIdAndCategoryId(Long userId, Long categoryId) {
         return repository.findByUserIdAndCategoryId(userId, categoryId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UserCategory> findAllByUserId(Long userId) {
+        return repository.findAllByUserId(userId);
     }
 
 }

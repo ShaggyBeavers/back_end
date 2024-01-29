@@ -34,7 +34,7 @@ public class RelicSpecification implements Specification<Relic> {
             predicates.add(root.get("collection").in(filter.getCollections()));
         }
         if (filter.getCategories() != null) {
-            predicates.add(root.get("relicCategories").get("category").get("categoryName").in(filter.getCategories()));
+            predicates.add(root.join("relicCategories").get("category").get("categoryName").in(filter.getCategories()));
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));

@@ -1,12 +1,14 @@
 package com.lpnu.shaggybeavers.facade;
 
-import com.lpnu.shaggybeavers.dto.ModeratorAdminCreateDTO;
-import com.lpnu.shaggybeavers.dto.RegionalModeratorDTO;
+import com.lpnu.shaggybeavers.domain.RoleEnum;
+import com.lpnu.shaggybeavers.dto.ModeratorCreateDTO;
 import com.lpnu.shaggybeavers.dto.UserDTO;
 import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.filter.UserFilter;
 import com.lpnu.shaggybeavers.model.User;
+import com.lpnu.shaggybeavers.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +28,41 @@ public class AdminFacade {
     private final UserCategoryFacade userCategoryFacade;
 
     @Transactional
-    public List<UserDTO> getModerators() {
+    public void createModerator(ModeratorCreateDTO dto, RoleEnum roleEnum) {
+        User user = userFacade.getUserById(dto.getUserId());
+        user.setRole(roleFacade.findByName(roleEnum.name()));
+        userFacade.save(user);
+
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String currentUserRole = userPrincipal.getUser().getRole().getName();
+        Long currentUserId = userPrincipal.getUser().getId();
+
+        switch (RoleEnum.valueOf(currentUserRole)) {
+            case ADMIN -> {
+                userRegionFacade.create(user, dto.getRegionIds());
+                userCategoryFacade.create(user, dto.getCategoryIds());
+            }
+            case REGIONAL_MODERATOR -> {
+                userRegionFacade.create(user, userRegionFacade.getRegionIdsByUserId(currentUserId));
+                userCategoryFacade.create(user, userCategoryFacade.getCategoryIdsByUserId(currentUserId));
+            }
+        }
+    }
+
+    @Transactional
+    public List<UserDTO> getModerators(RoleEnum roleEnum) {
         UserFilter userFilter = new UserFilter();
-        userFilter.setRoleName("MODERATOR");
+
+        userFilter.setRoleName(roleEnum.name());
+
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String currentUserRole = userPrincipal.getUser().getRole().getName();
+        Long currentUserId = userPrincipal.getUser().getId();
+
+        if (currentUserRole.equals(RoleEnum.REGIONAL_MODERATOR.name())) {
+            userFilter.setRegionIds(userRegionFacade.getRegionIdsByUserId(currentUserId));
+        }
+
         return userFacade.getUsersByFilter(userFilter);
     }
 
@@ -38,25 +72,6 @@ public class AdminFacade {
             throw new NotExistsObjectException("Moderator with id " + moderatorId + " does not exist");
         }
         userFacade.deleteUserById(moderatorId);
-    }
-
-    @Transactional
-    public void createRegionalModerator(RegionalModeratorDTO dto) {
-        User user = userFacade.getUserById(dto.getUserId());
-        user.setRole(roleFacade.findByName("REGIONAL_MODERATOR"));
-        userFacade.save(user);
-
-        userRegionFacade.create(user, dto.getRegionIds());
-    }
-
-    @Transactional
-    public void createModerator(ModeratorAdminCreateDTO dto) {
-        User user = userFacade.getUserById(dto.getUserId());
-        user.setRole(roleFacade.findByName("MODERATOR"));
-        userFacade.save(user);
-
-        userRegionFacade.create(user, dto.getRegionIds());
-        userCategoryFacade.create(user, dto.getCategoryIds());
     }
 
 }

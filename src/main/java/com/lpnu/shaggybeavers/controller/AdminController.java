@@ -1,7 +1,7 @@
 package com.lpnu.shaggybeavers.controller;
 
-import com.lpnu.shaggybeavers.dto.ModeratorAdminCreateDTO;
-import com.lpnu.shaggybeavers.dto.RegionalModeratorDTO;
+import com.lpnu.shaggybeavers.domain.RoleEnum;
+import com.lpnu.shaggybeavers.dto.ModeratorCreateDTO;
 import com.lpnu.shaggybeavers.dto.UserDTO;
 import com.lpnu.shaggybeavers.facade.AdminFacade;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +18,6 @@ public class AdminController {
 
     private final AdminFacade adminFacade;
 
-    @GetMapping("/moderators")
-    public ResponseEntity<List<UserDTO>> getModerators() {
-        return new ResponseEntity<>(adminFacade.getModerators(), HttpStatus.OK);
-    }
-
     @DeleteMapping("/moderators/{moderatorId}")
     public ResponseEntity<Void> deleteModeratorById(@PathVariable Long moderatorId) {
         adminFacade.deleteModeratorById(moderatorId);
@@ -30,15 +25,25 @@ public class AdminController {
     }
 
     @PostMapping("/regional-moderators")
-    public ResponseEntity<Void> createRegionalModerator(@RequestBody RegionalModeratorDTO dto) {
-        adminFacade.createRegionalModerator(dto);
+    public ResponseEntity<Void> createRegionalModerator(@RequestBody ModeratorCreateDTO dto) {
+        adminFacade.createModerator(dto, RoleEnum.REGIONAL_MODERATOR);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/moderators")
-    public ResponseEntity<Void> createModerator(@RequestBody ModeratorAdminCreateDTO dto) {
-        adminFacade.createModerator(dto);
+    public ResponseEntity<Void> createModerator(@RequestBody ModeratorCreateDTO dto) {
+        adminFacade.createModerator(dto, RoleEnum.MODERATOR);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/regional-moderators")
+    public ResponseEntity<List<UserDTO>> getRegionalModerators() {
+        return new ResponseEntity<>(adminFacade.getModerators(RoleEnum.REGIONAL_MODERATOR), HttpStatus.OK);
+    }
+
+    @GetMapping("/moderators")
+    public ResponseEntity<List<UserDTO>> getModerators() {
+        return new ResponseEntity<>(adminFacade.getModerators(RoleEnum.MODERATOR), HttpStatus.OK);
     }
 
 }
