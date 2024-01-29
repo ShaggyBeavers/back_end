@@ -179,4 +179,8 @@ public class RelicFacade {
         }
     }
 
+    public Page<RelicCatalogDTO> getRelicsByName(String relicName, Pageable pageable) {
+        Page<Relic> relicPage = relicService.findAllByNameContaining(relicName, pageable);
+        return relicPage.map(relicFactory::toRelicCatalogDTO);
+    }
 }
