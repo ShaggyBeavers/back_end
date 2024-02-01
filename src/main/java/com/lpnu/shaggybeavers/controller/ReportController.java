@@ -1,6 +1,8 @@
 package com.lpnu.shaggybeavers.controller;
 
-import com.lpnu.shaggybeavers.dto.CurrentUserReportDTO;
+import com.lpnu.shaggybeavers.domain.ReportStatus;
+import com.lpnu.shaggybeavers.dto.ReportDTO;
+import com.lpnu.shaggybeavers.dto.ReportPageDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,12 +22,12 @@ public class ReportController {
 
     private final ReportFacade reportFacade;
 
-    @GetMapping("/user-profile/{userId}")
-    public ResponseEntity<Page<CurrentUserReportDTO>> getUserReports(
-            @PathVariable(value = "userId") Long userId,
+    @GetMapping("/")
+    public ResponseEntity<Page<ReportPageDTO>> getReportsPage(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return new ResponseEntity<>(reportFacade.getUserReports(userId, pageable), HttpStatus.OK);
+        return new ResponseEntity<>(reportFacade.getReportsPage(userPrincipal, pageable), HttpStatus.OK);
     }
 
     @PostMapping("/")
@@ -33,6 +35,17 @@ public class ReportController {
             @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody ReportCreateDTO reportCreateDTO) {
         Long id = reportFacade.createReport(userPrincipal, reportCreateDTO);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{reportId}")
+    public ResponseEntity<ReportDTO> getReport(@PathVariable Long reportId) {
+        return new ResponseEntity<>(reportFacade.getReport(reportId), HttpStatus.OK);
+    }
+
+    @PutMapping("/status")
+    public ResponseEntity<Void> changeStatus(@RequestParam Long reportId, @RequestParam String status) {
+        reportFacade.changeStatus(reportId, ReportStatus.valueOf(status));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

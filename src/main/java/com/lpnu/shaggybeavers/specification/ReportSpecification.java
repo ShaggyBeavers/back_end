@@ -24,6 +24,12 @@ public class ReportSpecification implements Specification<Report> {
         if (filter.getUserId() != null) {
             predicates.add(root.get("user").get("id").in(filter.getUserId()));
         }
+        if (filter.getRegionIds() != null) {
+            predicates.add(root.get("region").get("id").in(filter.getRegionIds()));
+        }
+        if (filter.getCategoryIds() != null) {
+            predicates.add(root.join("reportCategories").get("category").get("id").in(filter.getCategoryIds()));
+        }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }

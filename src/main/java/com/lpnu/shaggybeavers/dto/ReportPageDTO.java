@@ -8,12 +8,14 @@ import java.util.List;
 
 @Setter
 @Getter
-public class CurrentUserReportDTO {
+public class ReportPageDTO {
 
     private String name;
 
     private ReportStatus status;
 
-    private List<ReportCategoryDTO> categoriesDTO;
+    private List<CategoryDTO> categoriesDTO;
+
+    private String userEmail;
 
 }
