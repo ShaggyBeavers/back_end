@@ -42,4 +42,10 @@ public class UserRegionFacade {
         });
         return regionIds;
     }
+
+    @Transactional
+    public void deleteAllByUserId(Long userId) {
+        userRegionService.deleteAllByUserId(userId);
+    }
+
 }

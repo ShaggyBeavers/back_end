@@ -11,4 +11,6 @@ public interface UserRegionService extends CRUDService<UserRegion,Long> {
 
     List<UserRegion> findAllByUserId(Long userId);
 
+    void deleteAllByUserId(Long userId);
+
 }
