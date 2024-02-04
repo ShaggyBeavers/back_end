@@ -24,7 +24,7 @@ public class UserSpecification implements Specification<User> {
         if (filter.getRoleName() != null) {
             predicates.add(criteriaBuilder.like(root.get("role").get("name"), filter.getRoleName()));
         }
-        if (filter.getRegionIds() != null) {
+        if (filter.getRegionIds() != null && !filter.getRegionIds().isEmpty()) {
             predicates.add(root.join("userRegions").get("region").get("id").in(filter.getRegionIds()));
         }
 
