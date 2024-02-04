@@ -11,4 +11,6 @@ public interface UserCategoryService extends CRUDService<UserCategory,Long> {
 
     List<UserCategory> findAllByUserId(Long userId);
 
+    void deleteAllByUserId(Long userId);
+
 }

@@ -34,4 +34,10 @@ public class UserCategoryServiceImpl extends CRUDServiceImpl<UserCategory,Long> 
         return repository.findAllByUserId(userId);
     }
 
+    @Override
+    @Transactional
+    public void deleteAllByUserId(Long userId) {
+        repository.deleteAllByUserId(userId);
+    }
+
 }

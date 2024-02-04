@@ -43,4 +43,9 @@ public class UserCategoryFacade {
                 .collect(Collectors.toSet());
     }
 
+    @Transactional
+    public void deleteAllByUserId(Long userId) {
+        userCategoryService.deleteAllByUserId(userId);
+    }
+
 }

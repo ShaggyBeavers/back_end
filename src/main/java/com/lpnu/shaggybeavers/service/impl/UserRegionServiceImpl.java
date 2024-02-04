@@ -34,4 +34,10 @@ public class UserRegionServiceImpl extends CRUDServiceImpl<UserRegion,Long> impl
         return repository.findAllByUserId(userId);
     }
 
+    @Override
+    @Transactional
+    public void deleteAllByUserId(Long userId) {
+        repository.deleteAllByUserId(userId);
+    }
+
 }

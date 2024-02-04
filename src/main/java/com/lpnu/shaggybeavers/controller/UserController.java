@@ -25,8 +25,8 @@ public class UserController {
 
     @PutMapping("/edit/{userId}")
     public ResponseEntity<Void> editUser(
-            @PathVariable Long userId, @RequestBody @Valid UserEditDTO userEditDTO) {
-        userFacade.editUser(userId, userEditDTO);
+            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid UserEditDTO userEditDTO) {
+        userFacade.editUser(userPrincipal.getId(), userEditDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -42,10 +42,10 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/password/change/{userId}")
+    @PatchMapping("/password/change")
     public ResponseEntity<Void> changePassword(
-            @PathVariable Long userId, @RequestBody @Valid ChangePasswordDTO changePasswordDTO) {
-        userFacade.changePassword(userId, changePasswordDTO);
+            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid ChangePasswordDTO dto) {
+        userFacade.changePassword(userPrincipal.getId(), dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

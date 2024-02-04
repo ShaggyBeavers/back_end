@@ -13,4 +13,7 @@ public interface UserRegionRepository extends JpaRepository<UserRegion,Long> {
     Optional<UserRegion> findByUserIdAndRegionId(Long userId, Long regionId);
 
     List<UserRegion> findAllByUserId(Long userId);
+
+    void deleteAllByUserId(Long userId);
+
 }

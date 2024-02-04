@@ -1,19 +1,18 @@
 package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.domain.RoleEnum;
+import com.lpnu.shaggybeavers.dto.ChangeModeratorCategoriesDTO;
+import com.lpnu.shaggybeavers.dto.ChangeModeratorRegionsDTO;
 import com.lpnu.shaggybeavers.dto.ModeratorCreateDTO;
 import com.lpnu.shaggybeavers.dto.UserDTO;
-import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.filter.UserFilter;
 import com.lpnu.shaggybeavers.model.User;
-import com.lpnu.shaggybeavers.security.UserPrincipal;
+import com.lpnu.shaggybeavers.util.UserUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -28,49 +27,50 @@ public class AdminFacade {
     private final UserCategoryFacade userCategoryFacade;
 
     @Transactional
-    public void createModerator(ModeratorCreateDTO dto, RoleEnum roleEnum) {
+    public void createModerator(User currentUser, ModeratorCreateDTO dto, RoleEnum roleEnum) {
         User user = userFacade.getUserById(dto.getUserId());
         user.setRole(roleFacade.findByName(roleEnum.name()));
         userFacade.save(user);
 
-        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String currentUserRole = userPrincipal.getUser().getRole().getName();
-        Long currentUserId = userPrincipal.getUser().getId();
-
-        switch (RoleEnum.valueOf(currentUserRole)) {
+        switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
             case ADMIN -> {
                 userRegionFacade.create(user, dto.getRegionIds());
                 userCategoryFacade.create(user, dto.getCategoryIds());
             }
             case REGIONAL_MODERATOR -> {
-                userRegionFacade.create(user, userRegionFacade.getRegionIdsByUserId(currentUserId));
-                userCategoryFacade.create(user, userCategoryFacade.getCategoryIdsByUserId(currentUserId));
+                userRegionFacade.create(user, userRegionFacade.getRegionIdsByUserId(currentUser.getId()));
+                userCategoryFacade.create(user, userCategoryFacade.getCategoryIdsByUserId(currentUser.getId()));
             }
         }
     }
 
     @Transactional
-    public List<UserDTO> getModerators(RoleEnum roleEnum) {
+    public List<UserDTO> getModerators(User currentUser, RoleEnum roleEnum) {
         UserFilter userFilter = new UserFilter();
 
         userFilter.setRoleName(roleEnum.name());
 
-        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String currentUserRole = userPrincipal.getUser().getRole().getName();
-        Long currentUserId = userPrincipal.getUser().getId();
-
-        if (currentUserRole.equals(RoleEnum.REGIONAL_MODERATOR.name())) {
-            userFilter.setRegionIds(userRegionFacade.getRegionIdsByUserId(currentUserId));
+        if (UserUtil.doesUserHasRole(currentUser, RoleEnum.REGIONAL_MODERATOR)) {
+            userFilter.setRegionIds(userRegionFacade.getRegionIdsByUserId(currentUser.getId()));
         }
 
         return userFacade.getUsersByFilter(userFilter);
     }
 
     @Transactional
+    public void changeModeratorRegions(ChangeModeratorRegionsDTO dto) {
+        userRegionFacade.deleteAllByUserId(dto.getModeratorId());
+        userRegionFacade.create(userFacade.getUserById(dto.getModeratorId()), dto.getRegionIds());
+    }
+
+    @Transactional
+    public void changeModeratorCategories(ChangeModeratorCategoriesDTO dto) {
+        userCategoryFacade.deleteAllByUserId(dto.getModeratorId());
+        userCategoryFacade.create(userFacade.getUserById(dto.getModeratorId()), dto.getCategoryIds());
+    }
+
+    @Transactional
     public void deleteModeratorById(Long moderatorId) {
-        if (!Objects.equals(userFacade.getUserById(moderatorId).getRole().getName(), "MODERATOR")) {
-            throw new NotExistsObjectException("Moderator with id " + moderatorId + " does not exist");
-        }
         userFacade.deleteUserById(moderatorId);
     }
 
