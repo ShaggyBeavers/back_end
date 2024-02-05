@@ -1,7 +1,10 @@
 package com.lpnu.shaggybeavers.facade;
 
-import com.lpnu.shaggybeavers.dto.CurrentUserReportDTO;
+import com.lpnu.shaggybeavers.domain.ReportStatus;
+import com.lpnu.shaggybeavers.domain.RoleEnum;
 import com.lpnu.shaggybeavers.dto.ReportCreateDTO;
+import com.lpnu.shaggybeavers.dto.ReportDTO;
+import com.lpnu.shaggybeavers.dto.ReportPageDTO;
 import com.lpnu.shaggybeavers.factory.ReportFactory;
 import com.lpnu.shaggybeavers.filter.ReportFilter;
 import com.lpnu.shaggybeavers.model.Category;
@@ -29,14 +32,9 @@ public class ReportFacade {
 
     private final ReportCategoryFacade reportCategoryFacade;
 
-    @Transactional
-    public Page<CurrentUserReportDTO> getUserReports(Long userId, Pageable pageable) {
-        ReportFilter reportFilter = new ReportFilter();
-        reportFilter.setUserId(userId);
-        Specification<Report> specification = new ReportSpecification(reportFilter);
-        Page<Report> reportPage = reportService.findAll(pageable, specification);
-        return reportPage.map(reportFactory::toReportDTO);
-    }
+    private final UserCategoryFacade userCategoryFacade;
+
+    private final UserRegionFacade userRegionFacade;
 
     @Transactional
     public Long createReport(UserPrincipal userPrincipal, ReportCreateDTO reportCreateDTO) {
@@ -55,4 +53,36 @@ public class ReportFacade {
         return report.getId();
     }
 
+    @Transactional
+    public ReportDTO getReport(Long reportId) {
+        return reportFactory.toReportDTO(reportService.findById(reportId));
+    }
+
+    @Transactional
+    public void changeStatus(Long reportId, ReportStatus status) {
+        Report report = reportService.findById(reportId);
+        report.setStatus(status);
+        reportService.save(report);
+    }
+
+    @Transactional
+    public Page<ReportPageDTO> getReportsPage(UserPrincipal userPrincipal, Pageable pageable) {
+        Long userId = userPrincipal.getId();
+        String currentUserRole = userPrincipal.getUser().getRole().getName();
+        ReportFilter reportFilter = new ReportFilter();
+
+        switch (RoleEnum.valueOf(currentUserRole)) {
+            case MODERATOR, REGIONAL_MODERATOR, ADMIN -> {
+                reportFilter.setCategoryIds(userCategoryFacade.getCategoryIdsByUserId(userId));
+                reportFilter.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
+            }
+            case USER -> {
+                reportFilter.setUserId(userId);
+            }
+        }
+
+        Specification<Report> specification = new ReportSpecification(reportFilter);
+        Page<Report> reportPage = reportService.findAll(pageable, specification);
+        return reportPage.map(reportFactory::toReportPageDTO);
+    }
 }

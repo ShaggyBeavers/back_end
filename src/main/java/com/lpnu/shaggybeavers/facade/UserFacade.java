@@ -99,4 +99,8 @@ public class UserFacade {
         userService.save(user);
     }
 
+    @Transactional
+    public String getEmail(Long userId) {
+        return userService.findById(userId).getEmail();
+    }
 }

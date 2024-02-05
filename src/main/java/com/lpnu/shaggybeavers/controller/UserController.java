@@ -49,4 +49,10 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/email")
+    public ResponseEntity<String> getEmail(@RequestParam Long userId){
+        return new ResponseEntity<>(userFacade.getEmail(userId), HttpStatus.OK);
+    }
+
+
 }
