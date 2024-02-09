@@ -45,4 +45,7 @@ public class User implements EntityWithId<Long> {
     @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private ResetToken resetToken;
 
+    @Column(name = "ban")
+    private boolean ban;
+
 }

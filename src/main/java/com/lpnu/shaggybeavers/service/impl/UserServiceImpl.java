@@ -46,4 +46,11 @@ public class UserServiceImpl extends CRUDServiceImpl<User,Long> implements UserS
         repository.save(user);
     }
 
+    @Override
+    @Transactional
+    public void banUnban(User user) {
+        user.setBan(!user.isBan());
+        repository.save(user);
+    }
+
 }

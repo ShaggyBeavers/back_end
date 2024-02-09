@@ -50,7 +50,7 @@ public class AdminFacade {
 
         userFilter.setRoleName(roleEnum.name());
 
-        if (UserUtil.doesUserHasRole(currentUser, RoleEnum.REGIONAL_MODERATOR)) {
+        if (UserUtil.doesUserHaveRole(currentUser, RoleEnum.REGIONAL_MODERATOR)) {
             userFilter.setRegionIds(userRegionFacade.getRegionIdsByUserId(currentUser.getId()));
         }
 

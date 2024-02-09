@@ -13,4 +13,6 @@ public interface UserService extends CRUDService<User,Long> {
 
     void changePassword(User user, String password);
 
+    void banUnban(User user);
+
 }

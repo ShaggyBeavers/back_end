@@ -103,4 +103,10 @@ public class UserFacade {
     public String getEmail(Long userId) {
         return userService.findById(userId).getEmail();
     }
+
+    @Transactional
+    public void banUnban(Long userId) {
+        userService.banUnban(userService.findById(userId));
+    }
+
 }
