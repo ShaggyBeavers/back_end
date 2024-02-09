@@ -52,21 +52,21 @@ public class AdminController {
     }
 
     @PatchMapping("/moderators/change-regions")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR') and @securityFacade.checkIfRegionalModeratorControlsModerator(authentication, #dto.moderatorId)")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthority(authentication, #dto.moderatorId)")
     public ResponseEntity<Void> changeModeratorRegions(@RequestBody ChangeModeratorRegionsDTO dto) {
         adminFacade.changeModeratorRegions(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/moderators/change-categories")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR') and @securityFacade.checkIfRegionalModeratorControlsModerator(authentication, #dto.moderatorId)")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthority(authentication, #dto.moderatorId)")
     public ResponseEntity<Void> changeModeratorCategories(@RequestBody ChangeModeratorCategoriesDTO dto) {
         adminFacade.changeModeratorCategories(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/moderators/{moderatorId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR') and @securityFacade.checkIfRegionalModeratorControlsModerator(authentication, #moderatorId)")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthority(authentication, #moderatorId)")
     public ResponseEntity<Void> deleteModeratorById(@PathVariable Long moderatorId) {
         adminFacade.deleteModeratorById(moderatorId);
         return new ResponseEntity<>(HttpStatus.OK);

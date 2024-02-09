@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,5 +55,11 @@ public class UserController {
         return new ResponseEntity<>(userFacade.getEmail(userId), HttpStatus.OK);
     }
 
+    @PostMapping("/ban-unban/{userId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthority(authentication, #userId)")
+    public ResponseEntity<Void> banUnban(@PathVariable Long userId) {
+        userFacade.banUnban(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

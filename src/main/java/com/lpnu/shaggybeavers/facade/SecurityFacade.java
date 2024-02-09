@@ -1,7 +1,6 @@
 package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.domain.RoleEnum;
-import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.model.User;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
 import com.lpnu.shaggybeavers.util.UserUtil;
@@ -21,27 +20,36 @@ public class SecurityFacade {
 
     private final UserFacade userFacade;
 
-    public boolean checkIfRegionalModeratorControlsModerator(Authentication authentication, Long moderatorId) {
-        User moderator = userFacade.getUserById(moderatorId);
+    public boolean checkIfUserHasEnoughAuthority(Authentication authentication, Long userId) {
+        User user = userFacade.getUserById(userId);
         User currentUser = ((UserPrincipal) authentication.getPrincipal()).getUser();
 
-        if (UserUtil.doesUserHasRole(currentUser, RoleEnum.REGIONAL_MODERATOR)) {
-            Long regionalModeratorId = currentUser.getId();
-
-            Set<Long> moderatorRegions = userRegionFacade.getRegionIdsByUserId(moderatorId);
-            Set<Long> moderatorCategories = userCategoryFacade.getCategoryIdsByUserId(moderatorId);
-
-            Set<Long> regionalModeratorRegions = userRegionFacade.getRegionIdsByUserId(regionalModeratorId);
-            Set<Long> regionalModeratorCategories = userCategoryFacade.getCategoryIdsByUserId(regionalModeratorId);
-
-            if(UserUtil.doesUserHasRole(moderator, RoleEnum.REGIONAL_MODERATOR)
-                    || moderatorRegions.stream().noneMatch(regionalModeratorRegions::contains)
-                    || moderatorCategories.stream().noneMatch(regionalModeratorCategories::contains)) {
-                throw new NotExistsObjectException("Moderator is out of your control");
+        switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
+            case REGIONAL_MODERATOR -> {
+                if (!UserUtil.doesUserHaveRole(user, RoleEnum.USER)
+                        && !(UserUtil.doesUserHaveRole(user, RoleEnum.MODERATOR) && doesRegionalModeratorControlModerator(currentUser.getId(), userId))) {
+                    return false;
+                }
+            }
+            case MODERATOR -> {
+                if (!UserUtil.doesUserHaveRole(user, RoleEnum.USER)) {
+                    return false;
+                }
             }
         }
 
         return true;
+    }
+
+    private boolean doesRegionalModeratorControlModerator(Long regionalModeratorId, Long moderatorId) {
+        Set<Long> moderatorRegions = userRegionFacade.getRegionIdsByUserId(moderatorId);
+        Set<Long> moderatorCategories = userCategoryFacade.getCategoryIdsByUserId(moderatorId);
+
+        Set<Long> regionalModeratorRegions = userRegionFacade.getRegionIdsByUserId(regionalModeratorId);
+        Set<Long> regionalModeratorCategories = userCategoryFacade.getCategoryIdsByUserId(regionalModeratorId);
+
+        return moderatorRegions.stream().anyMatch(regionalModeratorRegions::contains)
+                && moderatorCategories.stream().anyMatch(regionalModeratorCategories::contains);
     }
 
 }

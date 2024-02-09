@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class UserUtil {
 
-    public static boolean doesUserHasRole(User user, RoleEnum roleEnum) {
+    public static boolean doesUserHaveRole(User user, RoleEnum roleEnum) {
         return Objects.equals(user.getRole().getName(), roleEnum.name());
     }
 
