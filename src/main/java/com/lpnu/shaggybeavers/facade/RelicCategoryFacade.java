@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -30,4 +32,13 @@ public class RelicCategoryFacade {
             relicCategoryService.create(relic.getId(), categoryId);
         }
     }
+
+    @Transactional
+    public Set<Long> getCategoryIdsByRelicId(Long relicId) {
+        return relicCategoryService.findAllByRelicId(relicId)
+                .stream()
+                .map(relicCategory -> relicCategory.getCategory().getId())
+                .collect(Collectors.toSet());
+    }
+
 }

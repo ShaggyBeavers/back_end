@@ -7,9 +7,7 @@ import com.lpnu.shaggybeavers.dto.ReportDTO;
 import com.lpnu.shaggybeavers.dto.ReportPageDTO;
 import com.lpnu.shaggybeavers.factory.ReportFactory;
 import com.lpnu.shaggybeavers.filter.ReportFilter;
-import com.lpnu.shaggybeavers.model.Category;
-import com.lpnu.shaggybeavers.model.Report;
-import com.lpnu.shaggybeavers.model.ReportCategory;
+import com.lpnu.shaggybeavers.model.*;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
 import com.lpnu.shaggybeavers.service.ReportService;
 import com.lpnu.shaggybeavers.specification.ReportSpecification;
@@ -36,12 +34,16 @@ public class ReportFacade {
 
     private final UserRegionFacade userRegionFacade;
 
-    @Transactional
-    public Long createReport(UserPrincipal userPrincipal, ReportCreateDTO reportCreateDTO) {
-        Report report = reportService.save(reportFactory.toReport(reportCreateDTO));
-        report.setUser(userPrincipal.getUser());
+    private final RegionFacade regionFacade;
 
-        reportCreateDTO.getCategoryIds()
+    @Transactional
+    public Long createReport(UserPrincipal userPrincipal, ReportCreateDTO dto) {
+        Report report = reportFactory.toReport(dto);
+        report.setRegion(regionFacade.findById(dto.getRegionId()));
+        report.setUser(userPrincipal.getUser());
+        reportService.save(report);
+
+        dto.getCategoryIds()
                 .forEach(categoryId -> {
                     Category category = categoryFacade.findById(categoryId);
                     ReportCategory reportCategory = new ReportCategory();
@@ -85,4 +87,23 @@ public class ReportFacade {
         Page<Report> reportPage = reportService.findAll(pageable, specification);
         return reportPage.map(reportFactory::toReportPageDTO);
     }
+
+    @Transactional
+    public Report findById(Long reportId) {
+        return reportService.findById(reportId);
+    }
+
+    @Transactional
+    public void delete(User currentUser, Long reportId) {
+        Report report = reportService.findById(reportId);
+
+        switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
+            case ADMIN -> reportService.delete(report);
+            case REGIONAL_MODERATOR, MODERATOR -> {
+                report.setDeleted(true);
+                reportService.update(report);
+            }
+        }
+    }
+
 }
