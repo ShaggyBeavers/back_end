@@ -31,6 +31,8 @@ public class ReportSpecification implements Specification<Report> {
             predicates.add(root.join("reportCategories").get("category").get("id").in(filter.getCategoryIds()));
         }
 
+        predicates.add(criteriaBuilder.equal(root.get("isDeleted"), false));
+
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 }

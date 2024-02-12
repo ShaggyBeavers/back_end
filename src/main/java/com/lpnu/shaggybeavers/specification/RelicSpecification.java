@@ -37,6 +37,8 @@ public class RelicSpecification implements Specification<Relic> {
             predicates.add(root.join("relicCategories").get("category").get("categoryName").in(filter.getCategories()));
         }
 
+        predicates.add(criteriaBuilder.equal(root.get("isDeleted"), false));
+
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 }
