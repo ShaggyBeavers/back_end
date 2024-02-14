@@ -6,6 +6,7 @@ import com.lpnu.shaggybeavers.dto.ReportPageDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.lpnu.shaggybeavers.dto.ReportCreateDTO;
 import com.lpnu.shaggybeavers.facade.ReportFacade;
@@ -45,6 +46,14 @@ public class ReportController {
     @PutMapping("/status")
     public ResponseEntity<Void> changeStatus(@RequestParam Long reportId, @RequestParam String status) {
         reportFacade.changeStatus(reportId, ReportStatus.valueOf(status));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{reportId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    public ResponseEntity<Void> delete(
+            @AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Long reportId) {
+        reportFacade.delete(userPrincipal.getUser(), reportId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

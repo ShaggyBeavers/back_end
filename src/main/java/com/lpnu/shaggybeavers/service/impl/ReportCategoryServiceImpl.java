@@ -6,6 +6,9 @@ import com.lpnu.shaggybeavers.service.ReportCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,4 +20,11 @@ public class ReportCategoryServiceImpl extends CRUDServiceImpl<ReportCategory, L
     protected JpaRepository<ReportCategory, Long> getRepository () {
         return this.repository;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReportCategory> findAllByReportId(Long reportId) {
+        return repository.findAllByReportId(reportId);
+    }
+
 }

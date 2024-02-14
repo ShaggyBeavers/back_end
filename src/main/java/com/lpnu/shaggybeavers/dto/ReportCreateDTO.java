@@ -22,4 +22,6 @@ public class ReportCreateDTO {
 
     private String infoReferences;
 
+    private Long regionId;
+
 }

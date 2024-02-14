@@ -2,15 +2,13 @@ package com.lpnu.shaggybeavers.facade;
 
 
 import com.lpnu.shaggybeavers.domain.RelicStatus;
+import com.lpnu.shaggybeavers.domain.RoleEnum;
 import com.lpnu.shaggybeavers.dto.*;
 import com.lpnu.shaggybeavers.exception.FileException;
 import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.factory.RelicFactory;
 import com.lpnu.shaggybeavers.filter.RelicFilter;
-import com.lpnu.shaggybeavers.model.LostRelicInfo;
-import com.lpnu.shaggybeavers.model.RecoveredRelicInfo;
-import com.lpnu.shaggybeavers.model.Relic;
-import com.lpnu.shaggybeavers.model.RelicInfo;
+import com.lpnu.shaggybeavers.model.*;
 import com.lpnu.shaggybeavers.service.RelicService;
 import com.lpnu.shaggybeavers.specification.RelicSpecification;
 import com.lpnu.shaggybeavers.util.FileUtil;
@@ -186,4 +184,23 @@ public class RelicFacade {
         Page<Relic> relicPage = relicService.findAllByNameContaining(relicName, pageable);
         return relicPage.map(relicFactory::toRelicCatalogDTO);
     }
+
+    @Transactional
+    public Relic findById(Long relicId) {
+        return relicService.findById(relicId);
+    }
+
+    @Transactional
+    public void delete(User currentUser, Long relicId) {
+        Relic relic = relicService.findById(relicId);
+
+        switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
+            case ADMIN -> relicService.delete(relic);
+            case REGIONAL_MODERATOR, MODERATOR -> {
+                relic.setDeleted(true);
+                relicService.update(relic);
+            }
+        }
+    }
+
 }

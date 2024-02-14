@@ -5,10 +5,12 @@ import com.lpnu.shaggybeavers.repository.RelicCategoryRepository;
 import com.lpnu.shaggybeavers.service.CategoryService;
 import com.lpnu.shaggybeavers.service.RelicCategoryService;
 import com.lpnu.shaggybeavers.service.RelicService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,4 +35,11 @@ public class RelicCategoryServiceImpl extends CRUDServiceImpl<RelicCategory, Lon
         relicCategory.setRelic(relicService.findById(relicId));
         relicCategoryRepository.save(relicCategory);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<RelicCategory> findAllByRelicId(Long relicId) {
+        return relicCategoryRepository.findAllByRelicId(relicId);
+    }
+
 }

@@ -58,4 +58,7 @@ public class Report implements EntityWithId<Long> {
     @OneToMany(mappedBy = "report", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<ReportCategory> reportCategories = new ArrayList<>();
 
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
 }

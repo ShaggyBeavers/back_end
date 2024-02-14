@@ -20,14 +20,22 @@ public class SecurityFacade {
 
     private final UserFacade userFacade;
 
-    public boolean checkIfUserHasEnoughAuthority(Authentication authentication, Long userId) {
+    private final RelicFacade relicFacade;
+
+    private final RelicCategoryFacade relicCategoryFacade;
+
+    private final ReportFacade reportFacade;
+
+    private final ReportCategoryFacade reportCategoryFacade;
+
+    public boolean checkIfUserHasEnoughAuthorityOnUser(Authentication authentication, Long userId) {
         User user = userFacade.getUserById(userId);
         User currentUser = ((UserPrincipal) authentication.getPrincipal()).getUser();
 
         switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
             case REGIONAL_MODERATOR -> {
                 if (!UserUtil.doesUserHaveRole(user, RoleEnum.USER)
-                        && !(UserUtil.doesUserHaveRole(user, RoleEnum.MODERATOR) && doesRegionalModeratorControlModerator(currentUser.getId(), userId))) {
+                        && !(UserUtil.doesUserHaveRole(user, RoleEnum.MODERATOR) && doesUserAndUserHaveCommonRegionAndCategory(currentUser.getId(), userId))) {
                     return false;
                 }
             }
@@ -41,15 +49,57 @@ public class SecurityFacade {
         return true;
     }
 
-    private boolean doesRegionalModeratorControlModerator(Long regionalModeratorId, Long moderatorId) {
-        Set<Long> moderatorRegions = userRegionFacade.getRegionIdsByUserId(moderatorId);
-        Set<Long> moderatorCategories = userCategoryFacade.getCategoryIdsByUserId(moderatorId);
+    public boolean checkIfUserHasEnoughAuthorityOnRelic(Authentication authentication, Long relicId) {
+        User currentUser = ((UserPrincipal) authentication.getPrincipal()).getUser();
 
-        Set<Long> regionalModeratorRegions = userRegionFacade.getRegionIdsByUserId(regionalModeratorId);
-        Set<Long> regionalModeratorCategories = userCategoryFacade.getCategoryIdsByUserId(regionalModeratorId);
+        if (!UserUtil.doesUserHaveRole(currentUser, RoleEnum.ADMIN)) {
+            return doesUserAndRelicHaveCommonRegionAndCategory(currentUser.getId(), relicId);
+        }
 
-        return moderatorRegions.stream().anyMatch(regionalModeratorRegions::contains)
-                && moderatorCategories.stream().anyMatch(regionalModeratorCategories::contains);
+        return true;
+    }
+
+    public boolean checkIfUserHasEnoughAuthorityOnReport(Authentication authentication, Long reportId) {
+        User currentUser = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        if (!UserUtil.doesUserHaveRole(currentUser, RoleEnum.ADMIN)) {
+            return doesUserAndReportHaveCommonRegionAndCategory(currentUser.getId(), reportId);
+        }
+
+        return true;
+    }
+
+    private boolean doesUserAndUserHaveCommonRegionAndCategory(Long userId, Long entityId) {
+        Set<Long> userRegions = userRegionFacade.getRegionIdsByUserId(userId);
+        Set<Long> userCategories = userCategoryFacade.getCategoryIdsByUserId(userId);
+
+        Set<Long> entityRegions = userRegionFacade.getRegionIdsByUserId(entityId);
+        Set<Long> entityCategories = userCategoryFacade.getCategoryIdsByUserId(entityId);
+
+        return userRegions.stream().anyMatch(entityRegions::contains)
+                && userCategories.stream().anyMatch(entityCategories::contains);
+    }
+
+    private boolean doesUserAndRelicHaveCommonRegionAndCategory(Long userId, Long entityId) {
+        Set<Long> userRegions = userRegionFacade.getRegionIdsByUserId(userId);
+        Set<Long> userCategories = userCategoryFacade.getCategoryIdsByUserId(userId);
+
+        Long entityRegion = relicFacade.findById(entityId).getRegion().getId();
+        Set<Long> entityCategories = relicCategoryFacade.getCategoryIdsByRelicId(entityId);
+
+        return userRegions.stream().anyMatch(entityRegion::equals)
+                && userCategories.stream().anyMatch(entityCategories::contains);
+    }
+
+    private boolean doesUserAndReportHaveCommonRegionAndCategory(Long userId, Long entityId) {
+        Set<Long> userRegions = userRegionFacade.getRegionIdsByUserId(userId);
+        Set<Long> userCategories = userCategoryFacade.getCategoryIdsByUserId(userId);
+
+        Long entityRegion = reportFacade.findById(entityId).getRegion().getId();
+        Set<Long> entityCategories = reportCategoryFacade.getCategoryIdsByReportId(entityId);
+
+        return userRegions.stream().anyMatch(entityRegion::equals)
+                && userCategories.stream().anyMatch(entityCategories::contains);
     }
 
 }

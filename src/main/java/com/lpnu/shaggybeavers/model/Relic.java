@@ -89,4 +89,7 @@ public class Relic extends FileEntity<String> implements EntityWithId<Long> {
     @Column(name = "favorite")
     private boolean favorite;
 
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
 }
