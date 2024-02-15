@@ -50,15 +50,17 @@ public class RelicController {
 
 
     @PutMapping("/edit/{relicId}")
-    public void editRelic(
+    public ResponseEntity<Void> editRelic(
             @PathVariable(value = "relicId") Long relicId, @RequestBody RelicCreateEditDTO relicCreateEditDTO){
         relicFacade.editRelic(relicId, relicCreateEditDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public void createRelic(
+    public ResponseEntity<Void> createRelic(
            @RequestBody RelicCreateEditDTO relicCreateEditDTO){
         relicFacade.createRelic(relicCreateEditDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/change-favorite")
