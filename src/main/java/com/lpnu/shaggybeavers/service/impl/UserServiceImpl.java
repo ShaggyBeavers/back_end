@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.service.impl;
 
+import com.lpnu.shaggybeavers.exception.DuplicateException;
 import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.model.User;
 import com.lpnu.shaggybeavers.repository.UserRepository;
@@ -51,6 +52,14 @@ public class UserServiceImpl extends CRUDServiceImpl<User,Long> implements UserS
     public void banUnban(User user) {
         user.setBan(!user.isBan());
         repository.save(user);
+    }
+
+    @Override
+    public User save(User user) {
+        if (repository.findByEmail(user.getEmail()).isPresent())  {
+            throw new DuplicateException("This email is already registered");
+        }
+        return repository.save(user);
     }
 
 }
