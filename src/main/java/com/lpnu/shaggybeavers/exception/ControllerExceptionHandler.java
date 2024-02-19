@@ -1,6 +1,7 @@
 package com.lpnu.shaggybeavers.exception;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -17,6 +18,11 @@ import java.util.List;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(value = JwtException.class)
+    public ResponseEntity<Object> handleJwtException(JwtException e) {
+        return buildException((List.of(e.getMessage())), HttpStatus.CONFLICT);
+    }
 
     @ExceptionHandler(value = DuplicateException.class)
     public ResponseEntity<Object> handleDuplicateException(DuplicateException e) {
