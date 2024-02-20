@@ -1,6 +1,7 @@
 package com.lpnu.shaggybeavers.model;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 public class User implements EntityWithId<Long> {
 
     @Id

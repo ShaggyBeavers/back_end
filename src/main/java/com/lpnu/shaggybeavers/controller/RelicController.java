@@ -60,7 +60,7 @@ public class RelicController {
     public ResponseEntity<Void> createRelic(
            @RequestBody RelicCreateEditDTO relicCreateEditDTO){
         relicFacade.createRelic(relicCreateEditDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/change-favorite")

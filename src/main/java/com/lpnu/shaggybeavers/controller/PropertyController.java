@@ -19,7 +19,7 @@ public class PropertyController {
     @PostMapping("/create")
     public ResponseEntity<Void> createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
         propertyFacade.createProperty(propertyCreateDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

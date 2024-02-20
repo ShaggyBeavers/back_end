@@ -18,7 +18,7 @@ public class TechniqueController {
     @PostMapping("/create")
     public ResponseEntity<Void> createTechnique(@RequestBody TechniqueCreateDTO techniqueCreateDTO){
         techniqueFacade.createTechnique(techniqueCreateDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

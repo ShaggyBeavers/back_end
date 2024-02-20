@@ -19,6 +19,6 @@ public class HistoricalPeriodController {
     @PostMapping("/create")
     public ResponseEntity<Void> createHistoricalPeriod(@RequestBody HistoricalPeriodCreateDTO historicalPeriodCreateDTO){
         historicalPeriodFacade.createHistoricalPeriod(historicalPeriodCreateDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

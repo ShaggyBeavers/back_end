@@ -24,7 +24,7 @@ public class UserController {
         return new ResponseEntity<>(userFacade.getProfile(userPrincipal.getId()), HttpStatus.OK);
     }
 
-    @PutMapping("/edit/{userId}")
+    @PutMapping("/edit")
     public ResponseEntity<Void> editUser(
             @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid UserEditDTO userEditDTO) {
         userFacade.editUser(userPrincipal.getId(), userEditDTO);

@@ -15,4 +15,5 @@ public interface UserService extends CRUDService<User,Long> {
 
     void banUnban(User user);
 
+    boolean emailIsPresent(String email);
 }

@@ -7,6 +7,7 @@ import com.lpnu.shaggybeavers.repository.UserRepository;
 import com.lpnu.shaggybeavers.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -55,11 +56,28 @@ public class UserServiceImpl extends CRUDServiceImpl<User,Long> implements UserS
     }
 
     @Override
+    public boolean emailIsPresent(String email) {
+        return repository.findByEmail(email).isPresent();
+    }
+
+    @Override
+    @Transactional
     public User save(User user) {
         if (repository.findByEmail(user.getEmail()).isPresent())  {
             throw new DuplicateException("This email is already registered");
         }
         return repository.save(user);
     }
+
+//    @Override
+//    @Transactional
+//    public User update(User newUser) {
+//        if (repository.findByEmail(newUser.getEmail()).isPresent())  {
+//            throw new DuplicateException("This email is already registered");
+//        }
+//        User oldUser = this.findById(newUser.getId());
+//        BeanUtils.copyProperties(newUser,oldUser);
+//        return repository.saveAndFlush(oldUser);
+//    }
 
 }

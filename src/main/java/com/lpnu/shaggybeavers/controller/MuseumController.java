@@ -19,7 +19,7 @@ public class MuseumController {
     @PostMapping("/create")
     public ResponseEntity<Void> createMuseum(@RequestBody MuseumCreateDTO museumCreateDTO) {
         museumFacade.createMuseum(museumCreateDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 

@@ -19,7 +19,7 @@ public class RegionController {
     @PostMapping("/create")
     public ResponseEntity<Void> createRegion(@RequestBody RegionCreateDTO regionCreateDTO){
         regionFacade.createRegion(regionCreateDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }
