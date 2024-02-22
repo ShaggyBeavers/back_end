@@ -1,6 +1,7 @@
 package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.dto.*;
+import com.lpnu.shaggybeavers.exception.DuplicateException;
 import com.lpnu.shaggybeavers.exception.NotEqualObjectsException;
 import com.lpnu.shaggybeavers.factory.UserFactory;
 import com.lpnu.shaggybeavers.filter.UserFilter;
@@ -54,7 +55,10 @@ public class UserFacade {
 
     @Transactional
     public void editUser(Long userId, UserEditDTO userEditDTO) {
-        userService.save(userFactory.update(userService.findById(userId), userEditDTO));
+        if (userService.emailIsPresent(userEditDTO.getEmail()))  {
+              throw new DuplicateException("This email is already registered");
+        }
+        userService.update(userFactory.update(userService.findById(userId), userEditDTO));
     }
 
     @Transactional

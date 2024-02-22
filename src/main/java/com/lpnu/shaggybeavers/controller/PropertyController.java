@@ -5,6 +5,7 @@ import com.lpnu.shaggybeavers.dto.TechniqueCreateDTO;
 import com.lpnu.shaggybeavers.facade.PropertyFacade;
 import com.lpnu.shaggybeavers.service.PropertyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,9 @@ public class PropertyController {
     private final PropertyFacade propertyFacade;
 
     @PostMapping("/create")
-    public void createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
+    public ResponseEntity<Void> createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
         propertyFacade.createProperty(propertyCreateDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

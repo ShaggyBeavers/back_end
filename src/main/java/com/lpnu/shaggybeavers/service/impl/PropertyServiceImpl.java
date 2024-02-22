@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.service.impl;
 
+import com.lpnu.shaggybeavers.exception.DuplicateException;
 import com.lpnu.shaggybeavers.model.Property;
 import com.lpnu.shaggybeavers.repository.PropertyRepository;
 import com.lpnu.shaggybeavers.service.PropertyService;
@@ -17,4 +18,12 @@ public class PropertyServiceImpl extends CRUDServiceImpl<Property, Long> impleme
     protected JpaRepository<Property, Long> getRepository() {
         return this.propertyRepository;
     }
+
+    @Override
+    public Property save(Property property) {
+        if (propertyRepository.findByProperty(property.getProperty()) != null)  {
+            throw new DuplicateException("Property already exists");
+        }
+        return propertyRepository.save(property);
+      }
 }

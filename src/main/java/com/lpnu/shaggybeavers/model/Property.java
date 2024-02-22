@@ -17,7 +17,7 @@ public class Property implements EntityWithId<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "property")
+    @Column(name = "property", unique = true)
     private String property;
 
     @OneToMany(mappedBy = "property", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
