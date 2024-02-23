@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.security.jwt;
 
+import com.lpnu.shaggybeavers.security.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -38,7 +39,7 @@ public class JwtUtil {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(((UserPrincipal) userDetails).getId().toString())
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plusMillis(expiration)))
                 .signWith(getSecretKey())
