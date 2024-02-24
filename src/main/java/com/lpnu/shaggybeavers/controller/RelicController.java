@@ -43,11 +43,11 @@ public class RelicController {
     }
 
     @PostMapping("/filter")
-    public ResponseEntity<List<RelicDTO>> getRelicsByFilter(
-            @RequestBody RelicFilter filter) {
-        return new ResponseEntity<>(relicFacade.getRelicsByFilter(filter), HttpStatus.OK);
+    public ResponseEntity<Page<RelicDTO>> getRelicsByFilter(
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size, @RequestBody RelicFilter filter) {
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(relicFacade.getRelicsByFilter(filter, pageable), HttpStatus.OK);
     }
-
 
     @PutMapping("/edit/{relicId}")
     public ResponseEntity<Void> editRelic(
