@@ -41,8 +41,8 @@ public class RelicServiceImpl extends FileStoreServiceImpl<Relic, String, Long> 
     }
 
     @Override
-    public List<Relic> findAll(Specification<Relic> specification) {
-        return repository.findAll(specification);
+    public Page<Relic> findAll(Specification<Relic> specification, Pageable pageable) {
+        return repository.findAll(specification, pageable);
     }
 
     @Override

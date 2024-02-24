@@ -12,7 +12,7 @@ public interface RelicService extends FileStoreService<Relic, String, Long> {
 
     Page<Relic> findAll(Pageable pageable);
 
-    List<Relic> findAll(Specification<Relic> specification);
+    Page<Relic> findAll(Specification<Relic> specification, Pageable pageable);
 
     Long countByStatuses(List<RelicStatus> statuses);
 

@@ -46,7 +46,6 @@ public class RelicFacade {
 
     private final RelicCategoryFacade relicCategoryFacade;
 
-
     @Transactional
     public RelicDTO getRelicById(Long relicId) {
         return relicFactory.toRelicDTO(relicService.findById(relicId));
@@ -59,10 +58,10 @@ public class RelicFacade {
     }
 
     @Transactional
-    public List<RelicDTO> getRelicsByFilter(RelicFilter filter) {
+    public Page<RelicDTO> getRelicsByFilter(RelicFilter filter, Pageable pageable) {
         Specification<Relic> specification = new RelicSpecification(filter);
-        List<Relic> relics = relicService.findAll(specification);
-        return relicFactory.toRelicDTOList(relics);
+        Page<Relic> relicPage = relicService.findAll(specification, pageable);
+        return relicPage.map(relicFactory::toRelicDTO);
     }
 
     @Transactional
