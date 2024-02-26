@@ -50,6 +50,7 @@ public class RelicController {
     }
 
     @PutMapping("/edit/{relicId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnRelic(authentication, #relicId)")
     public ResponseEntity<Void> editRelic(
             @PathVariable(value = "relicId") Long relicId, @RequestBody RelicCreateEditDTO relicCreateEditDTO){
         relicFacade.editRelic(relicId, relicCreateEditDTO);
@@ -57,6 +58,7 @@ public class RelicController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
     public ResponseEntity<Void> createRelic(
            @RequestBody RelicCreateEditDTO relicCreateEditDTO){
         relicFacade.createRelic(relicCreateEditDTO);
@@ -64,6 +66,7 @@ public class RelicController {
     }
 
     @PostMapping("/change-favorite")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
     public ResponseEntity<Void> changeFavoriteRelic() {
         relicFacade.changeFavoriteRelic();
         return new ResponseEntity<>(HttpStatus.OK);
@@ -93,12 +96,14 @@ public class RelicController {
     }
 
     @DeleteMapping("/file/delete/{relicId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
     public ResponseEntity<Void> deleteFile(@PathVariable Long relicId) {
         relicFacade.deleteFile(relicId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/file/update/{relicId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
     public ResponseEntity<Void> updateFile(
             @PathVariable Long relicId, @RequestParam(value = "file") MultipartFile multipartFile) {
         relicFacade.updateFile(relicId, multipartFile);
