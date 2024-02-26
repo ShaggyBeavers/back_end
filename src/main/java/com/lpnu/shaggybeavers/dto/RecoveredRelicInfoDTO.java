@@ -17,4 +17,6 @@ public class RecoveredRelicInfoDTO {
 
     private String courtDecision;
 
+    private LocalDate previousSearchInfo;
+
 }

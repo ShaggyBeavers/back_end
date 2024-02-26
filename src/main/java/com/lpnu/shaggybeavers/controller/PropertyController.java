@@ -1,9 +1,8 @@
 package com.lpnu.shaggybeavers.controller;
 
 import com.lpnu.shaggybeavers.dto.PropertyCreateDTO;
-import com.lpnu.shaggybeavers.dto.TechniqueCreateDTO;
 import com.lpnu.shaggybeavers.facade.PropertyFacade;
-import com.lpnu.shaggybeavers.service.PropertyService;
+import com.lpnu.shaggybeavers.model.Property;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,11 @@ public class PropertyController {
     public ResponseEntity<Void> createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
         propertyFacade.createProperty(propertyCreateDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{propertyId}")
+    public ResponseEntity<Property> getPropertyById(@PathVariable Long propertyId) {
+        return new ResponseEntity<>(propertyFacade.findById(propertyId), HttpStatus.OK);
     }
 
 }

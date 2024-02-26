@@ -33,6 +33,18 @@ public class RelicDTO {
 
     private RelicStatus status;
 
+    private String copyInformation;
+
+    private LocalDate copyCreationTime;
+
+    private String entryBookNumber;
+
+    private Integer inventoryNumber;
+
+    private Integer formerInventoryNumber;
+
+    private String author;
+
     private List<RelicPropertyDTO> relicPropertyDTOs;
 
     private RelicInfoDTO relicInfoDTO;
