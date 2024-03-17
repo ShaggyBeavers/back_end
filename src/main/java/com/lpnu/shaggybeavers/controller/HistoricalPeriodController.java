@@ -1,12 +1,14 @@
 package com.lpnu.shaggybeavers.controller;
 
 import com.lpnu.shaggybeavers.dto.HistoricalPeriodCreateDTO;
+import com.lpnu.shaggybeavers.dto.HistoricalPeriodDTO;
 import com.lpnu.shaggybeavers.facade.HistoricalPeriodFacade;
-import com.lpnu.shaggybeavers.model.HistoricalPeriod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 
@@ -23,8 +25,13 @@ public class HistoricalPeriodController {
     }
 
     @GetMapping("/{historicalPeriodId}")
-    public ResponseEntity<HistoricalPeriod> getHistoricalPeriodById(@PathVariable Long historicalPeriodId) {
+    public ResponseEntity<HistoricalPeriodDTO> getHistoricalPeriodById(@PathVariable Long historicalPeriodId) {
         return new ResponseEntity<>(historicalPeriodFacade.findById(historicalPeriodId), HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<HistoricalPeriodDTO>> getHistoricalPeriods() {
+        return new ResponseEntity<>(historicalPeriodFacade.findAll(), HttpStatus.OK);
     }
 
 }
