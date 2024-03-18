@@ -25,4 +25,9 @@ public class UserFactory {
     }
 
     public User update(User user, UserEditDTO userEditDTO) { return entityMapper.update(user, userEditDTO); }
+
+    public UserDTO toUserDTO(User user) {
+        return entityMapper.toUserDTO(user);
+    }
+
 }

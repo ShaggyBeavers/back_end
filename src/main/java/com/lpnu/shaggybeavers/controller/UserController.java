@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/user")
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class UserController {
     private final UserFacade userFacade;
 
     @GetMapping("/current-profile")
-    public ResponseEntity<UserProfileDTO> getProfile(
+    public ResponseEntity<UserDTO> getProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal) {
         return new ResponseEntity<>(userFacade.getProfile(userPrincipal.getId()), HttpStatus.OK);
     }
@@ -56,10 +58,16 @@ public class UserController {
     }
 
     @PostMapping("/ban-unban/{userId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthority(authentication, #userId)")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnUser(authentication, #userId)")
     public ResponseEntity<Void> banUnban(@PathVariable Long userId) {
         userFacade.banUnban(userId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    public ResponseEntity<List<UserDTO>> getUsers() {
+        return new ResponseEntity<>(userFacade.getAll(), HttpStatus.OK);
     }
 
 }

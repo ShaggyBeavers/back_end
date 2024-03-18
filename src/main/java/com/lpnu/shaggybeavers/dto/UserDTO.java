@@ -9,6 +9,10 @@ import java.util.List;
 @Getter
 public class UserDTO {
 
+    private Long id;
+
+    private String email;
+
     private String firstName;
 
     private String lastName;
@@ -16,5 +20,7 @@ public class UserDTO {
     private List<CategoryDTO> categories;
 
     private List<RegionDTO> regions;
+
+    private boolean ban;
 
 }
