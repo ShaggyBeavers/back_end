@@ -28,12 +28,12 @@ public class HistoricalPeriodController {
 
     @GetMapping("/{historicalPeriodId}")
     public ResponseEntity<HistoricalPeriodDTO> getHistoricalPeriodById(@PathVariable Long historicalPeriodId) {
-        return new ResponseEntity<>(historicalPeriodFacade.findById(historicalPeriodId), HttpStatus.OK);
+        return new ResponseEntity<>(historicalPeriodFacade.getById(historicalPeriodId), HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<HistoricalPeriodDTO>> getHistoricalPeriods() {
-        return new ResponseEntity<>(historicalPeriodFacade.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(historicalPeriodFacade.getAll(), HttpStatus.OK);
     }
 
 }

@@ -27,12 +27,12 @@ public class TechniqueController {
 
     @GetMapping("/{techniqueId}")
     public ResponseEntity<TechniqueDTO> getTechniqueById(@PathVariable Long techniqueId) {
-        return new ResponseEntity<>(techniqueFacade.findById(techniqueId), HttpStatus.OK);
+        return new ResponseEntity<>(techniqueFacade.getById(techniqueId), HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<TechniqueDTO>> getTechniques() {
-        return new ResponseEntity<>(techniqueFacade.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(techniqueFacade.getAll(), HttpStatus.OK);
     }
 
 }

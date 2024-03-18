@@ -27,12 +27,12 @@ public class PropertyController {
 
     @GetMapping("/{propertyId}")
     public ResponseEntity<PropertyDTO> getPropertyById(@PathVariable Long propertyId) {
-        return new ResponseEntity<>(propertyFacade.findById(propertyId), HttpStatus.OK);
+        return new ResponseEntity<>(propertyFacade.getById(propertyId), HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<PropertyDTO>> getProperties() {
-        return new ResponseEntity<>(propertyFacade.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(propertyFacade.getAll(), HttpStatus.OK);
     }
 
 }

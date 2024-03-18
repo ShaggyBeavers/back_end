@@ -3,6 +3,7 @@ package com.lpnu.shaggybeavers.facade;
 import com.lpnu.shaggybeavers.dto.RegionCreateDTO;
 import com.lpnu.shaggybeavers.dto.RegionDTO;
 import com.lpnu.shaggybeavers.factory.RegionFactory;
+import com.lpnu.shaggybeavers.model.Region;
 import com.lpnu.shaggybeavers.service.RegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,12 +25,17 @@ public class RegionFacade {
     }
 
     @Transactional
-    public RegionDTO findById(Long regionId) {
+    public Region findById(Long regionId) {
+        return regionService.findById(regionId);
+    }
+
+    @Transactional
+    public RegionDTO getById(Long regionId) {
         return regionFactory.toRegionDTO(regionService.findById(regionId));
     }
 
     @Transactional
-    public List<RegionDTO> findAll() {
+    public List<RegionDTO> getAll() {
         return regionFactory.toRegionDTOs(regionService.findAll());
     }
 
