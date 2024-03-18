@@ -36,10 +36,11 @@ public class JwtUtil {
         claims.put("authorities", userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList());
+        claims.put("id", ((UserPrincipal) userDetails).getId().toString());
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(((UserPrincipal) userDetails).getId().toString())
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plusMillis(expiration)))
                 .signWith(getSecretKey())

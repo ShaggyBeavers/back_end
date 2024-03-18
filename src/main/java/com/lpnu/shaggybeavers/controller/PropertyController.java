@@ -6,6 +6,7 @@ import com.lpnu.shaggybeavers.facade.PropertyFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class PropertyController {
     private final PropertyFacade propertyFacade;
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR')")
     public ResponseEntity<Void> createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
         propertyFacade.createProperty(propertyCreateDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);

@@ -39,11 +39,13 @@ public class ReportController {
     }
 
     @GetMapping("/{reportId}")
+    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityToReadReport(authentication, #reportId)")
     public ResponseEntity<ReportDTO> getReport(@PathVariable Long reportId) {
         return new ResponseEntity<>(reportFacade.getReport(reportId), HttpStatus.OK);
     }
 
     @PutMapping("/status")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUsecserHasEnoughAuthorityOnReport(authentication, #reportId)")
     public ResponseEntity<Void> changeStatus(@RequestParam Long reportId, @RequestParam String status) {
         reportFacade.changeStatus(reportId, ReportStatus.valueOf(status));
         return new ResponseEntity<>(HttpStatus.OK);

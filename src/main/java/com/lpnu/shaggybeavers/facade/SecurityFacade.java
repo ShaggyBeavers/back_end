@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Component
@@ -63,6 +64,19 @@ public class SecurityFacade {
         User currentUser = ((UserPrincipal) authentication.getPrincipal()).getUser();
 
         if (!UserUtil.doesUserHaveRole(currentUser, RoleEnum.ADMIN)) {
+            return doesUserAndReportHaveCommonRegionAndCategory(currentUser.getId(), reportId);
+        }
+
+        return true;
+    }
+
+    public boolean checkIfUserHasEnoughAuthorityToReadReport(Authentication authentication, Long reportId) {
+        User currentUser = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        if (UserUtil.doesUserHaveRole(currentUser, RoleEnum.USER)) {
+            return Objects.equals(Long.toString(currentUser.getId()), reportFacade.getReport(reportId).getUserId());
+        }
+        else if (!UserUtil.doesUserHaveRole(currentUser, RoleEnum.ADMIN)) {
             return doesUserAndReportHaveCommonRegionAndCategory(currentUser.getId(), reportId);
         }
 
