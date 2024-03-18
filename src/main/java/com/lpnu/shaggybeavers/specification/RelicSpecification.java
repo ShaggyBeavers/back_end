@@ -36,6 +36,9 @@ public class RelicSpecification implements Specification<Relic> {
         if (filter.getCategories() != null && !filter.getCategories().isEmpty()) {
             predicates.add(root.join("relicCategories").get("category").get("categoryName").in(filter.getCategories()));
         }
+        if (filter.getImageUrl() != null) {
+            predicates.add(filter.getImageUrl() ? criteriaBuilder.isNotNull(root.get("imageUrl")) : criteriaBuilder.isNull(root.get("imageUrl")));
+        }
 
         predicates.add(criteriaBuilder.equal(root.get("isDeleted"), false));
 

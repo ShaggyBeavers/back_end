@@ -11,8 +11,15 @@ import java.util.List;
 public class RelicFilter {
 
     private List<String> historicalPeriods;
+
     private List<RelicStatus> statuses;
+
     private List<String> techniques;
+
     private List<String> collections;
+
     private List<String> categories;
+
+    private Boolean imageUrl;
+
 }
