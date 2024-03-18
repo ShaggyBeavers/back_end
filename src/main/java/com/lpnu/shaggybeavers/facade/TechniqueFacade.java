@@ -3,6 +3,7 @@ package com.lpnu.shaggybeavers.facade;
 import com.lpnu.shaggybeavers.dto.TechniqueCreateDTO;
 import com.lpnu.shaggybeavers.dto.TechniqueDTO;
 import com.lpnu.shaggybeavers.factory.TechniqueFactory;
+import com.lpnu.shaggybeavers.model.Technique;
 import com.lpnu.shaggybeavers.service.TechniqueService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,17 @@ public class TechniqueFacade {
     }
 
     @Transactional
-    public TechniqueDTO findById(Long techniqueId) {
+    public Technique findById(Long techniqueId) {
+        return techniqueService.findById(techniqueId);
+    }
+
+    @Transactional
+    public TechniqueDTO getById(Long techniqueId) {
         return techniqueFactory.toTechniqueDTO(techniqueService.findById(techniqueId));
     }
 
     @Transactional
-    public List<TechniqueDTO> findAll() {
+    public List<TechniqueDTO> getAll() {
         return techniqueFactory.toTechniqueDTOs(techniqueService.findAll());
     }
 

@@ -3,6 +3,7 @@ package com.lpnu.shaggybeavers.facade;
 import com.lpnu.shaggybeavers.dto.HistoricalPeriodCreateDTO;
 import com.lpnu.shaggybeavers.dto.HistoricalPeriodDTO;
 import com.lpnu.shaggybeavers.factory.HistoricalPeriodFactory;
+import com.lpnu.shaggybeavers.model.HistoricalPeriod;
 import com.lpnu.shaggybeavers.service.HistoricalPeriodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,12 +25,17 @@ public class HistoricalPeriodFacade {
     }
 
     @Transactional
-    public HistoricalPeriodDTO findById(Long historicalPeriodId) {
+    public HistoricalPeriod findById(Long historicalPeriodId) {
+        return historicalPeriodService.findById(historicalPeriodId);
+    }
+
+    @Transactional
+    public HistoricalPeriodDTO getById(Long historicalPeriodId) {
         return historicalPeriodFactory.toHistoricalPeriodDTO(historicalPeriodService.findById(historicalPeriodId));
     }
 
     @Transactional
-    public List<HistoricalPeriodDTO> findAll() {
+    public List<HistoricalPeriodDTO> getAll() {
         return historicalPeriodFactory.toHistoricalPeriodDTOs(historicalPeriodService.findAll());
     }
 

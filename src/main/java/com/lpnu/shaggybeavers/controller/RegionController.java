@@ -27,12 +27,12 @@ public class RegionController {
 
     @GetMapping("/{regionId}")
     public ResponseEntity<RegionDTO> getRegionById(@PathVariable Long regionId) {
-        return new ResponseEntity<>(regionFacade.findById(regionId), HttpStatus.OK);
+        return new ResponseEntity<>(regionFacade.getById(regionId), HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<RegionDTO>> getRegions() {
-        return new ResponseEntity<>(regionFacade.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(regionFacade.getAll(), HttpStatus.OK);
     }
 
 }
