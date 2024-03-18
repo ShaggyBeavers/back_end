@@ -32,8 +32,8 @@ public class UserFacade {
     private final EmailFacade emailFacade;
 
     @Transactional
-    public UserProfileDTO getProfile(Long userId) {
-        return userFactory.toUserProfileDTO(userService.findById(userId));
+    public UserDTO getProfile(Long userId) {
+        return userFactory.toUserDTO(userService.findById(userId));
     }
 
     @Transactional
@@ -111,6 +111,11 @@ public class UserFacade {
     @Transactional
     public void banUnban(Long userId) {
         userService.banUnban(userService.findById(userId));
+    }
+
+    @Transactional
+    public List<UserDTO> getAll() {
+        return userFactory.toUserDTOList(userService.findAll());
     }
 
 }
