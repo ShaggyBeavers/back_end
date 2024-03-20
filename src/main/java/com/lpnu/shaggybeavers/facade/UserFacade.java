@@ -25,8 +25,6 @@ public class UserFacade {
 
     private final UserService userService;
 
-    private final StorageFacade storageFacade;
-
     private final ResetTokenFacade resetTokenFacade;
 
     private final EmailFacade emailFacade;
