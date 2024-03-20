@@ -5,7 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MuseumCreateDTO {
+public class MuseumDTO {
+
+    private Long id;
 
     private String name;
 
