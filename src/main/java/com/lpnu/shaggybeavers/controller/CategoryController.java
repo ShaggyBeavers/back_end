@@ -23,10 +23,23 @@ public class CategoryController {
         return new ResponseEntity<>(categoryFacade.readCategories(), HttpStatus.OK);
     }
 
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<CategoryDTO> readCategory(@PathVariable Long categoryId) {
+        return new ResponseEntity<>(categoryFacade.getById(categoryId), HttpStatus.OK);
+    }
+
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR')")
     public ResponseEntity<Void> createCategory(@RequestBody CategoryCreateDTO categoryCreateDTO){
         categoryFacade.createCategory(categoryCreateDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{categoryId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    public ResponseEntity<Void> delete(@PathVariable Long categoryId) {
+        categoryFacade.deleteById(categoryId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

@@ -35,4 +35,10 @@ public class TechniqueController {
         return new ResponseEntity<>(techniqueFacade.getAll(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{techniqueId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    public ResponseEntity<Void> delete(@PathVariable Long techniqueId) {
+        techniqueFacade.deleteById(techniqueId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

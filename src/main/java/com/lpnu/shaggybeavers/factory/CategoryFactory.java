@@ -22,4 +22,9 @@ public class CategoryFactory {
     public Category toCategory(CategoryCreateDTO categoryCreateDTO) {
         return entityMapper.toCategory(categoryCreateDTO);
     }
+
+    public CategoryDTO toCategoryDTO(Category category) {
+        return entityMapper.toCategoryDTO(category);
+    }
+
 }
