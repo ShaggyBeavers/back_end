@@ -36,4 +36,11 @@ public class HistoricalPeriodController {
         return new ResponseEntity<>(historicalPeriodFacade.getAll(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{historicalPeriodId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    public ResponseEntity<Void> delete(@PathVariable Long historicalPeriodId) {
+        historicalPeriodFacade.deleteById(historicalPeriodId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

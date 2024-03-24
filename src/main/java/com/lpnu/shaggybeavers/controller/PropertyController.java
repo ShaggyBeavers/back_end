@@ -35,4 +35,12 @@ public class PropertyController {
         return new ResponseEntity<>(propertyFacade.getAll(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{propertyId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    public ResponseEntity<Void> delete(@PathVariable Long propertyId) {
+        propertyFacade.deleteById(propertyId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

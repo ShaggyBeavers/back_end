@@ -33,4 +33,15 @@ public class CategoryFacade {
     public void createCategory(CategoryCreateDTO categoryCreateDTO) {
         categoryService.save(categoryFactory.toCategory(categoryCreateDTO));
     }
+
+    @Transactional
+    public CategoryDTO getById(Long categoryId) {
+        return categoryFactory.toCategoryDTO(categoryService.findById(categoryId));
+    }
+
+    @Transactional
+    public void deleteById(Long categoryId) {
+        categoryService.deleteById(categoryId);
+    }
+
 }

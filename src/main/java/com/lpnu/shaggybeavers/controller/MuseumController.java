@@ -35,4 +35,12 @@ public class MuseumController {
         return new ResponseEntity<>(museumFacade.getAll(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{museumId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    public ResponseEntity<Void> delete(@PathVariable Long museumId) {
+        museumFacade.deleteById(museumId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

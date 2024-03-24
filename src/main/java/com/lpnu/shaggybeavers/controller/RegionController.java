@@ -35,4 +35,11 @@ public class RegionController {
         return new ResponseEntity<>(regionFacade.getAll(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{regionId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    public ResponseEntity<Void> delete(@PathVariable Long regionId) {
+        regionFacade.deleteById(regionId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

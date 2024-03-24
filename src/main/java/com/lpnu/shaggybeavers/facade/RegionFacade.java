@@ -39,4 +39,8 @@ public class RegionFacade {
         return regionFactory.toRegionDTOs(regionService.findAll());
     }
 
+    @Transactional
+    public void deleteById(Long regionId) {
+        regionService.deleteById(regionId);
+    }
 }

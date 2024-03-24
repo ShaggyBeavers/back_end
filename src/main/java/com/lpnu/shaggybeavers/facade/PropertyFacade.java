@@ -39,4 +39,8 @@ public class PropertyFacade {
         return propertyFactory.toPropertyDTOs(propertyService.findAll());
     }
 
+    @Transactional
+    public void deleteById(Long propertyId) {
+        propertyService.deleteById(propertyId);
+    }
 }

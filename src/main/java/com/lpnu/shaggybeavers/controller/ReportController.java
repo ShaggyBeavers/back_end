@@ -45,7 +45,7 @@ public class ReportController {
     }
 
     @PutMapping("/status")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUsecserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
     public ResponseEntity<Void> changeStatus(@RequestParam Long reportId, @RequestParam String status) {
         reportFacade.changeStatus(reportId, ReportStatus.valueOf(status));
         return new ResponseEntity<>(HttpStatus.OK);

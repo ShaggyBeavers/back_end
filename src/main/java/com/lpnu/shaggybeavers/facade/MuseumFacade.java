@@ -38,4 +38,8 @@ public class MuseumFacade {
         return museumFactory.toMuseumDTOs(museumService.findAll());
     }
 
+    @Transactional
+    public void deleteById(Long museumId) {
+        museumService.deleteById(museumId);
+    }
 }

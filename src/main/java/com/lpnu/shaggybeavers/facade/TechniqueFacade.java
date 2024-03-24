@@ -39,4 +39,8 @@ public class TechniqueFacade {
         return techniqueFactory.toTechniqueDTOs(techniqueService.findAll());
     }
 
+    @Transactional
+    public void deleteById(Long techniqueId) {
+        techniqueService.deleteById(techniqueId);
+    }
 }

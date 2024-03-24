@@ -39,4 +39,8 @@ public class HistoricalPeriodFacade {
         return historicalPeriodFactory.toHistoricalPeriodDTOs(historicalPeriodService.findAll());
     }
 
+    @Transactional
+    public void deleteById(Long historicalPeriodId) {
+        historicalPeriodService.deleteById(historicalPeriodId);
+    }
 }
