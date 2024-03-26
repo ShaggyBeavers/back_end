@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class PropertyCreateDTO {
 
-    private String property;
+    private String name;
 }
