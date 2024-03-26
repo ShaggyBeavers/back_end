@@ -15,6 +15,7 @@ public interface CategoryMapper {
     @Mapping(source = "name", target = "categoryName")
     Category toCategory(CategoryCreateDTO categoryCreateDTO);
 
+    @Mapping(source = "categoryName", target = "name")
     CategoryDTO toCategoryDTO(Category category);
 
 }

@@ -9,6 +9,6 @@ public class PropertyDTO {
 
     private Long id;
 
-    private String property;
+    private String name;
 
 }

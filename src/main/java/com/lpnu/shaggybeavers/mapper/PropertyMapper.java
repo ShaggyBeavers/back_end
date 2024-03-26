@@ -11,6 +11,7 @@ public interface PropertyMapper {
     @Mapping(source = "name", target = "property")
     Property toProperty(PropertyCreateDTO propertyCreateDTO);
 
+    @Mapping(source = "property", target = "name")
     PropertyDTO toPropertyDTO(Property property);
 
     List<PropertyDTO> toPropertyDTOs(List<Property> properties);
