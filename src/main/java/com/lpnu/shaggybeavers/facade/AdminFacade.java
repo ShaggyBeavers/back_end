@@ -30,7 +30,7 @@ public class AdminFacade {
     public void createModerator(User currentUser, ModeratorCreateDTO dto, RoleEnum roleEnum) {
         User user = userFacade.getUserById(dto.getUserId());
         user.setRole(roleFacade.findByName(roleEnum.name()));
-        userFacade.save(user);
+        userFacade.update(user);
 
         switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
             case ADMIN -> {

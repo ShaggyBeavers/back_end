@@ -116,4 +116,9 @@ public class UserFacade {
         return userFactory.toUserDTOList(userService.findAll());
     }
 
+    @Transactional
+    public void update(User user) {
+        userService.update(user);
+    }
+
 }
