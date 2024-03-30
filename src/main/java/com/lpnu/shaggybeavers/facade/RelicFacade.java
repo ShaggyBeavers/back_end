@@ -14,7 +14,6 @@ import com.lpnu.shaggybeavers.specification.RelicSpecification;
 import com.lpnu.shaggybeavers.util.FileUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -45,6 +44,8 @@ public class RelicFacade {
     private final RelicPropertyFacade relicPropertyFacade;
 
     private final RelicCategoryFacade relicCategoryFacade;
+
+    private final RelicFileFacade relicFileFacade;
 
     @Transactional
     public RelicDTO getRelicById(Long relicId) {
@@ -151,31 +152,38 @@ public class RelicFacade {
     }
 
     @Transactional
-    public void uploadFile(Long relicId, MultipartFile multipartFile) {
-        try {
-            relicService.uploadFile(relicService.findById(relicId), FileUtil.toFile(multipartFile));
-        } catch (IOException ioe) {
-            throw new FileException("Failed uploading file: " + ioe.getMessage());
-        }
+    public void uploadFiles(Long relicId, List<MultipartFile> multipartFiles) {
+        multipartFiles.forEach(multipartFile -> {
+            try {
+                relicFileFacade.createRelicFile(relicService.findById(relicId), FileUtil.toFile(multipartFile));
+            } catch (IOException e) {
+                throw new FileException("Failed uploading file: " + e.getMessage());
+            }
+        });
     }
 
     @Transactional
-    public Resource downloadFile(Long relicId) {
-        return relicService.downloadFile(relicService.findById(relicId));
+    public List<FileDTO> downloadFiles(Long relicId) {
+        List<RelicFile> relicFiles = relicFileFacade.findAllByRelicId(relicId);
+        return relicFiles.stream()
+                .map(relicFile -> {
+                    FileDTO fileDTO = new FileDTO();
+                    fileDTO.setFile(relicFileFacade.downloadFile(relicFile));
+                    fileDTO.setExtension(relicFile.getExtension());
+                    return fileDTO;
+                })
+                .toList();
     }
 
     @Transactional
-    public void deleteFile(Long relicId) {
-        relicService.deleteFile(relicService.findById(relicId));
+    public void deleteFiles(Long relicId) {
+        relicFileFacade.deleteAllByRelicId(relicId);
     }
 
     @Transactional
-    public void updateFile(Long relicId, MultipartFile multipartFile) {
-        try {
-            relicService.updateFile(relicService.findById(relicId), FileUtil.toFile(multipartFile));
-        } catch (IOException ioe) {
-            throw new FileException("Failed updating file: " + ioe.getMessage());
-        }
+    public void updateFiles(Long relicId, List<MultipartFile> multipartFiles) {
+        deleteFiles(relicId);
+        uploadFiles(relicId, multipartFiles);
     }
 
     @Transactional
