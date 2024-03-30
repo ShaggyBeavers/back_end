@@ -3,8 +3,6 @@ package com.lpnu.shaggybeavers.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Setter
 @Getter
 public class RecoveredRelicInfoDTO {
@@ -13,10 +11,10 @@ public class RecoveredRelicInfoDTO {
 
     private String returnProcess;
 
-    private LocalDate returnDate;
+    private String returnDate;
 
     private String courtDecision;
 
-    private LocalDate previousSearchInfo;
+    private String previousSearchInfo;
 
 }

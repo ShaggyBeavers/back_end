@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Table(name = "lost_relic_info")
 @Entity
 @Getter
@@ -28,7 +26,7 @@ public class LostRelicInfo implements EntityWithId<Long> {
     private String lossWay;
 
     @Column(name = "loss_time")
-    private LocalDate lossTime;
+    private String lossTime;
 
     @Column(name = "probable_location")
     private String probableLocation;

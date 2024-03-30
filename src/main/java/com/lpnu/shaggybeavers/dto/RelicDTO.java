@@ -4,7 +4,6 @@ import com.lpnu.shaggybeavers.domain.RelicStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Setter
@@ -15,7 +14,7 @@ public class RelicDTO {
 
     private String name;
 
-    private LocalDate creationDate;
+    private String creationDate;
 
     private String creationPlaceName;
 
@@ -35,7 +34,7 @@ public class RelicDTO {
 
     private String copyInformation;
 
-    private LocalDate copyCreationTime;
+    private String copyCreationTime;
 
     private String entryBookNumber;
 

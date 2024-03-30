@@ -1,11 +1,9 @@
 package com.lpnu.shaggybeavers.dto;
 
 import com.lpnu.shaggybeavers.domain.RelicStatus;
-import com.lpnu.shaggybeavers.model.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,7 @@ public class RelicCreateEditDTO {
 
     private RelicStatus status;
 
-    private LocalDate creationDate;
+    private String creationDate;
 
     private String author;
 
@@ -25,7 +23,7 @@ public class RelicCreateEditDTO {
 
     private String name;
 
-    private Long creationPlaceId;
+    private String creationPlace;
 
     private List<Long> reportIds = new ArrayList<>();
 
@@ -41,7 +39,7 @@ public class RelicCreateEditDTO {
 
     private String copyInformation;
 
-    private LocalDate copyCreationTime;
+    private String copyCreationTime;
 
     private String entryBookNumber;
 

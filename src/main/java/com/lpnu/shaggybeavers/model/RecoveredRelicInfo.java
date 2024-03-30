@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Table(name = "recovered_relic_info")
 @Entity
 @Getter
@@ -24,7 +22,7 @@ public class RecoveredRelicInfo implements EntityWithId<Long> {
     private String locationSource;
 
     @Column(name = "previous_search_info")
-    private LocalDate previousSearchInfo;
+    private String previousSearchInfo;
 
     @Column(name = "return_process")
     private String returnProcess;
@@ -33,7 +31,7 @@ public class RecoveredRelicInfo implements EntityWithId<Long> {
     private String courtDecision;
 
     @Column(name = "return_date")
-    private LocalDate returnDate;
+    private String returnDate;
 
 }
 

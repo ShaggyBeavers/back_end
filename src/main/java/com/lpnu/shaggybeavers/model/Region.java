@@ -29,6 +29,4 @@ public class Region implements EntityWithId<Long> {
     @OneToMany(mappedBy = "region", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Relic> relicsByRegion = new ArrayList<>();
 
-    @OneToMany(mappedBy = "creationPlace", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    private List<Relic> relicsByCreationPlace = new ArrayList<>();
 }

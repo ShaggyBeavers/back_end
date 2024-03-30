@@ -4,7 +4,6 @@ import com.lpnu.shaggybeavers.domain.RelicStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Setter
@@ -15,7 +14,7 @@ public class FavoriteRelicDTO {
 
     private RelicStatus status;
 
-    private LocalDate lossTime;
+    private String lossTime;
 
     private List<CategoryDTO> categories;
 
