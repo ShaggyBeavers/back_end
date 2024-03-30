@@ -166,12 +166,7 @@ public class RelicFacade {
     public List<FileDTO> downloadFiles(Long relicId) {
         List<RelicFile> relicFiles = relicFileFacade.findAllByRelicId(relicId);
         return relicFiles.stream()
-                .map(relicFile -> {
-                    FileDTO fileDTO = new FileDTO();
-                    fileDTO.setFile(relicFileFacade.downloadFile(relicFile));
-                    fileDTO.setExtension(relicFile.getExtension());
-                    return fileDTO;
-                })
+                .map(relicFile -> relicFactory.toFileDTO(relicFileFacade.downloadFile(relicFile), relicFile.getExtension()))
                 .toList();
     }
 

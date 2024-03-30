@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -26,12 +27,16 @@ public class FileUtil {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         try (ZipOutputStream zos = new ZipOutputStream(baos)) {
-            for (int i = 0; i < dtos.size(); i++) {
-                Resource resource = dtos.get(i).getFile();
-                zos.putNextEntry(new ZipEntry("file" + i + dtos.get(i).getExtension()));
-                zos.write(resource.getContentAsByteArray());
-                zos.closeEntry();
-            }
+            dtos.forEach(dto -> {
+                Resource file = dto.getFile();
+                try {
+                    zos.putNextEntry(new ZipEntry("file" + LocalDateTime.now() + dto.getExtension()));
+                    zos.write(file.getContentAsByteArray());
+                    zos.closeEntry();
+                } catch (IOException ex) {
+                    throw new FileException("Error zipping file: " + file.getFilename());
+                }
+            });
         } catch (IOException e) {
             throw new FileException("Zipping files failed");
         }
