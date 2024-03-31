@@ -20,6 +20,11 @@ public class RelicFilter {
 
     private List<String> categories;
 
-    private Boolean imageUrl;
+        private List<String> museums;
 
+        private List<String> regions;
+
+        private List<String> creationPlaces;
+
+    private Boolean imageUrl;
 }

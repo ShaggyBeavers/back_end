@@ -39,6 +39,15 @@ public class RelicSpecification implements Specification<Relic> {
         if (filter.getImageUrl() != null) {
             predicates.add(filter.getImageUrl() ? criteriaBuilder.isNotNull(root.get("imageUrl")) : criteriaBuilder.isNull(root.get("imageUrl")));
         }
+        if (filter.getRegions() != null && !filter.getRegions().isEmpty()) {
+            predicates.add(root.join("region").get("name").in(filter.getRegions()));
+        }
+        if (filter.getMuseums() != null && !filter.getMuseums().isEmpty()) {
+            predicates.add(root.join("museum").get("name").in(filter.getMuseums()));
+        }
+        if (filter.getCreationPlaces() != null && !filter.getCreationPlaces().isEmpty()) {
+            predicates.add(root.join("creationPlace").get("name").in(filter.getCreationPlaces()));
+        }
 
         predicates.add(criteriaBuilder.equal(root.get("isDeleted"), false));
 
