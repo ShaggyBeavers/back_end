@@ -18,8 +18,6 @@ public class ReportCreateDTO {
 
     private Set<Long> categoryIds;
 
-    private ReportStatus status;
-
     private String infoReferences;
 
     private Long regionId;

@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.facade;
 
+import com.lpnu.shaggybeavers.domain.RelicStatus;
 import com.lpnu.shaggybeavers.domain.ReportStatus;
 import com.lpnu.shaggybeavers.domain.RoleEnum;
 import com.lpnu.shaggybeavers.dto.ReportCreateDTO;
@@ -39,6 +40,7 @@ public class ReportFacade {
     @Transactional
     public Long createReport(UserPrincipal userPrincipal, ReportCreateDTO dto) {
         Report report = reportFactory.toReport(dto);
+        report.setStatus(ReportStatus.NEW);
         report.setRegion(regionFacade.findById(dto.getRegionId()));
         report.setUser(userPrincipal.getUser());
         reportService.save(report);
