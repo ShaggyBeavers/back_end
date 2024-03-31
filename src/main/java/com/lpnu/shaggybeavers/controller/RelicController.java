@@ -58,7 +58,7 @@ public class RelicController {
     }
 
     @PostMapping("/create")
-   //// @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
     public ResponseEntity<Void> createRelic(
            @RequestBody RelicCreateEditDTO relicCreateEditDTO){
         relicFacade.createRelic(relicCreateEditDTO);

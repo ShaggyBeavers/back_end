@@ -38,8 +38,9 @@ public class Relic extends FileEntity<String> implements EntityWithId<Long> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "creation_place")
-    private String creationPlace;
+    @ManyToOne
+    @JoinColumn(name = "creation_place_id")
+    private Region creationPlace;
 
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Report> reports = new ArrayList<>();

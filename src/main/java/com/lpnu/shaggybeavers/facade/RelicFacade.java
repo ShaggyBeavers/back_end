@@ -68,6 +68,7 @@ public class RelicFacade {
     public void editRelic(Long relicId, RelicCreateEditDTO relicCreateEditDTO) {
         Relic relic = relicFactory.update(relicService.findById(relicId), relicCreateEditDTO);
         relic.setRegion(regionFacade.findById((relicCreateEditDTO.getRegionId())));
+        relic.setCreationPlace(regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())));
         relic.setMuseum(museumFacade.findById((relicCreateEditDTO.getMuseumId())));
         relicService.save(relic);
 
@@ -104,6 +105,7 @@ public class RelicFacade {
     public void createRelic(RelicCreateEditDTO relicCreateEditDTO) {
         Relic relic = relicFactory.toRelic(relicCreateEditDTO);
         relic.setRegion(regionFacade.findById((relicCreateEditDTO.getRegionId())));
+        relic.setCreationPlace(regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())));
         relic.setMuseum(museumFacade.findById((relicCreateEditDTO.getMuseumId())));
         relic = relicService.save(relic);
 

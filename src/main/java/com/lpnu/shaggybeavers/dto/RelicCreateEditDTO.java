@@ -23,7 +23,7 @@ public class RelicCreateEditDTO {
 
     private String name;
 
-    private String creationPlace;
+    private Long creationPlaceId;
 
     private List<Long> reportIds = new ArrayList<>();
 

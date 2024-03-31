@@ -18,4 +18,7 @@ public class ReportPageDTO {
 
     private String userEmail;
 
+    private Long userId;
+
+    private Long reportId;
 }
