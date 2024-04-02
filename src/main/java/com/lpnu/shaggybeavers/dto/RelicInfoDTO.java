@@ -23,4 +23,7 @@ public class RelicInfoDTO {
 
     private String annotation;
 
+    private String appraisedValue;
+
+    private String insuranceValue;
 }

@@ -6,4 +6,8 @@ import org.mapstruct.Mapping;
 
 public interface ReportCategoryMapper {
 
+    @Mapping(source = "category.categoryName", target = "name")
+    @Mapping(source = "category.id", target = "id")
+    CategoryDTO toCategoryDTO(ReportCategory reportCategory);
+
 }
