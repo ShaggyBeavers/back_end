@@ -17,6 +17,8 @@ public interface ReportMapper {
     ReportDTO toReportDTO(Report report);
 
     @Mapping(source = "user.email", target = "userEmail")
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "id", target = "reportId")
     @Mapping(source = "reportCategories", target = "categoriesDTO")
     ReportPageDTO toReportPageDTO(Report report);
 }

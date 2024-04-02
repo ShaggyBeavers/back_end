@@ -6,8 +6,4 @@ import org.mapstruct.Mapping;
 
 public interface RelicCategoryMapper {
 
-    @Mapping(source = "category.id", target = "id")
-    @Mapping(source = "category.categoryName", target = "categoryName")
-    CategoryDTO toCategoryDTO(RelicCategory relicCategory);
-
 }

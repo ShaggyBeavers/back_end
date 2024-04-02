@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class Relic implements EntityWithId<Long> {
     private RelicStatus status;
 
     @Column(name = "creation_date")
-    private LocalDate creationDate;
+    private String creationDate;
 
     @Column(name = "author")
     private String author;
@@ -69,7 +68,7 @@ public class Relic implements EntityWithId<Long> {
     private String copyInformation;
 
     @Column(name = "copy_creation_time")
-    private LocalDate copyCreationTime;
+    private String copyCreationTime;
 
     @Column(name = "entry_book_number")
     private String entryBookNumber;
