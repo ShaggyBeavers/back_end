@@ -8,6 +8,7 @@ import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.facade.RelicFacade;
 import com.lpnu.shaggybeavers.filter.RelicFilter;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
+import com.lpnu.shaggybeavers.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
@@ -83,30 +84,30 @@ public class RelicController {
         return new ResponseEntity<>(relicFacade.countByStatuses(statuses), HttpStatus.OK);
     }
 
-    @PostMapping("/file/upload/{relicId}")
-    public ResponseEntity<Void> uploadFile(
-            @PathVariable Long relicId, @RequestParam(value = "file") MultipartFile multipartFile) {
-        relicFacade.uploadFile(relicId, multipartFile);
+    @PostMapping("/files/upload/{relicId}")
+    public ResponseEntity<Void> uploadFiles(
+            @PathVariable Long relicId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
+        relicFacade.uploadFiles(relicId, multipartFiles);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/file/download/{relicId}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable Long relicId) {
-        return new ResponseEntity<>(relicFacade.downloadFile(relicId), HttpStatus.OK);
+    @GetMapping("/files/download/{relicId}")
+    public ResponseEntity<Resource> downloadFiles(@PathVariable Long relicId) {
+        return new ResponseEntity<>(FileUtil.zipFiles(relicFacade.downloadFiles(relicId)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/file/delete/{relicId}")
+    @DeleteMapping("/files/delete/{relicId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
-    public ResponseEntity<Void> deleteFile(@PathVariable Long relicId) {
-        relicFacade.deleteFile(relicId);
+    public ResponseEntity<Void> deleteFiles(@PathVariable Long relicId) {
+        relicFacade.deleteFiles(relicId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/file/update/{relicId}")
+    @PutMapping("/files/update/{relicId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
-    public ResponseEntity<Void> updateFile(
-            @PathVariable Long relicId, @RequestParam(value = "file") MultipartFile multipartFile) {
-        relicFacade.updateFile(relicId, multipartFile);
+    public ResponseEntity<Void> updateFiles(
+            @PathVariable Long relicId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
+        relicFacade.updateFiles(relicId, multipartFiles);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

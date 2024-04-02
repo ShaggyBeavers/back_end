@@ -1,12 +1,10 @@
 package com.lpnu.shaggybeavers.factory;
 
-import com.lpnu.shaggybeavers.dto.FavoriteRelicDTO;
-import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
-import com.lpnu.shaggybeavers.dto.RelicDTO;
-import com.lpnu.shaggybeavers.dto.RelicCreateEditDTO;
+import com.lpnu.shaggybeavers.dto.*;
 import com.lpnu.shaggybeavers.mapper.EntityMapper;
 import com.lpnu.shaggybeavers.model.Relic;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,7 +25,6 @@ public class RelicFactory {
         return entityMapper.toRelicDTOList(relics);
     }
 
-
     public Relic toRelic(RelicCreateEditDTO relicCreateEditDTO) {
         return entityMapper.toRelic(relicCreateEditDTO);
     }
@@ -40,5 +37,8 @@ public class RelicFactory {
         return entityMapper.toFavoriteRelicDTO(relic);
     }
 
+    public FileDTO toFileDTO(Resource file, String extension) {
+        return entityMapper.toFileDTO(file, extension);
+    }
 
 }
