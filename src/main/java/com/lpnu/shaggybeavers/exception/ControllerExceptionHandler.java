@@ -2,10 +2,7 @@ package com.lpnu.shaggybeavers.exception;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,6 +51,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return buildException(List.of(e.getMessage()), HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<Object> handleOthers(RuntimeException e) {
+        return buildException(List.of( e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     private ResponseEntity<Object> buildException(List<String> message, HttpStatus httpStatus){
         var exceptionDetails = new ExcpetionDetails();
 
@@ -70,6 +72,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
+    protected ResponseEntity<Object> createResponseEntity(Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
+        return super.createResponseEntity(body, headers, statusCode, request);
+    }
+
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid (MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         List<String> errors = ex.getBindingResult()
@@ -79,5 +86,10 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 .toList();
 
         return buildException(errors,HttpStatus.valueOf(status.value()));
+    }
+
+    @Override
+    protected ProblemDetail createProblemDetail(Exception ex, HttpStatusCode status, String defaultDetail, String detailMessageCode, Object[] detailMessageArguments, WebRequest request) {
+        return super.createProblemDetail(ex, status, defaultDetail, detailMessageCode, detailMessageArguments, request);
     }
 }
