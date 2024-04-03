@@ -23,4 +23,6 @@ public class ReportPageDTO {
     private Long reportId;
 
     private Long regionId;
+
+    private String regionName;
 }
