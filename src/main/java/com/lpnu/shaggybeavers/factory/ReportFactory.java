@@ -1,11 +1,13 @@
 package com.lpnu.shaggybeavers.factory;
 
+import com.lpnu.shaggybeavers.dto.FileDTO;
 import com.lpnu.shaggybeavers.dto.ReportCreateDTO;
 import com.lpnu.shaggybeavers.dto.ReportDTO;
 import com.lpnu.shaggybeavers.dto.ReportPageDTO;
 import com.lpnu.shaggybeavers.mapper.EntityMapper;
 import com.lpnu.shaggybeavers.model.Report;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,4 +23,8 @@ public class ReportFactory {
     public ReportDTO toReportDTO(Report report) { return entityMapper.toReportDTO(report); }
 
     public ReportPageDTO toReportPageDTO(Report report) { return entityMapper.toReportPageDTO(report); }
+
+    public FileDTO toFileDTO(Resource file, String extension) {
+        return entityMapper.toFileDTO(file, extension);
+    }
 }

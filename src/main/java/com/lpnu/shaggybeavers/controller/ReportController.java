@@ -3,6 +3,8 @@ package com.lpnu.shaggybeavers.controller;
 import com.lpnu.shaggybeavers.domain.ReportStatus;
 import com.lpnu.shaggybeavers.dto.ReportDTO;
 import com.lpnu.shaggybeavers.dto.ReportPageDTO;
+import com.lpnu.shaggybeavers.util.FileUtil;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/report")
@@ -56,6 +61,35 @@ public class ReportController {
     public ResponseEntity<Void> delete(
             @AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Long reportId) {
         reportFacade.delete(userPrincipal.getUser(), reportId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/files/upload/{reportId}")
+    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    public ResponseEntity<Void> uploadFiles(
+            @PathVariable Long reportId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
+        reportFacade.uploadFiles(reportId, multipartFiles);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/files/download/{reportId}")
+    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    public ResponseEntity<Resource> downloadFiles(@PathVariable Long reportId) {
+        return new ResponseEntity<>(FileUtil.zipFiles(reportFacade.downloadFiles(reportId)), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/files/delete/{reportId}")
+    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    public ResponseEntity<Void> deleteFiles(@PathVariable Long reportId) {
+        reportFacade.deleteFiles(reportId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/files/update/{reportId}")
+    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    public ResponseEntity<Void> updateFiles(
+            @PathVariable Long reportId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
+        reportFacade.updateFiles(reportId, multipartFiles);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

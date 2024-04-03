@@ -52,4 +52,6 @@ public class RelicDTO {
 
     private LostRelicInfoDTO lostRelicInfoDTO;
 
+    private List<CategoryDTO> categoryDTOs;
+
 }

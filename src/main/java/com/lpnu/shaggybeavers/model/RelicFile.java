@@ -18,7 +18,4 @@ public class RelicFile extends FileEntity<String> implements EntityWithId<Long> 
     @JoinColumn(name = "relic_id")
     private Relic relic;
 
-    @Column(name = "extension")
-    private String extension;
-
 }
