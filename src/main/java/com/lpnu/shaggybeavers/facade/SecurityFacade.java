@@ -64,7 +64,8 @@ public class SecurityFacade {
         User currentUser = ((UserPrincipal) authentication.getPrincipal()).getUser();
 
         if (!UserUtil.doesUserHaveRole(currentUser, RoleEnum.ADMIN)) {
-            return doesUserAndReportHaveCommonRegionAndCategory(currentUser.getId(), reportId);
+            return Objects.equals(currentUser.getId(), reportFacade.findById(reportId).getUser().getId()) ||
+                    doesUserAndReportHaveCommonRegionAndCategory(currentUser.getId(), reportId);
         }
 
         return true;

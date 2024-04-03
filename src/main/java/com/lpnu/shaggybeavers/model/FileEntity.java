@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +17,8 @@ public class FileEntity <CONTENT_ID> {
 
     @ContentLength
     private Long contentLength;
+
+    @Column(name = "extension")
+    private String extension;
 
 }

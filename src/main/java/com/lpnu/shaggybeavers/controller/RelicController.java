@@ -85,6 +85,7 @@ public class RelicController {
     }
 
     @PostMapping("/files/upload/{relicId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
     public ResponseEntity<Void> uploadFiles(
             @PathVariable Long relicId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
         relicFacade.uploadFiles(relicId, multipartFiles);
