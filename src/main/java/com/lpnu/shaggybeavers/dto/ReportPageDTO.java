@@ -21,4 +21,6 @@ public class ReportPageDTO {
     private Long userId;
 
     private Long reportId;
+
+    private Long regionId;
 }

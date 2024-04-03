@@ -20,5 +20,6 @@ public interface ReportMapper {
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "id", target = "reportId")
     @Mapping(source = "reportCategories", target = "categoriesDTO")
+    @Mapping(source = "region.id", target = "regionId")
     ReportPageDTO toReportPageDTO(Report report);
 }
