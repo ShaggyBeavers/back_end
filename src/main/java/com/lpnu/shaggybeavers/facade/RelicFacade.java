@@ -69,8 +69,10 @@ public class RelicFacade {
     public void editRelic(Long relicId, RelicCreateEditDTO relicCreateEditDTO) {
         Relic relic = relicFactory.update(relicService.findById(relicId), relicCreateEditDTO);
         relic.setRegion(regionFacade.findById((relicCreateEditDTO.getRegionId())));
-        relic.setCreationPlace(regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())));
-        relic.setMuseum(museumFacade.findById((relicCreateEditDTO.getMuseumId())));
+        var creationPlace = (relicCreateEditDTO.getCreationPlaceId() != null) ? regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())) : null;
+        relic.setCreationPlace(creationPlace);
+        var museum = (relicCreateEditDTO.getMuseumId() != null) ? museumFacade.findById((relicCreateEditDTO.getMuseumId())) : null;
+        relic.setMuseum(museum);
         relicService.save(relic);
 
         relicCategoryFacade.updateRelicCategories(relicCreateEditDTO.getRelicCategoryIds(), relic);
@@ -103,11 +105,13 @@ public class RelicFacade {
     }
 
     @Transactional
-    public void createRelic(RelicCreateEditDTO relicCreateEditDTO) {
+    public Long createRelic(RelicCreateEditDTO relicCreateEditDTO) {
         Relic relic = relicFactory.toRelic(relicCreateEditDTO);
         relic.setRegion(regionFacade.findById((relicCreateEditDTO.getRegionId())));
-        relic.setCreationPlace(regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())));
-        relic.setMuseum(museumFacade.findById((relicCreateEditDTO.getMuseumId())));
+        var creationPlace = (relicCreateEditDTO.getCreationPlaceId() != null) ? regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())) : null;
+        relic.setCreationPlace(creationPlace);
+        var museum = (relicCreateEditDTO.getMuseumId() != null) ? museumFacade.findById((relicCreateEditDTO.getMuseumId())) : null;
+        relic.setMuseum(museum);
         relic = relicService.save(relic);
 
         relicCategoryFacade.updateRelicCategories(relicCreateEditDTO.getRelicCategoryIds(), relic);
@@ -124,6 +128,7 @@ public class RelicFacade {
         if (lostRelicInfoCreateEditDTO != null) {
             lostRelicInfoFacade.create(lostRelicInfoCreateEditDTO, relicInfo);
         }
+        return relic.getId();
     }
 
     @Transactional

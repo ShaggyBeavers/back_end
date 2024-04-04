@@ -60,10 +60,10 @@ public class RelicController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
-    public ResponseEntity<Void> createRelic(
+    public ResponseEntity<Long> createRelic(
            @RequestBody RelicCreateEditDTO relicCreateEditDTO){
-        relicFacade.createRelic(relicCreateEditDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Long id = relicFacade.createRelic(relicCreateEditDTO);
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @PostMapping("/change-favorite")

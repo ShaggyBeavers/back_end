@@ -26,16 +26,20 @@ public class RelicInfoFacade {
     public RelicInfo create(RelicInfoCreateEditDTO relicInfoCreateEditDTO, Relic relic) {
         RelicInfo relicInfo = relicInfoFactory.toRelicInfo(relicInfoCreateEditDTO);
         relicInfo.setRelic(relic);
-        relicInfo.setTechnique(techniqueFacade.findById(relicInfoCreateEditDTO.getTechniqueId()));
-        relicInfo.setHistoricalPeriod(historicalPeriodFacade.findById(relicInfoCreateEditDTO.getHistoricalPeriodId()));
+        var technique = (relicInfoCreateEditDTO.getTechniqueId() != null) ? techniqueFacade.findById((relicInfoCreateEditDTO.getTechniqueId())) : null;
+        relicInfo.setTechnique(technique);
+        var historicalPeriod = (relicInfoCreateEditDTO.getHistoricalPeriodId() != null) ? historicalPeriodFacade.findById((relicInfoCreateEditDTO.getHistoricalPeriodId())) : null;
+        relicInfo.setHistoricalPeriod(historicalPeriod);
         return relicInfoService.save(relicInfo);
     }
 
     @Transactional
     public RelicInfo update(Long id, RelicInfoCreateEditDTO relicInfoCreateEditDTO) {
         RelicInfo relicInfo = relicInfoFactory.update(relicInfoService.findById(id), relicInfoCreateEditDTO);
-        relicInfo.setTechnique(techniqueFacade.findById(relicInfoCreateEditDTO.getTechniqueId()));
-        relicInfo.setHistoricalPeriod(historicalPeriodFacade.findById(relicInfoCreateEditDTO.getHistoricalPeriodId()));
+        var technique = (relicInfoCreateEditDTO.getTechniqueId() != null) ? techniqueFacade.findById((relicInfoCreateEditDTO.getTechniqueId())) : null;
+        relicInfo.setTechnique(technique);
+        var historicalPeriod = (relicInfoCreateEditDTO.getHistoricalPeriodId() != null) ? historicalPeriodFacade.findById((relicInfoCreateEditDTO.getHistoricalPeriodId())) : null;
+        relicInfo.setHistoricalPeriod(historicalPeriod);
         return relicInfoService.save(relicInfo);
     }
 }
