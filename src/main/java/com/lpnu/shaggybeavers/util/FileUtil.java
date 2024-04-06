@@ -30,7 +30,7 @@ public class FileUtil {
             dtos.forEach(dto -> {
                 Resource file = dto.getFile();
                 try {
-                    zos.putNextEntry(new ZipEntry("file" + LocalDateTime.now() + dto.getExtension()));
+                    zos.putNextEntry(new ZipEntry(dto.getEntityId().toString() + '_' + LocalDateTime.now() + dto.getExtension()));
                     zos.write(file.getContentAsByteArray());
                     zos.closeEntry();
                 } catch (IOException ex) {

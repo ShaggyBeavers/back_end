@@ -1,6 +1,7 @@
 package com.lpnu.shaggybeavers.controller;
 
 import com.lpnu.shaggybeavers.domain.ReportStatus;
+import com.lpnu.shaggybeavers.dto.DownloadFilesDTO;
 import com.lpnu.shaggybeavers.dto.ReportDTO;
 import com.lpnu.shaggybeavers.dto.ReportPageDTO;
 import com.lpnu.shaggybeavers.util.FileUtil;
@@ -91,6 +92,11 @@ public class ReportController {
             @PathVariable Long reportId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
         reportFacade.updateFiles(reportId, multipartFiles);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/files/download")
+    public ResponseEntity<Resource> downloadFiles(@RequestBody DownloadFilesDTO dto) {
+        return new ResponseEntity<>(FileUtil.zipFiles(reportFacade.downloadFiles(dto)), HttpStatus.OK);
     }
 
 }
