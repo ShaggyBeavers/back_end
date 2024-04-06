@@ -43,9 +43,9 @@ public class RelicCreateEditDTO {
 
     private String entryBookNumber;
 
-    private Integer inventoryNumber;
+    private String inventoryNumber;
 
-    private Integer formerInventoryNumber;
+    private String formerInventoryNumber;
 
     private List<Long> relicPropertyIds = new ArrayList<>();
 

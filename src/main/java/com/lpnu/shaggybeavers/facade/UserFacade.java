@@ -53,7 +53,7 @@ public class UserFacade {
 
     @Transactional
     public void editUser(Long userId, UserEditDTO userEditDTO) {
-        if (userService.emailIsPresent(userEditDTO.getEmail()))  {
+        if (userService.emailIsPresent(userEditDTO.getEmail()) && !Objects.equals(userEditDTO.getEmail(), userService.findById(userId).getEmail()))  {
               throw new DuplicateException("This email is already registered");
         }
         userService.update(userFactory.update(userService.findById(userId), userEditDTO));
