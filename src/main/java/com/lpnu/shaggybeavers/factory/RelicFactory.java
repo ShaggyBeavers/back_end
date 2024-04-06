@@ -37,8 +37,8 @@ public class RelicFactory {
         return entityMapper.toFavoriteRelicDTO(relic);
     }
 
-    public FileDTO toFileDTO(Resource file, String extension) {
-        return entityMapper.toFileDTO(file, extension);
+    public FileDTO toFileDTO(Resource file, String extension, Long entityId) {
+        return entityMapper.toFileDTO(file, extension, entityId);
     }
 
 }

@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -171,7 +172,7 @@ public class RelicFacade {
     public List<FileDTO> downloadFiles(Long relicId) {
         List<RelicFile> relicFiles = relicFileFacade.findAllByRelicId(relicId);
         return relicFiles.stream()
-                .map(relicFile -> relicFactory.toFileDTO(relicFileFacade.downloadFile(relicFile), relicFile.getExtension()))
+                .map(relicFile -> relicFactory.toFileDTO(relicFileFacade.downloadFile(relicFile), relicFile.getExtension(), relicId))
                 .toList();
     }
 
@@ -184,6 +185,21 @@ public class RelicFacade {
     public void updateFiles(Long relicId, List<MultipartFile> multipartFiles) {
         deleteFiles(relicId);
         uploadFiles(relicId, multipartFiles);
+    }
+
+    @Transactional
+    public List<FileDTO> downloadFiles(DownloadFilesDTO dto) {
+        return dto.getEntityIds().stream()
+                .map(relicId -> {
+                    List<RelicFile> relicFiles = relicFileFacade.findAllByRelicId(relicId);
+                    if (relicFiles.isEmpty()) {
+                        return null;
+                    }
+                    return relicFiles.get(0);
+                })
+                .filter(Objects::nonNull)
+                .map(relicFile -> relicFactory.toFileDTO(relicFileFacade.downloadFile(relicFile), relicFile.getExtension(), relicFile.getRelic().getId()))
+                .toList();
     }
 
     @Transactional

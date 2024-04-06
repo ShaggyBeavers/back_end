@@ -12,4 +12,6 @@ public class FileDTO {
 
     private String extension;
 
+    private Long entityId;
+
 }

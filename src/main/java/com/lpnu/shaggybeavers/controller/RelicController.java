@@ -1,10 +1,7 @@
 package com.lpnu.shaggybeavers.controller;
 
 import com.lpnu.shaggybeavers.domain.RelicStatus;
-import com.lpnu.shaggybeavers.dto.FavoriteRelicDTO;
-import com.lpnu.shaggybeavers.dto.RelicCatalogDTO;
-import com.lpnu.shaggybeavers.dto.RelicCreateEditDTO;
-import com.lpnu.shaggybeavers.dto.RelicDTO;
+import com.lpnu.shaggybeavers.dto.*;
 import com.lpnu.shaggybeavers.facade.RelicFacade;
 import com.lpnu.shaggybeavers.filter.RelicFilter;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
@@ -110,6 +107,11 @@ public class RelicController {
             @PathVariable Long relicId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
         relicFacade.updateFiles(relicId, multipartFiles);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/files/download")
+    public ResponseEntity<Resource> downloadFiles(@RequestBody DownloadFilesDTO dto) {
+        return new ResponseEntity<>(FileUtil.zipFiles(relicFacade.downloadFiles(dto)), HttpStatus.OK);
     }
 
     @GetMapping("/search")
