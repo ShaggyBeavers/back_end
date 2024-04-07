@@ -21,4 +21,7 @@ public interface RelicService extends CRUDService<Relic, Long> {
     Relic getNewFavoriteRelic();
 
     Page<Relic> findAllByNameContaining(String relicName, Pageable pageable);
+
+    Relic findByIdAbsolute(Long relicId);
+
 }

@@ -52,13 +52,13 @@ public class Report implements EntityWithId<Long> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
     @OneToMany(mappedBy = "report", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<ReportCategory> reportCategories = new ArrayList<>();
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
+
+    @OneToMany(mappedBy = "report", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<ReportFile> reportFiles = new ArrayList<>();
 
 }

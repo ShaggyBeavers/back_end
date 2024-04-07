@@ -3,7 +3,6 @@ package com.lpnu.shaggybeavers.filter;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -15,5 +14,7 @@ public class ReportFilter {
     public Set<Long> regionIds;
 
     public Set<Long> categoryIds;
+
+    private Boolean file;
 
 }

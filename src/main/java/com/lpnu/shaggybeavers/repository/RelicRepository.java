@@ -26,7 +26,7 @@ public interface RelicRepository extends JpaRepository<Relic, Long>, JpaSpecific
     @Query(value = "select r from Relic r where r.isDeleted = false and r.favorite = true")
     Relic getCurrentFavoriteRelic();
 
-    @Query(value = "select r from Relic r where r.isDeleted = false and r.favorite = false and r.imageUrl != null order by random() limit 1")
+    @Query(value = "select r from Relic r where r.isDeleted = false and r.favorite = false and r.relicFiles is not empty order by random() limit 1")
     Relic getNewFavoriteRelic();
 
     @Query(value = "select count(r) from Relic r where r.isDeleted = false and r.status IN :statuses")
@@ -34,5 +34,8 @@ public interface RelicRepository extends JpaRepository<Relic, Long>, JpaSpecific
 
     @Query("select r from Relic r where r.isDeleted = false and r.id = :id")
     @NonNull Optional<Relic> findById(@Param("id") @NonNull Long id);
+
+    @Query("select r from Relic r where r.id = :id")
+    Optional<Relic> findByIdAbsolute(@Param("id") @NonNull Long id);
 
 }
