@@ -5,5 +5,7 @@ import com.lpnu.shaggybeavers.model.RelicCategory;
 import org.mapstruct.Mapping;
 
 public interface RelicCategoryMapper {
-
+    @Mapping(source = "category.id", target = "id")
+    @Mapping(source = "category.categoryName", target = "name")
+    CategoryDTO toCategoryDTO(RelicCategory relicCategory);
 }

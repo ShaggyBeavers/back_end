@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -68,8 +69,10 @@ public class RelicFacade {
     public void editRelic(Long relicId, RelicCreateEditDTO relicCreateEditDTO) {
         Relic relic = relicFactory.update(relicService.findById(relicId), relicCreateEditDTO);
         relic.setRegion(regionFacade.findById((relicCreateEditDTO.getRegionId())));
-        relic.setCreationPlace(regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())));
-        relic.setMuseum(museumFacade.findById((relicCreateEditDTO.getMuseumId())));
+        var creationPlace = (relicCreateEditDTO.getCreationPlaceId() != null) ? regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())) : null;
+        relic.setCreationPlace(creationPlace);
+        var museum = (relicCreateEditDTO.getMuseumId() != null) ? museumFacade.findById((relicCreateEditDTO.getMuseumId())) : null;
+        relic.setMuseum(museum);
         relicService.save(relic);
 
         relicCategoryFacade.updateRelicCategories(relicCreateEditDTO.getRelicCategoryIds(), relic);
@@ -102,11 +105,13 @@ public class RelicFacade {
     }
 
     @Transactional
-    public void createRelic(RelicCreateEditDTO relicCreateEditDTO) {
+    public Long createRelic(RelicCreateEditDTO relicCreateEditDTO) {
         Relic relic = relicFactory.toRelic(relicCreateEditDTO);
         relic.setRegion(regionFacade.findById((relicCreateEditDTO.getRegionId())));
-        relic.setCreationPlace(regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())));
-        relic.setMuseum(museumFacade.findById((relicCreateEditDTO.getMuseumId())));
+        var creationPlace = (relicCreateEditDTO.getCreationPlaceId() != null) ? regionFacade.findById((relicCreateEditDTO.getCreationPlaceId())) : null;
+        relic.setCreationPlace(creationPlace);
+        var museum = (relicCreateEditDTO.getMuseumId() != null) ? museumFacade.findById((relicCreateEditDTO.getMuseumId())) : null;
+        relic.setMuseum(museum);
         relic = relicService.save(relic);
 
         relicCategoryFacade.updateRelicCategories(relicCreateEditDTO.getRelicCategoryIds(), relic);
@@ -123,6 +128,7 @@ public class RelicFacade {
         if (lostRelicInfoCreateEditDTO != null) {
             lostRelicInfoFacade.create(lostRelicInfoCreateEditDTO, relicInfo);
         }
+        return relic.getId();
     }
 
     @Transactional
@@ -165,7 +171,7 @@ public class RelicFacade {
     public List<FileDTO> downloadFiles(Long relicId) {
         List<RelicFile> relicFiles = relicFileFacade.findAllByRelicId(relicId);
         return relicFiles.stream()
-                .map(relicFile -> relicFactory.toFileDTO(relicFileFacade.downloadFile(relicFile), relicFile.getExtension()))
+                .map(relicFile -> relicFactory.toFileDTO(relicFileFacade.downloadFile(relicFile), relicFile.getExtension(), relicId))
                 .toList();
     }
 
@@ -178,6 +184,21 @@ public class RelicFacade {
     public void updateFiles(Long relicId, List<MultipartFile> multipartFiles) {
         deleteFiles(relicId);
         uploadFiles(relicId, multipartFiles);
+    }
+
+    @Transactional
+    public List<FileDTO> downloadFiles(DownloadFilesDTO dto) {
+        return dto.getEntityIds().stream()
+                .map(relicId -> {
+                    List<RelicFile> relicFiles = relicFileFacade.findAllByRelicId(relicId);
+                    if (relicFiles.isEmpty()) {
+                        return null;
+                    }
+                    return relicFiles.get(0);
+                })
+                .filter(Objects::nonNull)
+                .map(relicFile -> relicFactory.toFileDTO(relicFileFacade.downloadFile(relicFile), relicFile.getExtension(), relicFile.getRelic().getId()))
+                .toList();
     }
 
     @Transactional

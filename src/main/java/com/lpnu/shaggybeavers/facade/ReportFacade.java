@@ -2,10 +2,7 @@ package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.domain.ReportStatus;
 import com.lpnu.shaggybeavers.domain.RoleEnum;
-import com.lpnu.shaggybeavers.dto.FileDTO;
-import com.lpnu.shaggybeavers.dto.ReportCreateDTO;
-import com.lpnu.shaggybeavers.dto.ReportDTO;
-import com.lpnu.shaggybeavers.dto.ReportPageDTO;
+import com.lpnu.shaggybeavers.dto.*;
 import com.lpnu.shaggybeavers.exception.FileException;
 import com.lpnu.shaggybeavers.factory.ReportFactory;
 import com.lpnu.shaggybeavers.filter.ReportFilter;
@@ -24,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -133,7 +131,7 @@ public class ReportFacade {
     public List<FileDTO> downloadFiles(Long reportId) {
         List<ReportFile> reportFiles = reportFileFacade.findAllByReportId(reportId);
         return reportFiles.stream()
-                .map(reportFile -> reportFactory.toFileDTO(reportFileFacade.downloadFile(reportFile), reportFile.getExtension()))
+                .map(reportFile -> reportFactory.toFileDTO(reportFileFacade.downloadFile(reportFile), reportFile.getExtension(), reportId))
                 .toList();
     }
 
@@ -152,6 +150,20 @@ public class ReportFacade {
     public void restore(Long reportId) {
         Report report = reportService.findByIdAbsolute(reportId);
         report.setDeleted(false);
+    }
+  
+    public List<FileDTO> downloadFiles(DownloadFilesDTO dto) {
+        return dto.getEntityIds().stream()
+                .map(reportId -> {
+                    List<ReportFile> reportFiles = reportFileFacade.findAllByReportId(reportId);
+                    if (reportFiles.isEmpty()) {
+                        return null;
+                    }
+                    return reportFiles.get(0);
+                })
+                .filter(Objects::nonNull)
+                .map(relicFile -> reportFactory.toFileDTO(reportFileFacade.downloadFile(relicFile), relicFile.getExtension(), relicFile.getReport().getId()))
+                .toList();
     }
 
 }

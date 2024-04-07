@@ -36,21 +36,21 @@ public class RelicDTO {
 
     private String entryBookNumber;
 
-    private Integer inventoryNumber;
+    private String inventoryNumber;
 
-    private Integer formerInventoryNumber;
+    private String formerInventoryNumber;
 
     private String author;
 
     private List<RelicPropertyDTO> relicPropertyDTOs;
+
+    private List<CategoryDTO> categoryDTOs;
 
     private RelicInfoDTO relicInfoDTO;
 
     private RecoveredRelicInfoDTO recoveredRelicInfoDTO;
 
     private LostRelicInfoDTO lostRelicInfoDTO;
-
-    private List<CategoryDTO> categoryDTOs;
 
     private RegionDTO regionDTO;
 
