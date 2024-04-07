@@ -98,6 +98,7 @@ public class ReportController {
     public ResponseEntity<Void> restore(@PathVariable Long reportId) {
         reportFacade.restore(reportId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @GetMapping("/files/download")
     public ResponseEntity<Resource> downloadFiles(@RequestBody DownloadFilesDTO dto) {
