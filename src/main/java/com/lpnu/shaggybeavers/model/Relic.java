@@ -74,10 +74,10 @@ public class Relic implements EntityWithId<Long> {
     private String entryBookNumber;
 
     @Column(name = "inventory_number")
-    private Integer inventoryNumber;
+    private String inventoryNumber;
 
     @Column(name = "former_inventory_number")
-    private Integer formerInventoryNumber;
+    private String formerInventoryNumber;
 
     @OneToMany(mappedBy = "relic", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<RelicProperty> relicProperties = new ArrayList<>();

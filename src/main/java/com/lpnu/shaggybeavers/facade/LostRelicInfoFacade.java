@@ -23,12 +23,16 @@ public class LostRelicInfoFacade {
     public void create(LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO, RelicInfo relicInfo) {
         LostRelicInfo lostRelicInfo = lostRelicInfoFactory.toLostRelicInfo(lostRelicInfoCreateEditDTO);
         lostRelicInfo.setRelicInfo(relicInfo);
-        lostRelicInfo.setMuseum(museumFacade.findById((lostRelicInfoCreateEditDTO.getMuseumId())));
+        var museum = (lostRelicInfoCreateEditDTO.getMuseumId() != null) ? museumFacade.findById((lostRelicInfoCreateEditDTO.getMuseumId())) : null;
+        lostRelicInfo.setMuseum(museum);
         lostRelicInfoService.save(lostRelicInfo);
     }
 
     @Transactional
     public void update(Long id, LostRelicInfoCreateEditDTO lostRelicInfoCreateEditDTO) {
-        lostRelicInfoService.save(lostRelicInfoFactory.update(lostRelicInfoService.findById(id), lostRelicInfoCreateEditDTO));
+        LostRelicInfo lostRelicInfo = lostRelicInfoFactory.update(lostRelicInfoService.findById(id), lostRelicInfoCreateEditDTO);
+        var museum = (lostRelicInfoCreateEditDTO.getMuseumId() != null) ? museumFacade.findById((lostRelicInfoCreateEditDTO.getMuseumId())) : null;
+        lostRelicInfo.setMuseum(museum);
+        lostRelicInfoService.save(lostRelicInfo);
     }
 }
