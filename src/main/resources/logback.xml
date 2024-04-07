@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- Define variables for filenames -->
-    <property name="log.path" value="./logs"/>
+    <property name="log.path" value="/srv/logs"/>
     <property name="app.log.file" value="${log.path}/app.log"/>
     <property name="info.log.file" value="${log.path}/info.log"/>
 
