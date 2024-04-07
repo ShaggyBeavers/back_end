@@ -7,7 +7,6 @@ import com.lpnu.shaggybeavers.dto.RelicCreateEditDTO;
 import com.lpnu.shaggybeavers.dto.RelicDTO;
 import com.lpnu.shaggybeavers.facade.RelicFacade;
 import com.lpnu.shaggybeavers.filter.RelicFilter;
-import com.lpnu.shaggybeavers.security.UserPrincipal;
 import com.lpnu.shaggybeavers.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,7 +83,7 @@ public class RelicController {
     }
 
     @PostMapping("/files/upload/{relicId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnRelic(authentication, #relicId)")
     public ResponseEntity<Void> uploadFiles(
             @PathVariable Long relicId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
         relicFacade.uploadFiles(relicId, multipartFiles);
@@ -98,14 +96,14 @@ public class RelicController {
     }
 
     @DeleteMapping("/files/delete/{relicId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnRelic(authentication, #relicId)")
     public ResponseEntity<Void> deleteFiles(@PathVariable Long relicId) {
         relicFacade.deleteFiles(relicId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/files/update/{relicId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnRelic(authentication, #relicId)")
     public ResponseEntity<Void> updateFiles(
             @PathVariable Long relicId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
         relicFacade.updateFiles(relicId, multipartFiles);
@@ -121,9 +119,15 @@ public class RelicController {
 
     @DeleteMapping("/delete/{relicId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnRelic(authentication, #relicId)")
-    public ResponseEntity<Void> delete(
-            @AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Long relicId) {
-        relicFacade.delete(userPrincipal.getUser(), relicId);
+    public ResponseEntity<Void> delete(@PathVariable Long relicId) {
+        relicFacade.delete(relicId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/restore/{relicId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnRelic(authentication, #relicId)")
+    public ResponseEntity<Void> restore(@PathVariable Long relicId) {
+        relicFacade.restore(relicId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

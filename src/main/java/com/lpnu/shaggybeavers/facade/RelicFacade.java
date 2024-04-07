@@ -2,7 +2,6 @@ package com.lpnu.shaggybeavers.facade;
 
 
 import com.lpnu.shaggybeavers.domain.RelicStatus;
-import com.lpnu.shaggybeavers.domain.RoleEnum;
 import com.lpnu.shaggybeavers.dto.*;
 import com.lpnu.shaggybeavers.exception.FileException;
 import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
@@ -193,16 +192,23 @@ public class RelicFacade {
     }
 
     @Transactional
-    public void delete(User currentUser, Long relicId) {
+    public void delete(Long relicId) {
         Relic relic = relicService.findById(relicId);
 
-        switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
-            case ADMIN -> relicService.delete(relic);
-            case REGIONAL_MODERATOR, MODERATOR -> {
-                relic.setDeleted(true);
-                relicService.update(relic);
-            }
-        }
+//        switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
+//            case ADMIN -> relicService.delete(relic);
+//            case REGIONAL_MODERATOR, MODERATOR -> {
+//                relic.setDeleted(true);
+//                relicService.update(relic);
+//            }
+//        }
+        relic.setDeleted(true);
+    }
+
+    @Transactional
+    public void restore(Long relicId) {
+        Relic relic = relicService.findByIdAbsolute(relicId);
+        relic.setDeleted(false);
     }
 
 }

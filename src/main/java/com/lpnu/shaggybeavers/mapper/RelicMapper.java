@@ -13,11 +13,12 @@ import java.util.List;
 public interface RelicMapper {
 
     @Mapping(source = "creationPlace.name", target = "creationPlaceName")    @Mapping(source = "museum.name", target = "museumName")
-    @Mapping(source = "region.name", target = "regionName")
     @Mapping(source = "relicProperties", target = "relicPropertyDTOs")
     @Mapping(source = "relicInfo", target = "relicInfoDTO")
     @Mapping(source = "relicInfo.recoveredRelicInfo", target = "recoveredRelicInfoDTO")
     @Mapping(source = "relicInfo.lostRelicInfo", target = "lostRelicInfoDTO")
+    @Mapping(source = "region.id", target = "regionDTO.id")
+    @Mapping(source = "region.name", target = "regionDTO.name")
     RelicDTO toRelicDTO(Relic relic);
 
     RelicCatalogDTO toRelicCatalogDTO(Relic relic);

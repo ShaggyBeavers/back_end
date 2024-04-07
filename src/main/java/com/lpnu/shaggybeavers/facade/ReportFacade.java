@@ -104,16 +104,18 @@ public class ReportFacade {
     }
 
     @Transactional
-    public void delete(User currentUser, Long reportId) {
+    public void delete(Long reportId) {
         Report report = reportService.findById(reportId);
 
-        switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
-            case ADMIN -> reportService.delete(report);
-            case REGIONAL_MODERATOR, MODERATOR -> {
-                report.setDeleted(true);
-                reportService.update(report);
-            }
-        }
+//        switch (RoleEnum.valueOf(currentUser.getRole().getName())) {
+//            case ADMIN -> reportService.delete(report);
+//            case REGIONAL_MODERATOR, MODERATOR -> {
+//                report.setDeleted(true);
+//                reportService.update(report);
+//            }
+//        }
+
+        report.setDeleted(true);
     }
 
     @Transactional
@@ -144,6 +146,12 @@ public class ReportFacade {
     public void updateFiles(Long reportId, List<MultipartFile> multipartFiles) {
         deleteFiles(reportId);
         uploadFiles(reportId, multipartFiles);
+    }
+
+    @Transactional
+    public void restore(Long reportId) {
+        Report report = reportService.findByIdAbsolute(reportId);
+        report.setDeleted(false);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.lpnu.shaggybeavers.service.impl;
 
 import com.lpnu.shaggybeavers.domain.RelicStatus;
+import com.lpnu.shaggybeavers.exception.NotEqualObjectsException;
 import com.lpnu.shaggybeavers.model.Relic;
 import com.lpnu.shaggybeavers.repository.RelicRepository;
 import com.lpnu.shaggybeavers.service.RelicService;
@@ -54,6 +55,11 @@ public class RelicServiceImpl extends CRUDServiceImpl<Relic, Long> implements Re
     @Override
     public Page<Relic> findAllByNameContaining(String relicName, Pageable pageable) {
         return repository.findByNameIgnoreCaseContaining(relicName, pageable);
+    }
+
+    @Override
+    public Relic findByIdAbsolute(Long relicId) {
+        return repository.findByIdAbsolute(relicId).orElseThrow(NotEqualObjectsException::new);
     }
 
 }

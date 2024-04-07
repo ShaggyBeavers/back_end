@@ -58,9 +58,8 @@ public class ReportController {
 
     @DeleteMapping("/delete/{reportId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
-    public ResponseEntity<Void> delete(
-            @AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Long reportId) {
-        reportFacade.delete(userPrincipal.getUser(), reportId);
+    public ResponseEntity<Void> delete(@PathVariable Long reportId) {
+        reportFacade.delete(reportId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -79,17 +78,24 @@ public class ReportController {
     }
 
     @DeleteMapping("/files/delete/{reportId}")
-    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
     public ResponseEntity<Void> deleteFiles(@PathVariable Long reportId) {
         reportFacade.deleteFiles(reportId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/files/update/{reportId}")
-    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
     public ResponseEntity<Void> updateFiles(
             @PathVariable Long reportId, @RequestParam(value = "file") List<MultipartFile> multipartFiles) {
         reportFacade.updateFiles(reportId, multipartFiles);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/restore/{reportId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    public ResponseEntity<Void> restore(@PathVariable Long reportId) {
+        reportFacade.restore(reportId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

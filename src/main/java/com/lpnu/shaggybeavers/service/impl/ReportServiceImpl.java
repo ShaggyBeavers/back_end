@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.service.impl;
 
+import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.model.Report;
 import com.lpnu.shaggybeavers.repository.ReportRepository;
 import com.lpnu.shaggybeavers.service.ReportService;
@@ -27,4 +28,10 @@ public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements R
     protected JpaRepository<Report, Long> getRepository () {
         return this.repository;
     }
+
+    @Override
+    public Report findByIdAbsolute(Long reportId) {
+        return repository.findByIdAbsolute(reportId).orElseThrow(NotExistsObjectException::new);
+    }
+
 }

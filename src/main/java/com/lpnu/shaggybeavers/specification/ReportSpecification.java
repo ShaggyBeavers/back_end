@@ -30,6 +30,9 @@ public class ReportSpecification implements Specification<Report> {
         if (filter.getCategoryIds() != null && !filter.getCategoryIds().isEmpty()) {
             predicates.add(root.join("reportCategories").get("category").get("id").in(filter.getCategoryIds()));
         }
+        if (filter.getFile() != null) {
+            predicates.add(filter.getFile() ? criteriaBuilder.isNotEmpty(root.get("reportFiles")) : criteriaBuilder.isEmpty(root.get("reportFiles")));
+        }
 
         predicates.add(criteriaBuilder.equal(root.get("isDeleted"), false));
 

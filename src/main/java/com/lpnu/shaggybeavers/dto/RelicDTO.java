@@ -22,8 +22,6 @@ public class RelicDTO {
 
     private String museumName;
 
-    private String regionName;
-
     private Integer quantity;
 
     private String collection;
@@ -53,5 +51,7 @@ public class RelicDTO {
     private LostRelicInfoDTO lostRelicInfoDTO;
 
     private List<CategoryDTO> categoryDTOs;
+
+    private RegionDTO regionDTO;
 
 }
