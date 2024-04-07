@@ -18,8 +18,6 @@ public class RelicDTO {
 
     private String creationPlaceName;
 
-    private String imageUrl;
-
     private String museumName;
 
     private Integer quantity;

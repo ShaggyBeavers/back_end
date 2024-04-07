@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -30,10 +29,8 @@ public class ReportDTO {
 
     private String name;
 
-    private String imageUrl;
-
     private List<CategoryDTO> categoryDTOs;
 
-    private Long regionId;
+    private RegionDTO regionDTO;
 
 }
