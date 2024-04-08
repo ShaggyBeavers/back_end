@@ -107,7 +107,7 @@ public class RelicController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/files/download")
+    @PostMapping("/files/download")
     public ResponseEntity<Resource> downloadFiles(@RequestBody DownloadFilesDTO dto) {
         return new ResponseEntity<>(FileUtil.zipFiles(relicFacade.downloadFiles(dto)), HttpStatus.OK);
     }
