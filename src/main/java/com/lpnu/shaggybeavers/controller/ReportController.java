@@ -100,7 +100,7 @@ public class ReportController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/files/download")
+    @PostMapping("/files/download")
     public ResponseEntity<Resource> downloadFiles(@RequestBody DownloadFilesDTO dto) {
         return new ResponseEntity<>(FileUtil.zipFiles(reportFacade.downloadFiles(dto)), HttpStatus.OK);
     }
