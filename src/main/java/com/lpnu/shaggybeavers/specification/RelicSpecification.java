@@ -21,6 +21,11 @@ public class RelicSpecification implements Specification<Relic> {
     public Predicate toPredicate(Root<Relic> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
+        if (filter.getName() != null) {
+            predicates.add(criteriaBuilder.like(
+                    criteriaBuilder.lower(root.get("name")),
+                    criteriaBuilder.lower(criteriaBuilder.literal("%" + filter.getName() + "%"))));
+        }
         if (filter.getHistoricalPeriods() != null && !filter.getHistoricalPeriods().isEmpty()) {
             predicates.add(root.get("relicInfo").get("historicalPeriod").get("name").in(filter.getHistoricalPeriods()));
         }
