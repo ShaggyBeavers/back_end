@@ -3,6 +3,7 @@ package com.lpnu.shaggybeavers.exception;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.*;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +20,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = JwtException.class)
     public ResponseEntity<Object> handleJwtException(JwtException e) {
         return buildException((List.of(e.getMessage())), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException e) {
+        return buildException((List.of(e.getMessage())), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(value = DuplicateException.class)
