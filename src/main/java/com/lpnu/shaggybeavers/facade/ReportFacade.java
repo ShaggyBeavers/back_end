@@ -81,17 +81,27 @@ public class ReportFacade {
         String currentUserRole = userPrincipal.getUser().getRole().getName();
         ReportFilter reportFilter = new ReportFilter();
 
+        reportFilter.setUserRole(RoleEnum.valueOf(currentUserRole));
+        reportFilter.setUserId(userId);
+        Specification<Report> specificationOnId = new ReportSpecification(reportFilter);
+        reportFilter.setUserId(null);
+
         switch (RoleEnum.valueOf(currentUserRole)) {
-            case MODERATOR, REGIONAL_MODERATOR, ADMIN -> {
+            case MODERATOR -> {
                 reportFilter.setCategoryIds(userCategoryFacade.getCategoryIdsByUserId(userId));
                 reportFilter.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
             }
-            case USER -> {
-                reportFilter.setUserId(userId);
+            case REGIONAL_MODERATOR -> {
+                reportFilter.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
+            }
+            case ADMIN -> {
+                Page<Report> reportPage = reportService.findAll(pageable);
+                return reportPage.map(reportFactory::toReportPageDTO);
             }
         }
 
-        Specification<Report> specification = new ReportSpecification(reportFilter);
+        Specification<Report> specificationOnAuthority = new ReportSpecification(reportFilter);
+        Specification<Report> specification = specificationOnAuthority.or(specificationOnId);
         Page<Report> reportPage = reportService.findAll(pageable, specification);
         return reportPage.map(reportFactory::toReportPageDTO);
     }

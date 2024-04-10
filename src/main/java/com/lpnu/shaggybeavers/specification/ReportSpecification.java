@@ -1,5 +1,6 @@
 package com.lpnu.shaggybeavers.specification;
 
+import com.lpnu.shaggybeavers.domain.RoleEnum;
 import com.lpnu.shaggybeavers.filter.ReportFilter;
 import com.lpnu.shaggybeavers.model.Report;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -24,11 +25,14 @@ public class ReportSpecification implements Specification<Report> {
         if (filter.getUserId() != null) {
             predicates.add(root.get("user").get("id").in(filter.getUserId()));
         }
-        if (filter.getRegionIds() != null && !filter.getRegionIds().isEmpty() ) {
+
+        if (filter.getRegionIds() != null) {
             predicates.add(root.get("region").get("id").in(filter.getRegionIds()));
+            predicates.add(root.get("region").get("id").isNull());
         }
-        if (filter.getCategoryIds() != null && !filter.getCategoryIds().isEmpty()) {
+        if (filter.getCategoryIds() != null && filter.getUserRole() == RoleEnum.MODERATOR) {
             predicates.add(root.join("reportCategories").get("category").get("id").in(filter.getCategoryIds()));
+            predicates.add(root.join("reportCategories").get("category").get("id").isNull());
         }
         if (filter.getFile() != null) {
             predicates.add(filter.getFile() ? criteriaBuilder.isNotEmpty(root.get("reportFiles")) : criteriaBuilder.isEmpty(root.get("reportFiles")));

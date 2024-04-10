@@ -9,6 +9,8 @@ public interface ReportService extends CRUDService<Report,Long> {
 
     Page<Report> findAll(Pageable pageable, Specification<Report> specification);
 
+    Page<Report> findAll(Pageable pageable);
+
     Report findByIdAbsolute(Long reportId);
 
 }

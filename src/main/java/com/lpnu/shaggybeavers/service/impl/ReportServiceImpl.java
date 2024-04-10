@@ -25,6 +25,11 @@ public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements R
     }
 
     @Override
+    public Page<Report> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    @Override
     protected JpaRepository<Report, Long> getRepository () {
         return this.repository;
     }
