@@ -10,6 +10,8 @@ import java.util.List;
 @Setter
 public class RelicFilter {
 
+    private String name;
+
     private List<String> historicalPeriods;
 
     private List<RelicStatus> statuses;
