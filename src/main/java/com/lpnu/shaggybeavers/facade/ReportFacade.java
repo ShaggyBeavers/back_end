@@ -47,7 +47,8 @@ public class ReportFacade {
     public Long createReport(UserPrincipal userPrincipal, ReportCreateDTO dto) {
         Report report = reportFactory.toReport(dto);
         report.setStatus(ReportStatus.NEW);
-        report.setRegion(regionFacade.findById(dto.getRegionId()));
+        var region = (dto.getRegionId() != null) ? regionFacade.findById((dto.getRegionId())) : null;
+        report.setRegion(region);
         report.setUser(userPrincipal.getUser());
         reportService.save(report);
 
