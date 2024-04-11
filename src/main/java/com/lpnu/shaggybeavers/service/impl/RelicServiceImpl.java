@@ -37,46 +37,55 @@ public class RelicServiceImpl extends CRUDServiceImpl<Relic, Long> implements Re
     }
 
     @Override
+    @Transactional
     public Page<Relic> findAll(Specification<Relic> specification, Pageable pageable) {
         return repository.findAll(specification, pageable);
     }
 
     @Override
+    @Transactional
     public Long countByStatuses(List<RelicStatus> statuses) {
         return repository.countByStatuses(statuses);
     }
 
     @Override
+    @Transactional
     public Relic getCurrentFavoriteRelic() {
         return repository.getCurrentFavoriteRelic();
     }
 
     @Override
+    @Transactional
     public Relic getNewFavoriteRelic() {
         return repository.getNewFavoriteRelic();
     }
 
     @Override
+    @Transactional
     public Page<Relic> findAllByNameContaining(String relicName, Pageable pageable) {
         return repository.findByNameIgnoreCaseContaining(relicName, pageable);
     }
 
     @Override
+    @Transactional
     public Relic findByIdAbsolute(Long relicId) {
         return repository.findByIdAbsolute(relicId).orElseThrow(NotEqualObjectsException::new);
     }
 
     @Override
+    @Transactional
     public boolean existsByMuseumId(Long museumId) {
         return repository.existsByMuseumId(museumId);
     }
 
     @Override
+    @Transactional
     public boolean existsByRegionId(Long regionId) {
         return repository.existsByRegionId(regionId);
     }
 
     @Override
+    @Transactional
     public boolean existsByCreationPlaceId(Long regionId) {
         return repository.existsByCreationPlaceId(regionId);
     }

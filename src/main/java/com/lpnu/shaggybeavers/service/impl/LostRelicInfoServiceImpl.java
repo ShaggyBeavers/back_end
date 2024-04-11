@@ -3,6 +3,7 @@ package com.lpnu.shaggybeavers.service.impl;
 import com.lpnu.shaggybeavers.model.LostRelicInfo;
 import com.lpnu.shaggybeavers.repository.LostRelicInfoRepository;
 import com.lpnu.shaggybeavers.service.LostRelicInfoService;
+import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class LostRelicInfoServiceImpl extends CRUDServiceImpl<LostRelicInfo, Lon
     }
 
     @Override
+    @Transactional
     public boolean existsByMuseumId(Long museumId) {
         return lostRelicInfoRepository.existsByMuseumId(museumId);
     }

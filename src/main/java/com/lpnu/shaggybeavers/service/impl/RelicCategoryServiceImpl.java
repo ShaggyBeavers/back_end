@@ -49,6 +49,7 @@ public class RelicCategoryServiceImpl extends CRUDServiceImpl<RelicCategory, Lon
     }
 
     @Override
+    @Transactional
     public boolean existsByCategoryId(Long categoryId) {
         return relicCategoryRepository.existsByCategoryId(categoryId);
     }

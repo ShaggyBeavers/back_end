@@ -32,6 +32,7 @@ public class ReportCategoryServiceImpl extends CRUDServiceImpl<ReportCategory, L
     }
 
     @Override
+    @Transactional
     public boolean existsByCategoryId(Long categoryId) {
         return repository.existsByCategoryId(categoryId);
     }

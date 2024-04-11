@@ -45,6 +45,7 @@ public class UserCategoryServiceImpl extends CRUDServiceImpl<UserCategory,Long> 
     }
 
     @Override
+    @Transactional
     public boolean existsByCategoryId(Long categoryId) {
         return repository.existsByCategoryId(categoryId);
     }

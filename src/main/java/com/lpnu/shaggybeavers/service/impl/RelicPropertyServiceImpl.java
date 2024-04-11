@@ -42,6 +42,7 @@ public class RelicPropertyServiceImpl extends CRUDServiceImpl<RelicProperty, Lon
     }
 
     @Override
+    @Transactional
     public boolean existsByPropertyId(Long propertyId) {
         return relicPropertyRepository.existsByPropertyId(propertyId);
     }

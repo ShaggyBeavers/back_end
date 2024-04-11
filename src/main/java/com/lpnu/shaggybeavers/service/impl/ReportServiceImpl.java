@@ -34,11 +34,13 @@ public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements R
     }
 
     @Override
+    @Transactional
     public Report findByIdAbsolute(Long reportId) {
         return repository.findByIdAbsolute(reportId).orElseThrow(NotExistsObjectException::new);
     }
 
     @Override
+    @Transactional
     public boolean existsByRegionId(Long regionId) {
         return repository.existsByRegionId(regionId);
     }

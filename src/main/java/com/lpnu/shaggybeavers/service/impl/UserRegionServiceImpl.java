@@ -45,6 +45,7 @@ public class UserRegionServiceImpl extends CRUDServiceImpl<UserRegion,Long> impl
     }
 
     @Override
+    @Transactional
     public boolean existsByRegionId(Long regionId) {
         return repository.existsByRegionId(regionId);
     }
