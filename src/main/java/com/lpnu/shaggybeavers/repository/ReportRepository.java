@@ -36,4 +36,7 @@ public interface ReportRepository extends JpaRepository<Report,Long>, JpaSpecifi
     Page<Report> getRegionalModeratorReports(Set<Long> userRegions, Long userId, Pageable pageable);
 
     Page<Report> findAllByUserId(Long userId, Pageable pageable);
+  
+    @Query("select r from Report r where r.isDeleted = false and r.region.id = :regionId")
+    boolean existsByRegionId(@Param("regionId") @NonNull Long regionId);
 }

@@ -3,7 +3,7 @@ package com.lpnu.shaggybeavers.service.impl;
 import com.lpnu.shaggybeavers.model.UserRegion;
 import com.lpnu.shaggybeavers.repository.UserRegionRepository;
 import com.lpnu.shaggybeavers.service.UserRegionService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UserRegionServiceImpl extends CRUDServiceImpl<UserRegion,Long> implements UserRegionService {
 
     private final UserRegionRepository repository;
+
+    @Lazy
+    public UserRegionServiceImpl(UserRegionRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     protected JpaRepository<UserRegion, Long> getRepository () {
@@ -38,6 +42,12 @@ public class UserRegionServiceImpl extends CRUDServiceImpl<UserRegion,Long> impl
     @Transactional
     public void deleteAllByUserId(Long userId) {
         repository.deleteAllByUserId(userId);
+    }
+
+    @Override
+    @Transactional
+    public boolean existsByRegionId(Long regionId) {
+        return repository.existsByRegionId(regionId);
     }
 
 }

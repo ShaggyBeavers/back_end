@@ -6,12 +6,11 @@ import com.lpnu.shaggybeavers.service.PropertyService;
 import com.lpnu.shaggybeavers.service.RelicPropertyService;
 import com.lpnu.shaggybeavers.service.RelicService;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class RelicPropertyServiceImpl extends CRUDServiceImpl<RelicProperty, Long> implements RelicPropertyService {
 
     private final RelicPropertyRepository relicPropertyRepository;
@@ -19,6 +18,13 @@ public class RelicPropertyServiceImpl extends CRUDServiceImpl<RelicProperty, Lon
     private final PropertyService propertyService;
 
     private final RelicService relicService;
+
+    @Lazy
+    public RelicPropertyServiceImpl(RelicPropertyRepository relicPropertyRepository, PropertyService propertyService, RelicService relicService) {
+        this.relicPropertyRepository = relicPropertyRepository;
+        this.propertyService = propertyService;
+        this.relicService = relicService;
+    }
 
     @Override
     protected JpaRepository<RelicProperty, Long> getRepository() {
@@ -33,5 +39,11 @@ public class RelicPropertyServiceImpl extends CRUDServiceImpl<RelicProperty, Lon
         relicProperty.setRelic(relicService.findById(relicId));
         relicProperty.setValue(value);
         relicPropertyRepository.save(relicProperty);
+    }
+
+    @Override
+    @Transactional
+    public boolean existsByPropertyId(Long propertyId) {
+        return relicPropertyRepository.existsByPropertyId(propertyId);
     }
 }

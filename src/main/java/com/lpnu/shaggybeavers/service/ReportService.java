@@ -21,4 +21,5 @@ public interface ReportService extends CRUDService<Report,Long> {
 
     Page<Report> findAllByUserId(Long userId, Pageable pageable);
 
+    boolean existsByRegionId(Long regionId);
 }

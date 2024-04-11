@@ -20,6 +20,6 @@ public class HistoricalPeriod implements EntityWithId<Long> {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "historicalPeriod", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "historicalPeriod", cascade = {CascadeType.MERGE})
     private List<RelicInfo> relicInfos = new ArrayList<>();
 }

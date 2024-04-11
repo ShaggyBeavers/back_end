@@ -20,6 +20,8 @@ public class ReportPageDTO {
 
     private Long userId;
 
+    private Boolean isUserBanned;
+
     private Long reportId;
 
     private Long regionId;

@@ -13,4 +13,5 @@ public interface UserRegionService extends CRUDService<UserRegion,Long> {
 
     void deleteAllByUserId(Long userId);
 
+    boolean existsByRegionId(Long regionId);
 }

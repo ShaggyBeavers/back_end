@@ -20,15 +20,15 @@ public class Region implements EntityWithId<Long> {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "region",cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "region",cascade = {CascadeType.MERGE})
     private List<UserRegion> userRegions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "region",cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "region",cascade = {CascadeType.MERGE})
     private List<Report> report = new ArrayList<>();
 
-    @OneToMany(mappedBy = "region", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "region", cascade = {CascadeType.MERGE})
     private List<Relic> relicsByRegion = new ArrayList<>();
 
-    @OneToMany(mappedBy = "creationPlace", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "creationPlace", cascade = {CascadeType.MERGE})
     private List<Relic> relicsByCreationPlace = new ArrayList<>();
 }

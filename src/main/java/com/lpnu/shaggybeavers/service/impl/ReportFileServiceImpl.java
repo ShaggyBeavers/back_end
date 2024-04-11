@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.content.commons.store.ContentStore;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class ReportFileServiceImpl extends FileStoreServiceImpl<ReportFile, Stri
     }
 
     @Override
+    @Transactional
     public List<ReportFile> findAllByReportId(Long reportId) {
         return repository.findAllByReportId(reportId);
     }

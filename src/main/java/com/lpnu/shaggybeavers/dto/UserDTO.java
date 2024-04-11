@@ -23,4 +23,6 @@ public class UserDTO {
 
     private boolean ban;
 
+    private String roleName;
+
 }

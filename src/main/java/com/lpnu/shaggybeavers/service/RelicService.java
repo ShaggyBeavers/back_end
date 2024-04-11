@@ -24,4 +24,9 @@ public interface RelicService extends CRUDService<Relic, Long> {
 
     Relic findByIdAbsolute(Long relicId);
 
+    boolean existsByMuseumId(Long museumId);
+
+    boolean existsByRegionId(Long regionId);
+
+    boolean existsByCreationPlaceId(Long regionId);
 }
