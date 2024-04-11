@@ -12,6 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements ReportService {
 
@@ -29,6 +31,11 @@ public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements R
     }
 
     @Override
+    public Page<Report> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    @Override
     protected JpaRepository<Report, Long> getRepository () {
         return this.repository;
     }
@@ -40,6 +47,19 @@ public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements R
     }
 
     @Override
+    public Page<Report> getModeratorReports(Set<Long> userRegions, Set<Long> userCategories, Long userId, Pageable pageable) {
+        return repository.getModeratorReports(userRegions, userCategories, userId, pageable);
+    }
+
+    @Override
+    public Page<Report> getRegionalModeratorReports(Set<Long> userRegions, Long userId, Pageable pageable) {
+        return repository.getRegionalModeratorReports(userRegions, userId, pageable);
+    }
+
+    @Override
+    public Page<Report> findAllByUserId(Long userId, Pageable pageable) {
+        return repository.findAllByUserId(userId, pageable);
+      
     @Transactional
     public boolean existsByRegionId(Long regionId) {
         return repository.existsByRegionId(regionId);
