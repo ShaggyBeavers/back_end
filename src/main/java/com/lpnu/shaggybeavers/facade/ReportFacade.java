@@ -91,10 +91,12 @@ public class ReportFacade {
         switch (RoleEnum.valueOf(currentUserRole)) {
             case MODERATOR -> {
                 ReportFilter reportFilterCategory = new ReportFilter();
+                reportFilterCategory.setUserRole(RoleEnum.valueOf(currentUserRole));
                 Specification<Report> specificationCategory = new ReportSpecification(reportFilterCategory);
                 reportFilterCategory.setCategoryIds(userCategoryFacade.getCategoryIdsByUserId(userId));
 
                 ReportFilter reportFilterRegion = new ReportFilter();
+                reportFilterRegion.setUserRole(RoleEnum.valueOf(currentUserRole));
                 Specification<Report> specificationRegion = new ReportSpecification(reportFilterRegion);
                 reportFilterRegion.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
 
@@ -102,6 +104,7 @@ public class ReportFacade {
             }
             case REGIONAL_MODERATOR -> {
                 ReportFilter reportFilterRegion = new ReportFilter();
+                reportFilterRegion.setUserRole(RoleEnum.valueOf(currentUserRole));
                 Specification<Report> specificationRegion = new ReportSpecification(reportFilterRegion);
                 reportFilterRegion.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
                 specificationOnAuthority = specificationRegion;
