@@ -9,7 +9,6 @@ import com.lpnu.shaggybeavers.filter.ReportFilter;
 import com.lpnu.shaggybeavers.model.*;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
 import com.lpnu.shaggybeavers.service.ReportService;
-import com.lpnu.shaggybeavers.specification.ReportSpecification;
 import com.lpnu.shaggybeavers.util.FileUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -80,42 +79,23 @@ public class ReportFacade {
     public Page<ReportPageDTO> getReportsPage(UserPrincipal userPrincipal, Pageable pageable) {
         Long userId = userPrincipal.getId();
         String currentUserRole = userPrincipal.getUser().getRole().getName();
-        ReportFilter reportFilter = new ReportFilter();
-        ReportFilter reportFilterId = new ReportFilter();
-
-        reportFilter.setUserRole(RoleEnum.valueOf(currentUserRole));
-        reportFilterId.setUserId(userId);
-        Specification<Report> specificationOnId = new ReportSpecification(reportFilterId);
-        Specification<Report> specificationOnAuthority = new ReportSpecification(reportFilter);
+        Page<Report> reportPage;
 
         switch (RoleEnum.valueOf(currentUserRole)) {
             case MODERATOR -> {
-                ReportFilter reportFilterCategory = new ReportFilter();
-                reportFilterCategory.setUserRole(RoleEnum.valueOf(currentUserRole));
-                Specification<Report> specificationCategory = new ReportSpecification(reportFilterCategory);
-                reportFilterCategory.setCategoryIds(userCategoryFacade.getCategoryIdsByUserId(userId));
-
-                ReportFilter reportFilterRegion = new ReportFilter();
-                reportFilterRegion.setUserRole(RoleEnum.valueOf(currentUserRole));
-                Specification<Report> specificationRegion = new ReportSpecification(reportFilterRegion);
-                reportFilterRegion.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
-
-                specificationOnAuthority = specificationCategory.and(specificationRegion);
+                reportPage = reportService.getModeratorReports(userRegionFacade.getRegionIdsByUserId(userId),
+                        userCategoryFacade.getCategoryIdsByUserId(userId), userId, pageable);
             }
             case REGIONAL_MODERATOR -> {
-                ReportFilter reportFilterRegion = new ReportFilter();
-                reportFilterRegion.setUserRole(RoleEnum.valueOf(currentUserRole));
-                Specification<Report> specificationRegion = new ReportSpecification(reportFilterRegion);
-                reportFilterRegion.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
-                specificationOnAuthority = specificationRegion;
+                reportPage = reportService.getRegionalModeratorReports(userRegionFacade.getRegionIdsByUserId(userId), userId, pageable);
             }
             case ADMIN -> {
-                Page<Report> reportPage = reportService.findAll(pageable);
-                return reportPage.map(reportFactory::toReportPageDTO);
+                reportPage = reportService.findAll(pageable);
+            }
+            default -> {
+                reportPage = reportService.findAllByUserId(userId, pageable);
             }
         }
-        specificationOnAuthority = specificationOnAuthority.or(specificationOnId);
-        Page<Report> reportPage = reportService.findAll(pageable, specificationOnAuthority);
         return reportPage.map(reportFactory::toReportPageDTO);
     }
 

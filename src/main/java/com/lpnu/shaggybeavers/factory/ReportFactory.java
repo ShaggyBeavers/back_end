@@ -27,4 +27,6 @@ public class ReportFactory {
     public FileDTO toFileDTO(Resource file, String extension, Long entityId) {
         return entityMapper.toFileDTO(file, extension, entityId);
     }
+
+
 }

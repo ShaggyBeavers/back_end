@@ -12,6 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements ReportService {
@@ -37,6 +39,21 @@ public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements R
     @Override
     public Report findByIdAbsolute(Long reportId) {
         return repository.findByIdAbsolute(reportId).orElseThrow(NotExistsObjectException::new);
+    }
+
+    @Override
+    public Page<Report> getModeratorReports(Set<Long> userRegions, Set<Long> userCategories, Long userId, Pageable pageable) {
+        return repository.getModeratorReports(userRegions, userCategories, userId, pageable);
+    }
+
+    @Override
+    public Page<Report> getRegionalModeratorReports(Set<Long> userRegions, Long userId, Pageable pageable) {
+        return repository.getRegionalModeratorReports(userRegions, userId, pageable);
+    }
+
+    @Override
+    public Page<Report> findAllByUserId(Long userId, Pageable pageable) {
+        return repository.findAllByUserId(userId, pageable);
     }
 
 }

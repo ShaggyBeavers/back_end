@@ -3,10 +3,7 @@ package com.lpnu.shaggybeavers.specification;
 import com.lpnu.shaggybeavers.domain.RoleEnum;
 import com.lpnu.shaggybeavers.filter.ReportFilter;
 import com.lpnu.shaggybeavers.model.Report;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -27,14 +24,11 @@ public class ReportSpecification implements Specification<Report> {
         }
 
         if (filter.getUserRole() == RoleEnum.MODERATOR) {
-                Predicate regionPredicate = root.get("region").get("id").in(filter.getRegionIds());
-                Predicate categoryPredicate = root.join("reportCategories").get("category").get("id").in(filter.getCategoryIds());
-                Predicate regionIsNull = root.get("region").get("id").isNull();
-                Predicate categoryIsNull = root.join("reportCategories").get("category").get("id").isNull();
-                predicates.add(
-                        criteriaBuilder.or(regionPredicate, regionIsNull));
-                predicates.add(
-                        criteriaBuilder.or(categoryPredicate, categoryIsNull));
+            predicates.add(criteriaBuilder.or(
+                    criteriaBuilder.in(root.get("region").get("id")).in(filter.getRegionIds()),
+                    criteriaBuilder.isNull(root.get("region").get("id"))
+            ));
+
         }
         if (filter.getUserRole() == RoleEnum.REGIONAL_MODERATOR) {
             Predicate sameRegionOrNull = criteriaBuilder.or(
