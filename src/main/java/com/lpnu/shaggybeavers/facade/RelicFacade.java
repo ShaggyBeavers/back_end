@@ -4,7 +4,6 @@ package com.lpnu.shaggybeavers.facade;
 import com.lpnu.shaggybeavers.domain.RelicStatus;
 import com.lpnu.shaggybeavers.dto.*;
 import com.lpnu.shaggybeavers.exception.FileException;
-import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
 import com.lpnu.shaggybeavers.factory.RelicFactory;
 import com.lpnu.shaggybeavers.filter.RelicFilter;
 import com.lpnu.shaggybeavers.model.*;
@@ -132,18 +131,22 @@ public class RelicFacade {
     }
 
     @Transactional
-    public void changeFavoriteRelic() {
+    public void changeFavoriteRelic(Long relicId) {
         Relic currentFavoriteRelic = relicService.getCurrentFavoriteRelic();
-        Relic newFavoriteRelic = relicService.getNewFavoriteRelic();
-        if (currentFavoriteRelic != null) {
+        if (Objects.nonNull(currentFavoriteRelic)) {
             currentFavoriteRelic.setFavorite(false);
-            relicService.update(currentFavoriteRelic);
         }
-        if (newFavoriteRelic == null) {
-            throw new NotExistsObjectException("There is no new relic with image at the moment.");
+
+        Relic newFavoriteRelic;
+        if (Objects.isNull(relicId)) {
+            newFavoriteRelic = relicService.getNewFavoriteRelic();
+            if (Objects.isNull(newFavoriteRelic)) {
+                newFavoriteRelic = relicService.findById(1L);
+            }
+        } else {
+            newFavoriteRelic = relicService.findById(relicId);
         }
         newFavoriteRelic.setFavorite(true);
-        relicService.update(newFavoriteRelic);
     }
 
     @Transactional
@@ -223,6 +226,7 @@ public class RelicFacade {
 //                relicService.update(relic);
 //            }
 //        }
+        relic.setFavorite(false);
         relic.setDeleted(true);
     }
 

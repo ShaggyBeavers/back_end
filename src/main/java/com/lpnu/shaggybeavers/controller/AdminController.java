@@ -3,7 +3,7 @@ package com.lpnu.shaggybeavers.controller;
 import com.lpnu.shaggybeavers.domain.RoleEnum;
 import com.lpnu.shaggybeavers.dto.ChangeModeratorCategoriesDTO;
 import com.lpnu.shaggybeavers.dto.ChangeModeratorRegionsDTO;
-import com.lpnu.shaggybeavers.dto.ModeratorCreateDTO;
+import com.lpnu.shaggybeavers.dto.ModeratorDTO;
 import com.lpnu.shaggybeavers.dto.UserDTO;
 import com.lpnu.shaggybeavers.facade.AdminFacade;
 import com.lpnu.shaggybeavers.security.UserPrincipal;
@@ -26,7 +26,7 @@ public class AdminController {
     @PostMapping("/regional-moderators")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> createRegionalModerator(
-            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody ModeratorCreateDTO dto) {
+            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody ModeratorDTO dto) {
         adminFacade.createModerator(userPrincipal.getUser(), dto, RoleEnum.REGIONAL_MODERATOR);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -34,7 +34,7 @@ public class AdminController {
     @PostMapping("/moderators")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR')")
     public ResponseEntity<Void> createModerator(
-            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody ModeratorCreateDTO dto) {
+            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody ModeratorDTO dto) {
         adminFacade.createModerator(userPrincipal.getUser(), dto, RoleEnum.MODERATOR);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -69,6 +69,20 @@ public class AdminController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnUser(authentication, #moderatorId)")
     public ResponseEntity<Void> deleteModeratorById(@PathVariable Long moderatorId) {
         adminFacade.deleteModeratorById(moderatorId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/regional-moderators")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<Void> updateRegionalModerator(@RequestBody ModeratorDTO dto) {
+        adminFacade.updateModerator(dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/moderators")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnUser(authentication, #dto.userId)")
+    public ResponseEntity<Void> updateModerator(@RequestBody ModeratorDTO dto) {
+        adminFacade.updateModerator(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

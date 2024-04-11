@@ -10,6 +10,8 @@ import java.util.List;
 @Getter
 public class FavoriteRelicDTO {
 
+    private Long id;
+
     private String name;
 
     private RelicStatus status;
@@ -17,7 +19,5 @@ public class FavoriteRelicDTO {
     private String lossTime;
 
     private List<CategoryDTO> categories;
-
-    private String imageUrl;
 
 }

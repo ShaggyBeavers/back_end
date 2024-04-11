@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class ModeratorCreateDTO {
+public class ModeratorDTO {
 
     private Long userId;
 
