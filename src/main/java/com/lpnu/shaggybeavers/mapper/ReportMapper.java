@@ -12,6 +12,7 @@ public interface ReportMapper {
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.email", target = "userEmail")
+    @Mapping(source = "user.ban", target = "isUserBanned")
     @Mapping(source = "reportCategories", target = "categoryDTOs")
     @Mapping(source = "region.id", target = "regionDTO.id")
     @Mapping(source = "region.name", target = "regionDTO.name")
@@ -19,6 +20,7 @@ public interface ReportMapper {
 
     @Mapping(source = "user.email", target = "userEmail")
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.ban", target = "isUserBanned")
     @Mapping(source = "id", target = "reportId")
     @Mapping(source = "reportCategories", target = "categoriesDTO")
     @Mapping(source = "region.id", target = "regionId")
