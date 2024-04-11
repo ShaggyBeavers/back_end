@@ -15,6 +15,7 @@ public interface UserMapper {
 
     @Mapping(source = "userCategories", target = "categories")
     @Mapping(source = "userRegions", target = "regions")
+    @Mapping(source = "role.name", target = "roleName")
     UserDTO toUserDTO(User user);
 
     List<UserDTO> toUserDTOList(List<User> users);

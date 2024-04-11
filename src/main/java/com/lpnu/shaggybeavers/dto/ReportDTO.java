@@ -15,6 +15,8 @@ public class ReportDTO {
 
     private String userId;
 
+    private Boolean isUserBanned;
+
     private Date submissionDate;
 
     private String mapLocation;
