@@ -81,29 +81,38 @@ public class ReportFacade {
         Long userId = userPrincipal.getId();
         String currentUserRole = userPrincipal.getUser().getRole().getName();
         ReportFilter reportFilter = new ReportFilter();
+        ReportFilter reportFilterId = new ReportFilter();
 
         reportFilter.setUserRole(RoleEnum.valueOf(currentUserRole));
-        reportFilter.setUserId(userId);
-        Specification<Report> specificationOnId = new ReportSpecification(reportFilter);
-        reportFilter.setUserId(null);
+        reportFilterId.setUserId(userId);
+        Specification<Report> specificationOnId = new ReportSpecification(reportFilterId);
+        Specification<Report> specificationOnAuthority = new ReportSpecification(reportFilter);
 
         switch (RoleEnum.valueOf(currentUserRole)) {
             case MODERATOR -> {
-                reportFilter.setCategoryIds(userCategoryFacade.getCategoryIdsByUserId(userId));
-                reportFilter.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
+                ReportFilter reportFilterCategory = new ReportFilter();
+                Specification<Report> specificationCategory = new ReportSpecification(reportFilterCategory);
+                reportFilterCategory.setCategoryIds(userCategoryFacade.getCategoryIdsByUserId(userId));
+
+                ReportFilter reportFilterRegion = new ReportFilter();
+                Specification<Report> specificationRegion = new ReportSpecification(reportFilterRegion);
+                reportFilterRegion.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
+
+                specificationOnAuthority = specificationCategory.and(specificationRegion);
             }
             case REGIONAL_MODERATOR -> {
-                reportFilter.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
+                ReportFilter reportFilterRegion = new ReportFilter();
+                Specification<Report> specificationRegion = new ReportSpecification(reportFilterRegion);
+                reportFilterRegion.setRegionIds(userRegionFacade.getRegionIdsByUserId(userId));
+                specificationOnAuthority = specificationRegion;
             }
             case ADMIN -> {
                 Page<Report> reportPage = reportService.findAll(pageable);
                 return reportPage.map(reportFactory::toReportPageDTO);
             }
         }
-
-        Specification<Report> specificationOnAuthority = new ReportSpecification(reportFilter);
-        Specification<Report> specification = specificationOnAuthority.or(specificationOnId);
-        Page<Report> reportPage = reportService.findAll(pageable, specification);
+        specificationOnAuthority = specificationOnAuthority.or(specificationOnId);
+        Page<Report> reportPage = reportService.findAll(pageable, specificationOnAuthority);
         return reportPage.map(reportFactory::toReportPageDTO);
     }
 
