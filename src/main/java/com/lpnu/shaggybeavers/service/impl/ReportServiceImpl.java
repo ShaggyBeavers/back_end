@@ -31,6 +31,7 @@ public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements R
     }
 
     @Override
+    @Transactional
     public Page<Report> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
@@ -47,19 +48,24 @@ public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements R
     }
 
     @Override
+    @Transactional
     public Page<Report> getModeratorReports(Set<Long> userRegions, Set<Long> userCategories, Long userId, Pageable pageable) {
         return repository.getModeratorReports(userRegions, userCategories, userId, pageable);
     }
 
     @Override
+    @Transactional
     public Page<Report> getRegionalModeratorReports(Set<Long> userRegions, Long userId, Pageable pageable) {
         return repository.getRegionalModeratorReports(userRegions, userId, pageable);
     }
 
     @Override
+    @Transactional
     public Page<Report> findAllByUserId(Long userId, Pageable pageable) {
         return repository.findAllByUserId(userId, pageable);
-      
+    }
+
+    @Override
     @Transactional
     public boolean existsByRegionId(Long regionId) {
         return repository.existsByRegionId(regionId);
