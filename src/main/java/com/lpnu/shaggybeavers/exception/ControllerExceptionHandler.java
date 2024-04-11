@@ -57,6 +57,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return buildException(List.of(e.getMessage()), HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(value = AssociationException.class)
+    public ResponseEntity<Object> handleAssociationException(AssociationException e) {
+        return buildException(List.of(e.getMessage()), HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<Object> handleOthers(RuntimeException e) {
         return buildException(List.of( e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);

@@ -11,4 +11,6 @@ public interface RelicCategoryRepository extends JpaRepository<RelicCategory, Lo
 
     List<RelicCategory> findAllByRelicId(Long relicId);
 
+    boolean existsByCategoryId(Long categoryId);
+
 }

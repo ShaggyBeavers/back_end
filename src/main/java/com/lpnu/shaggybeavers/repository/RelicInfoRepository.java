@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RelicInfoRepository extends JpaRepository<RelicInfo, Long> {
+    boolean existsByHistoricalPeriodId(Long historicalPeriodId);
+
+    boolean existsByTechniqueId(Long techniqueId);
 }

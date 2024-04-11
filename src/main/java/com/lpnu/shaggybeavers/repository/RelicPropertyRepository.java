@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RelicPropertyRepository extends JpaRepository<RelicProperty, Long> {
+    boolean existsByPropertyId(Long propertyId);
 }

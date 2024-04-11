@@ -10,4 +10,6 @@ public interface RelicCategoryService extends CRUDService<RelicCategory, Long> {
 
     List<RelicCategory> findAllByRelicId(Long relicId);
 
+    boolean existsByCategoryId(Long categoryId);
+
 }

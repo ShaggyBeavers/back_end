@@ -26,10 +26,10 @@ public class Museum implements EntityWithId<Long> {
     @Column(name = "is_destroyed")
     private Boolean isDestroyed;
 
-    @OneToMany(mappedBy = "museum", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "museum", cascade = {CascadeType.MERGE})
     private List<LostRelicInfo> lostRelicInfos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "museum", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "museum", cascade = {CascadeType.MERGE})
     private List<Relic> relics = new ArrayList<>();
 
 }

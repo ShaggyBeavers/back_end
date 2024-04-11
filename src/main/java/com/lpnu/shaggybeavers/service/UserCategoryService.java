@@ -13,4 +13,6 @@ public interface UserCategoryService extends CRUDService<UserCategory,Long> {
 
     void deleteAllByUserId(Long userId);
 
+    boolean existsByCategoryId(Long id);
+
 }

@@ -7,7 +7,6 @@ import com.lpnu.shaggybeavers.repository.UserRepository;
 import com.lpnu.shaggybeavers.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -56,6 +55,7 @@ public class UserServiceImpl extends CRUDServiceImpl<User,Long> implements UserS
     }
 
     @Override
+    @Transactional
     public boolean emailIsPresent(String email) {
         return repository.findByEmail(email).isPresent();
     }

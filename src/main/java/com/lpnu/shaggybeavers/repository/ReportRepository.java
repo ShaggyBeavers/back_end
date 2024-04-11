@@ -19,4 +19,6 @@ public interface ReportRepository extends JpaRepository<Report,Long>, JpaSpecifi
     @Query("select r from Report r where r.id = :id")
     Optional<Report> findByIdAbsolute(@Param("id") @NonNull Long id);
 
+    @Query("select r from Report r where r.isDeleted = false and r.region.id = :regionId")
+    boolean existsByRegionId(@Param("regionId") @NonNull Long regionId);
 }

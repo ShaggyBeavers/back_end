@@ -20,6 +20,6 @@ public class Technique implements EntityWithId<Long> {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "technique", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "technique", cascade = {CascadeType.MERGE})
     private List<RelicInfo> relicInfos = new ArrayList<>();
 }
