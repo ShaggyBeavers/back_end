@@ -11,4 +11,5 @@ public interface ReportService extends CRUDService<Report,Long> {
 
     Report findByIdAbsolute(Long reportId);
 
+    boolean existsByRegionId(Long regionId);
 }

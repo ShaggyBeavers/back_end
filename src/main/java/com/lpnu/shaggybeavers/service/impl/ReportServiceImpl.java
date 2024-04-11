@@ -5,7 +5,7 @@ import com.lpnu.shaggybeavers.model.Report;
 import com.lpnu.shaggybeavers.repository.ReportRepository;
 import com.lpnu.shaggybeavers.service.ReportService;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,10 +13,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements ReportService {
 
     private final ReportRepository repository;
+
+    @Lazy
+    public ReportServiceImpl(ReportRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     @Transactional
@@ -32,6 +36,11 @@ public class ReportServiceImpl extends CRUDServiceImpl<Report,Long> implements R
     @Override
     public Report findByIdAbsolute(Long reportId) {
         return repository.findByIdAbsolute(reportId).orElseThrow(NotExistsObjectException::new);
+    }
+
+    @Override
+    public boolean existsByRegionId(Long regionId) {
+        return repository.existsByRegionId(regionId);
     }
 
 }

@@ -20,7 +20,7 @@ public class Property implements EntityWithId<Long> {
     @Column(name = "property", unique = true)
     private String property;
 
-    @OneToMany(mappedBy = "property", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "property", cascade = {CascadeType.MERGE})
     private List<RelicProperty> relicProperties = new ArrayList<>();
 
 }

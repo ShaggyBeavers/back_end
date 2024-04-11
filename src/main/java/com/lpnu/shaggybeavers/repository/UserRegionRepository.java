@@ -16,4 +16,5 @@ public interface UserRegionRepository extends JpaRepository<UserRegion,Long> {
 
     void deleteAllByUserId(Long userId);
 
+    boolean existsByRegionId(Long regionId);
 }

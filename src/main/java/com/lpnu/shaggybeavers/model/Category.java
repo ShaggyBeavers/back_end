@@ -20,13 +20,13 @@ public class Category implements EntityWithId<Long> {
     @Column(name = "category_name", unique = true)
     private String categoryName;
 
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE})
     private List<UserCategory> userCategories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE})
     private List<RelicCategory> relicCategories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE})
     private List<ReportCategory> reportCategories = new ArrayList<>();
 
 }

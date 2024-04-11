@@ -11,4 +11,5 @@ public interface ReportCategoryRepository extends JpaRepository<ReportCategory, 
 
     List<ReportCategory> findAllByReportId(Long reportId);
 
+    boolean existsByCategoryId(Long categoryId);
 }

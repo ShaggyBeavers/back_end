@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LostRelicInfoRepository extends JpaRepository<LostRelicInfo, Long> {
+    boolean existsByMuseumId(Long museumId);
 }

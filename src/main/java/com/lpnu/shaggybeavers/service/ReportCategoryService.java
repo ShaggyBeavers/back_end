@@ -8,4 +8,6 @@ public interface ReportCategoryService extends CRUDService<ReportCategory, Long>
 
     List<ReportCategory> findAllByReportId(Long reportId);
 
+    boolean existsByCategoryId(Long id);
+
 }
