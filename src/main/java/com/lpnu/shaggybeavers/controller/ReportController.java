@@ -45,7 +45,7 @@ public class ReportController {
     }
 
     @GetMapping("/{reportId}")
-    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityToReadReport(authentication, #reportId)")
+    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
     public ResponseEntity<ReportDTO> getReport(@PathVariable Long reportId) {
         return new ResponseEntity<>(reportFacade.getReport(reportId), HttpStatus.OK);
     }

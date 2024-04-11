@@ -63,8 +63,8 @@ public class RelicController {
 
     @PostMapping("/change-favorite")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR')")
-    public ResponseEntity<Void> changeFavoriteRelic() {
-        relicFacade.changeFavoriteRelic();
+    public ResponseEntity<Void> changeFavoriteRelic(Long relicId) {
+        relicFacade.changeFavoriteRelic(relicId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
