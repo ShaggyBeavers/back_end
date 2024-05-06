@@ -38,12 +38,13 @@ public interface RelicRepository extends JpaRepository<Relic, Long>, JpaSpecific
     @Query("select r from Relic r where r.id = :id")
     Optional<Relic> findByIdAbsolute(@Param("id") @NonNull Long id);
 
-    @Query("select r from Relic r where r.isDeleted = false and r.museum.id = :museumId")
+    @Query("select case when count(r) > 0 then true else false end from Relic r where r.isDeleted = false and r.museum.id = :museumId")
     boolean existsByMuseumId(@Param("museumId") @NonNull Long museumId);
 
-    @Query("select r from Relic r where r.isDeleted = false and r.region.id = :regionId")
+    @Query("select case when count(r) > 0 then true else false end from Relic r where r.isDeleted = false and r.region.id = :regionId")
     boolean existsByRegionId(@Param("regionId") @NonNull Long regionId);
 
-    @Query("select r from Relic r where r.isDeleted = false and r.creationPlace.id = :creationPlaceId")
+    @Query("select case when count(r) > 0 then true else false end from Relic r where r.isDeleted = false and r.creationPlace.id = :creationPlaceId")
     boolean existsByCreationPlaceId(@Param("creationPlaceId") @NonNull Long creationPlaceId);
+
 }
