@@ -15,8 +15,8 @@ public class EmailServiceImpl implements EmailService {
     @Value("${domain:localhost}")
     private String domain;
 
-    @Value("${server.port:8081}")
-    private String serverPort;
+    @Value("${spring.mail.username}")
+    private String mailUsername;
 
     private final JavaMailSender javaMailSender;
 
@@ -24,12 +24,13 @@ public class EmailServiceImpl implements EmailService {
     public void sendResetPasswordEmail(User user, String token) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
+        simpleMailMessage.setFrom(mailUsername);
         simpleMailMessage.setTo(user.getEmail());
         simpleMailMessage.setSubject("Reset password");
 
         simpleMailMessage.setText(
                 "Click the following link to reset your password: " +
-                "https://%s:%s/api/users/password/reset?token=%s".formatted(domain, serverPort, token));
+                "https://%s/change_password?token=%s".formatted(domain, token));
 
         javaMailSender.send(simpleMailMessage);
     }

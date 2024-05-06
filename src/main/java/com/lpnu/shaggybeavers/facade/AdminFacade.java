@@ -1,8 +1,10 @@
 package com.lpnu.shaggybeavers.facade;
 
 import com.lpnu.shaggybeavers.domain.RoleEnum;
-import com.lpnu.shaggybeavers.dto.*;
-import com.lpnu.shaggybeavers.exception.NotExistsObjectException;
+import com.lpnu.shaggybeavers.dto.ChangeModeratorCategoriesDTO;
+import com.lpnu.shaggybeavers.dto.ChangeModeratorRegionsDTO;
+import com.lpnu.shaggybeavers.dto.ModeratorDTO;
+import com.lpnu.shaggybeavers.dto.UserDTO;
 import com.lpnu.shaggybeavers.filter.UserFilter;
 import com.lpnu.shaggybeavers.model.User;
 import com.lpnu.shaggybeavers.util.UserUtil;
@@ -75,9 +77,9 @@ public class AdminFacade {
     public void updateModerator(ModeratorDTO dto) {
         User user = userFacade.getUserById(dto.getUserId());
 
-        if (UserUtil.doesUserHaveRole(user, RoleEnum.ADMIN) || UserUtil.doesUserHaveRole(user, RoleEnum.USER)) {
-            throw new NotExistsObjectException("Moderator with " + dto.getUserId() + " id does not exist.");
-        }
+//        if (UserUtil.doesUserHaveRole(user, RoleEnum.ADMIN) || UserUtil.doesUserHaveRole(user, RoleEnum.USER)) {
+//            throw new NotExistsObjectException("Moderator with " + dto.getUserId() + " id does not exist.");
+//        }
 
         userRegionFacade.deleteAllByUserId(dto.getUserId());
         userCategoryFacade.deleteAllByUserId(dto.getUserId());
