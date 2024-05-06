@@ -4,5 +4,6 @@ public enum RelicStatus {
     DESTROYED,
     STOLEN,
     RETURNED,
-    UNKNOWN
+    UNKNOWN,
+    NONE
 }
