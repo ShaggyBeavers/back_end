@@ -121,4 +121,12 @@ public class UserFacade {
         userService.update(user);
     }
 
+    @Transactional
+    public void changePasswordWithOldOne(User user, ChangePasswordWithOldOneDTO dto) {
+        if (!Objects.equals(user.getPassword(), dto.getOldPassword())) {
+            throw new NotEqualObjectsException("Old password is wrong.");
+        }
+        userService.changePassword(user, dto.getNewPassword());
+    }
+
 }
