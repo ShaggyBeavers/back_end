@@ -70,4 +70,11 @@ public class UserController {
         return new ResponseEntity<>(userFacade.getAll(), HttpStatus.OK);
     }
 
+    @PatchMapping("/password/change-with-old-one")
+    public ResponseEntity<Void> changePasswordWithOldOne(
+            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid ChangePasswordWithOldOneDTO dto) {
+        userFacade.changePasswordWithOldOne(userPrincipal.getUser(), dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
