@@ -12,6 +12,7 @@ import com.lpnu.shaggybeavers.specification.UserSpecification;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,6 +29,8 @@ public class UserFacade {
     private final ResetTokenFacade resetTokenFacade;
 
     private final EmailFacade emailFacade;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public UserDTO getProfile(Long userId) {
@@ -123,7 +126,7 @@ public class UserFacade {
 
     @Transactional
     public void changePasswordWithOldOne(User user, ChangePasswordWithOldOneDTO dto) {
-        if (!Objects.equals(user.getPassword(), dto.getOldPassword())) {
+        if (!bCryptPasswordEncoder.matches(dto.getOldPassword(), user.getPassword())) {
             throw new NotEqualObjectsException("Old password is wrong.");
         }
         userService.changePassword(user, dto.getNewPassword());
