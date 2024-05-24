@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -74,15 +75,15 @@ public class AdminFacade {
     }
 
     @Transactional
-    public void updateModerator(ModeratorDTO dto) {
+    public void updateModerator(User currentUser, ModeratorDTO dto) {
         User user = userFacade.getUserById(dto.getUserId());
-
-//        if (UserUtil.doesUserHaveRole(user, RoleEnum.ADMIN) || UserUtil.doesUserHaveRole(user, RoleEnum.USER)) {
-//            throw new NotExistsObjectException("Moderator with " + dto.getUserId() + " id does not exist.");
-//        }
 
         userRegionFacade.deleteAllByUserId(dto.getUserId());
         userCategoryFacade.deleteAllByUserId(dto.getUserId());
+
+        if (UserUtil.doesUserHaveRole(currentUser, RoleEnum.ADMIN) && Objects.nonNull(dto.getRole())) {
+            user.setRole(roleFacade.findByName(dto.getRole().name()));
+        }
 
         userRegionFacade.create(user, dto.getRegionIds());
         userCategoryFacade.create(user, dto.getCategoryIds());
