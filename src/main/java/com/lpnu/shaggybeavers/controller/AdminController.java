@@ -74,15 +74,17 @@ public class AdminController {
 
     @PatchMapping("/regional-moderators")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Void> updateRegionalModerator(@RequestBody ModeratorDTO dto) {
-        adminFacade.updateModerator(dto);
+    public ResponseEntity<Void> updateRegionalModerator(
+            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody ModeratorDTO dto) {
+        adminFacade.updateModerator(userPrincipal.getUser(), dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/moderators")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnUser(authentication, #dto.userId)")
-    public ResponseEntity<Void> updateModerator(@RequestBody ModeratorDTO dto) {
-        adminFacade.updateModerator(dto);
+    public ResponseEntity<Void> updateModerator(
+            @AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody ModeratorDTO dto) {
+        adminFacade.updateModerator(userPrincipal.getUser(), dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
