@@ -32,16 +32,16 @@ public interface ReportRepository extends JpaRepository<Report,Long>, JpaSpecifi
     @Query("SELECT DISTINCT r FROM Report r " +
             "LEFT JOIN FETCH r.reportCategories rc " +
             "WHERE r.isDeleted = FALSE " +
-            "AND (r.region.id IN :userRegions OR r.region.id IS NULL) " +
+            "AND ((r.region.id IN :userRegions OR r.region.id IS NULL) " +
             "AND (rc.report.id IS NULL OR rc.category.id IN :userCategories) " +
-            "OR (r.user.id = :userId)")
+            "OR (r.user.id = :userId))")
     Page<Report> getModeratorReports(Set<Long> userRegions, Set<Long> userCategories, Long userId, Pageable pageable);
 
     @Query("SELECT DISTINCT r FROM Report r " +
             "LEFT JOIN FETCH r.reportCategories rc " +
             "WHERE r.isDeleted = FALSE " +
-            "AND (r.region.id IN :userRegions OR r.region.id IS NULL) " +
-            "OR (r.user.id = :userId)")
+            "AND ((r.region.id IN :userRegions OR r.region.id IS NULL) " +
+            "OR (r.user.id = :userId))")
     Page<Report> getRegionalModeratorReports(Set<Long> userRegions, Long userId, Pageable pageable);
 
     @Query("select r from Report r where r.isDeleted = false and r.user.id = :userId")
