@@ -58,7 +58,7 @@ public class ReportController {
     }
 
     @DeleteMapping("/delete/{reportId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'REGIONAL_MODERATOR', 'MODERATOR') and @securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
+    @PreAuthorize("@securityFacade.checkIfUserHasEnoughAuthorityOnReport(authentication, #reportId)")
     public ResponseEntity<Void> delete(@PathVariable Long reportId) {
         reportFacade.delete(reportId);
         return new ResponseEntity<>(HttpStatus.OK);
